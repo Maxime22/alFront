@@ -8,22 +8,7 @@ export class SectionService {
 
     sectionSubject = new Subject<any[]>();
 
-    private sections = [{
-        id: 1,
-        title: "Mariage"
-    },
-    {
-        id: 2,
-        title: "Portrait"
-    },
-    {
-        id: 3,
-        title: "Couple"
-    },
-    {
-        id: 2,
-        title: "Grossesse"
-    }];
+    private sections = [];
 
     constructor(private httpClient: HttpClient, private router: Router) { }
 
@@ -46,7 +31,7 @@ export class SectionService {
         )
         if (section === undefined) {
             this.router.navigate(['/']);
-        } 
+        }
         return section;
     }
 
@@ -59,10 +44,11 @@ export class SectionService {
         this.emitSectionSubject();
     }
 
-    saveSectionsToServer() {
-        this.httpClient.put('https://test-firebase-al.firebaseio.com/appareils.json', this.sections).subscribe(
-            () => {
-                console.log('enregistrement effectué')
+    saveSectionsToServer(title:string) {
+        let section = this.getSectionByTitle(title);
+        this.httpClient.post('http://localhost:3000/alBack/section', section).subscribe(
+            (resApi) => {
+                console.log(resApi['message'])
             },
             (error) => {
                 console.log('fail enregistrement ' + error)
@@ -71,14 +57,17 @@ export class SectionService {
     }
 
     getSectionsFromServer() {
-        this.httpClient.get<any[]>('https://test-firebase-al.firebaseio.com/appareils.json').subscribe(
-            (response) => {
-                this.sections = response;
-                this.emitSectionSubject();
-            },
-            (error) => {
-                console.log('fail récupération ' + error)
-            }
-        )
+        return new Promise((resolve, reject) => {
+            this.httpClient.get<any[]>('http://localhost:3000/alBack/sections').subscribe(
+                (response) => {
+                    this.sections = response;
+                    this.emitSectionSubject();
+                    resolve(response);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
     }
 }

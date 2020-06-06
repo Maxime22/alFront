@@ -9,19 +9,31 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
+  // IF I NEED EVERYTHING FROM THE SECTIONS IN HOME COMPONENT
   // sections: any[];
   // sectionSubscription: Subscription;
 
   sectionsTitles: string[];
-
+  
   constructor(private sectionService: SectionService) { }
 
+  // CALL THE ROUTE TO GET SECTIONS IN THE SERVICE AND, AFTER THE PROMISE IS DONE (SYNCHRONOUS), ADD ONLY THE TITLES IN HOME COMPONENT
   ngOnInit() {
-    this.sectionsTitles = this.sectionService.getSectionsTitles();
+    this.sectionService.getSectionsFromServer().then(
+      () => {
+        this.sectionsTitles = this.sectionService.getSectionsTitles();
+    }
+    );
+  
+    // IF I NEED EVERYTHING FROM THE SECTIONS IN HOME COMPONENT
     // this.sectionSubscription = this.sectionService.sectionSubject.subscribe((sections: any[]) => {
     //   this.sections = sections;
     // });
     // this.sectionService.emitSectionSubject();
+  }
+
+  onSend(title:string){
+    this.sectionService.saveSectionsToServer(title);
   }
 
 }

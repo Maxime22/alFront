@@ -2,6 +2,7 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Section } from '../models/section.model';
 
 @Injectable()
 export class SectionService {
@@ -35,20 +36,28 @@ export class SectionService {
         return section;
     }
 
-    addSection(title: string) {
-        const sectionObject = {
-            id: this.sections[this.sections.length - 1].id + 1,
-            title: title
-        };
-        this.sections.push(sectionObject);
+    getSectionById(id: number) {
+        const section = this.sections.find((sectionObject) => {
+            return sectionObject.id === id;
+        }
+        )
+        if (section === undefined) {
+            this.router.navigate(['/']);
+        }
+        return section;
+    }
+
+    addSection(section: Section) {
+        this.sections.push(section);
+        this.saveSectionToServer(section);
         this.emitSectionSubject();
     }
 
-    saveSectionsToServer(title:string) {
-        let section = this.getSectionByTitle(title);
+    saveSectionToServer(section: Section) {
         this.httpClient.post('http://localhost:3000/alBack/section', section).subscribe(
             (resApi) => {
                 console.log(resApi['message'])
+                this.emitSectionSubject();
             },
             (error) => {
                 console.log('fail enregistrement ' + error)

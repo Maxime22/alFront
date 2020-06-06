@@ -17,10 +17,18 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { SectionService } from './services/section.service';
 import { HomeComponent } from './home/home.component';
 import { LayoutSectionComponent } from './layout-section/layout-section.component';
+import { AdminComponent } from './admin/admin.component';
+import { SectionListComponent } from './admin/section-list/section-list.component';
+import { EditSectionComponent } from './admin/edit-section/edit-section.component';
+import { CreateSectionComponent } from './admin/create-section/create-section.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signUp', component: SignupComponent },
   { path: 'auth/signIn', component: SigninComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'admin/sectionList', component: SectionListComponent },
+  { path: 'admin/sectionList/editSection/:id', component: EditSectionComponent },
+  { path: 'admin/sectionList/createSection', component: CreateSectionComponent },
   { path: 'section/:sectionTitle', component: LayoutSectionComponent },
   { path: '', component: HomeComponent },
   // {
@@ -28,7 +36,7 @@ const appRoutes: Routes = [
   //   component: FourOhFourComponent
   // },
   {
-    path:"**", redirectTo:''
+    path: "**", redirectTo: ''
   }
 ];
 
@@ -43,7 +51,11 @@ const appRoutes: Routes = [
     PageComponent,
     SignupComponent,
     HomeComponent,
-    LayoutSectionComponent
+    LayoutSectionComponent,
+    AdminComponent,
+    SectionListComponent,
+    EditSectionComponent,
+    CreateSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +64,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-providers: [AuthService, AuthGuardService, SectionService],
+  providers: [AuthService, AuthGuardService, SectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

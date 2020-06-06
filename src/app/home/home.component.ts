@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SectionService } from '../services/section.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -30,10 +29,6 @@ export class HomeComponent implements OnInit {
     //   this.sections = sections;
     // });
     // this.sectionService.emitSectionSubject();
-  }
-
-  onSend(title:string){
-    this.sectionService.saveSectionsToServer(title);
   }
 
 }

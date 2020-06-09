@@ -30,9 +30,6 @@ export class SectionService {
             return sectionObject.title.toLowerCase() === title.toLowerCase();
         }
         )
-        if (section === undefined) {
-            this.router.navigate(['/']);
-        }
         return section;
     }
 
@@ -41,9 +38,6 @@ export class SectionService {
             return sectionObject._id === id;
         }
         )
-        // if (section === undefined) {
-        //     this.router.navigate(['/']);
-        // }
         return section;
     }
 
@@ -55,7 +49,7 @@ export class SectionService {
     saveSectionToServer(section: Section) {
         this.httpClient.post('http://localhost:3000/alBack/sections', section).subscribe(
             (resApi) => {
-                console.log(resApi['message'])
+                // console.log(resApi['message'])
                 this.router.navigate(['/admin/sectionList']);
             },
             (error) => {
@@ -119,7 +113,34 @@ export class SectionService {
             this.httpClient.get<any[]>('http://localhost:3000/alBack/sections').subscribe(
                 (response) => {
                     this.sections = response;
-                    this.emitSectionSubject();
+                    // this.emitSectionSubject();
+                    resolve(response);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getOneSectionFromServer(title: string) {
+        return new Promise((resolve, reject) => {
+            this.httpClient.post('http://localhost:3000/alBack/sections/getOneSectionWithTitle', {title:title.toLowerCase()}).subscribe(
+                (response) => {
+                    resolve(response);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    // NOT SURE
+    getSeveralSectionsFromServer(sectionsIds: []) {
+        return new Promise((resolve, reject) => {
+            this.httpClient.post<any[]>('http://localhost:3000/alBack/sections/severalSections', {sectionsIds:sectionsIds}).subscribe(
+                (response) => {
                     resolve(response);
                 },
                 (error) => {

@@ -75,7 +75,7 @@ export class EditSectionComponent implements OnInit {
   onSubmitForm() {
     const formValue = this.sectionForm.value;
     const editedSection = new Section(
-      formValue['title'], formValue['content']
+      formValue['title'].toLowerCase(), formValue['content']
     );
     this.sectionService.editSectionToServer(this.route.params['_value']['id'],editedSection);
 

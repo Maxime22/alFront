@@ -30,7 +30,7 @@ export class CreateSectionComponent implements OnInit {
   onSubmitForm(){
     const formValue = this.sectionForm.value;
     const newSection = new Section(
-      formValue['title'],formValue['content']
+      formValue['title'].toLowerCase(),formValue['content']
     );
     this.sectionService.addSection(newSection);
   }

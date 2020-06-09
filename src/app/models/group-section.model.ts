@@ -1,5 +1,7 @@
+import { Section } from './section.model';
 
 export class GroupSection {
-    constructor(public title: string) {
+    // sectionsIds:string[];
+    constructor(public title: string, public sectionsIds:[]) {
     }
 }

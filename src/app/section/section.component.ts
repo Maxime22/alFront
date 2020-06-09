@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { SectionService } from '../services/section.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-section',
@@ -10,18 +11,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SectionComponent implements OnInit {
 
   section: any;
+  sectionSubscription: Subscription;
 
-  constructor(private sectionService: SectionService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private sectionService: SectionService, private route: ActivatedRoute) { }
 
   // https://www.it-swarm.dev/fr/angular/angular-4-composant-ngoninit-non-appele-chaque-demande-de-route/832647952/
-  // route seems to be an observable
   ngOnInit(): void {
     this.route.params.subscribe(params => this.handleRouteChange(params));
   }
 
   handleRouteChange(params) {
-    const titleUrl = params['sectionTitle'];
-    this.section = this.sectionService.getSectionByTitle(titleUrl);
+    this.sectionService.getOneSectionFromServer(params['sectionTitle']).then(
+      (response) => {
+          this.section = response;
+      });
   }
 
 }

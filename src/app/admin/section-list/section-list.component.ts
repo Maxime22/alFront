@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 export class SectionListComponent implements OnInit {
 
   sections: any;
-  // sectionSubscription: Subscription;
 
   constructor(private sectionService: SectionService) { }
 
@@ -30,10 +29,4 @@ export class SectionListComponent implements OnInit {
     }
     );
   }
-
-  // this.sectionSubscription = this.sectionService.sectionSubject.subscribe((sections: any[]) => {
-        //   this.sections = sections;
-        // });
-        // this.sectionService.emitSectionSubject();
-
 }

@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
     this.sectionService.getSectionsFromServer().then(
       () => {
         this.sectionsTitles = this.sectionService.getSectionsTitles();
+        // console.log(this.sectionsTitles)
     }
     );
   

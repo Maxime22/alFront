@@ -30,25 +30,11 @@ export class CreateSectionComponent implements OnInit {
 
   onSubmitForm(){
     const formValue = this.sectionForm.value;
-    // console.log(formValue)
     const newSection = new Section(
       formValue['title'],formValue['content']
     );
     this.sectionService.addSection(newSection);
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin/sectionList']);
   }
-
-  // getHobbies(){
-  //   return this.sectionForm.get('hobbies') as FormArray;
-  // }
-
-  // onAddHobby(){
-  //   const newHobbyControl = this.formBuilder.control("",Validators.required)
-  //   this.getHobbies().push(newHobbyControl);
-  // }
-
-  // onDeleteHobby(i){
-  //   this.getHobbies().removeAt(i);
-  // }
 
 }

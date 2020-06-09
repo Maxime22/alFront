@@ -36,14 +36,14 @@ export class SectionService {
         return section;
     }
 
-    getSectionById(id: number) {
+    getSectionById(id) {
         const section = this.sections.find((sectionObject) => {
-            return sectionObject.id === id;
+            return sectionObject._id === id;
         }
         )
-        if (section === undefined) {
-            this.router.navigate(['/']);
-        }
+        // if (section === undefined) {
+        //     this.router.navigate(['/']);
+        // }
         return section;
     }
 
@@ -54,7 +54,7 @@ export class SectionService {
     }
 
     saveSectionToServer(section: Section) {
-        this.httpClient.post('http://localhost:3000/alBack/section', section).subscribe(
+        this.httpClient.post('http://localhost:3000/alBack/sections', section).subscribe(
             (resApi) => {
                 console.log(resApi['message'])
                 this.emitSectionSubject();
@@ -63,6 +63,56 @@ export class SectionService {
                 console.log('fail enregistrement ' + error)
             }
         )
+    }
+
+    editSectionToServer(id: string, section: Section) {
+        return new Promise((resolve, reject) => {
+            this.httpClient.put('http://localhost:3000/alBack/sections/' + id, section).subscribe(
+                (response) => {
+                    resolve(response['message']);
+                    this.emitSectionSubject();
+                    this.router.navigate(['/admin/sectionList']);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    // modifyThingWithFile(id: string, thing: Thing, image: File | string) {
+    //     return new Promise((resolve, reject) => {
+    //         let thingData: Thing | FormData;
+    //         if (typeof image === 'string') {
+    //             thing.imageUrl = image;
+    //             thingData = thing;
+    //         } else {
+    //             thingData = new FormData();
+    //             thingData.append('thing', JSON.stringify(thing));
+    //             thingData.append('image', image, thing.title);
+    //         }
+    //         this.http.put('http://localhost:3000/api/stuff/' + id, thingData).subscribe(
+    //             (response) => {
+    //                 resolve(response);
+    //             },
+    //             (error) => {
+    //                 reject(error);
+    //             }
+    //         );
+    //     });
+    // }
+
+    deleteSectionInServer(id: string) {
+        return new Promise((resolve, reject) => {
+            this.httpClient.delete('http://localhost:3000/alBack/sections/' + id).subscribe(
+                (response) => {
+                    resolve(response);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
     }
 
     getSectionsFromServer() {

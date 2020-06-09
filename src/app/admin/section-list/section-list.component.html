@@ -12,6 +12,7 @@
             <td>{{ section._id }}</td>
             <td>{{ section.title }}</td>
             <td><a routerLink="editSection/{{ section._id }}"><button class="btn btn-primary">Modifier</button></a></td>
+            <td><button class="btn btn-danger" (click)="onDelete(section._id)">Supprimer</button></td>
         </tr>
     </tbody>
 </table>

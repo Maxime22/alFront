@@ -17,6 +17,15 @@ export class SectionListComponent implements OnInit {
   constructor(private sectionService: SectionService) { }
 
   ngOnInit() {
+    this.updateServerDatas();
+  }
+
+  onDelete(id){
+    this.sectionService.deleteSectionInServer(id);
+    this.updateServerDatas();
+  }
+
+  updateServerDatas(){
     this.sectionService.getSectionsFromServer().then(
       (sections) => {
         this.sections = sections;

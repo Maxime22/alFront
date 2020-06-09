@@ -8,14 +8,6 @@
             <label for="content">Contenu</label>
             <input type="text" class="form-control" id="content" formControlName="content">
         </div>
-        <!-- <div formArrayName="hobbies">
-            <h3>Vos hobbies</h3>
-            <div class="form-group" *ngFor="let hobbyControl of getHobbies().controls, let i = index">
-                <input type="text" class="form-control" [formControlName]="i">
-                <button type="button" class="btn btn-danger" (click)="onDeleteHobby(i)">Delete ce hobby</button>
-            </div>
-            <button type="button" class="btn btn-success" (click)="onAddHobby()">Ajouter un hobby</button>
-        </div> -->
         <button class="btn btn-primary" type="submit" [disabled]="sectionForm.invalid">Soumettre</button>
     </form>
 </div>

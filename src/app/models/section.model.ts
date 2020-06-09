@@ -1,5 +1,7 @@
+import { Photo } from './photo.model';
+
 export class Section {
-    photos: any[]; // array of filenames
+    photos: Photo[]; // array of object Photos ? ou il faut le définir autrement ?
     orderPhotos: string; // type of template
     visible: boolean; // visible in the menu
     linkedTo: string; // linked to a groupSection

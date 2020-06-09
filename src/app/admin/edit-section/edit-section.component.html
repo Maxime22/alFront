@@ -1,1 +1,21 @@
-coucou
+<div class="col-sm-8 col-sm-offset-2">
+    <form [formGroup]="sectionForm" (ngSubmit)="onSubmitForm()">
+        <div class="form-group">
+            <label for="title">Titre</label>
+            <input type="text" class="form-control" id="title" formControlName="title">
+        </div>
+        <div class="form-group">
+            <label for="content">Contenu</label>
+            <textarea class="form-control" id="content" formControlName="content"></textarea>
+        </div>
+        <div formArrayName="photos">
+            <h3>Photos</h3>
+            <div class="form-group" *ngFor="let photoControl of getPhotos().controls, let i = index">
+                <input type="file" accept="image/*" [formControlName]="i" id="inputGroupFile{{ i }}" (change)="photoUploaded($event.target.files, i)">
+                <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button>
+            </div>
+            <button type="button" class="btn btn-success" (click)="onAddPhoto('')">Ajouter une photo</button>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="sectionForm.invalid">Soumettre</button>
+    </form>
+</div>

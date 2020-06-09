@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SectionService } from '../../services/section.service';
-import { Router } from '@angular/router';
 import { Section } from '../../models/section.model';
 
 
@@ -14,7 +13,7 @@ export class CreateSectionComponent implements OnInit {
 
   sectionForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private sectionService: SectionService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -34,7 +33,6 @@ export class CreateSectionComponent implements OnInit {
       formValue['title'],formValue['content']
     );
     this.sectionService.addSection(newSection);
-    this.router.navigate(['/admin/sectionList']);
   }
 
 }

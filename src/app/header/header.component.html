@@ -5,6 +5,9 @@
             <li class="nav-item" routerLinkActive="active" *ngFor="let sectionTitle of sectionsTitles">
                 <a class="nav-link" routerLink="/section/{{ sectionTitle | lowercase }}">{{ sectionTitle | titlecase }}</a>
             </li>
+            <li class="nav-item" routerLinkActive="active" *ngFor="let groupSectionTitle of groupSectionsTitles">
+                <a class="nav-link" routerLink="/groupSection/{{ groupSectionTitle | lowercase }}">{{ groupSectionTitle | titlecase }}</a>
+            </li>
         </ul>
     </div>
 </nav>

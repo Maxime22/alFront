@@ -21,6 +21,11 @@ import { AdminComponent } from './admin/admin.component';
 import { SectionListComponent } from './admin/section-list/section-list.component';
 import { EditSectionComponent } from './admin/edit-section/edit-section.component';
 import { CreateSectionComponent } from './admin/create-section/create-section.component';
+import { LayoutGroupSectionComponent } from './layout-group-section/layout-group-section.component';
+import { GroupSectionService } from './services/group-section.service';
+import { GroupSectionListComponent } from './admin/group-section-list/group-section-list.component';
+import { CreateGroupSectionComponent } from './admin/create-group-section/create-group-section.component';
+import { EditGroupSectionComponent } from './admin/edit-group-section/edit-group-section.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signUp', component: SignupComponent },
@@ -29,7 +34,11 @@ const appRoutes: Routes = [
   { path: 'admin/sectionList', component: SectionListComponent },
   { path: 'admin/sectionList/editSection/:id', component: EditSectionComponent },
   { path: 'admin/sectionList/createSection', component: CreateSectionComponent },
+  { path: 'admin/groupSectionList', component: GroupSectionListComponent },
+  { path: 'admin/groupSectionList/editGroupSection/:id', component: EditGroupSectionComponent },
+  { path: 'admin/groupSectionList/createGroupSection', component: CreateGroupSectionComponent },
   { path: 'section/:sectionTitle', component: LayoutSectionComponent },
+  { path: 'groupSection/:groupSectionTitle', component: LayoutGroupSectionComponent },
   { path: '', component: HomeComponent },
   // {
   //   path: 'not-found',
@@ -55,7 +64,11 @@ const appRoutes: Routes = [
     AdminComponent,
     SectionListComponent,
     EditSectionComponent,
-    CreateSectionComponent
+    CreateSectionComponent,
+    LayoutGroupSectionComponent,
+    GroupSectionListComponent,
+    CreateGroupSectionComponent,
+    EditGroupSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +77,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService, AuthGuardService, SectionService],
+  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

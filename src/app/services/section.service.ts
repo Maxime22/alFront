@@ -36,7 +36,7 @@ export class SectionService {
         return section;
     }
 
-    getSectionById(id) {
+    getSectionById(id: string) {
         const section = this.sections.find((sectionObject) => {
             return sectionObject._id === id;
         }
@@ -50,14 +50,13 @@ export class SectionService {
     addSection(section: Section) {
         this.sections.push(section);
         this.saveSectionToServer(section);
-        this.emitSectionSubject();
     }
 
     saveSectionToServer(section: Section) {
         this.httpClient.post('http://localhost:3000/alBack/sections', section).subscribe(
             (resApi) => {
                 console.log(resApi['message'])
-                this.emitSectionSubject();
+                this.router.navigate(['/admin/sectionList']);
             },
             (error) => {
                 console.log('fail enregistrement ' + error)
@@ -70,7 +69,7 @@ export class SectionService {
             this.httpClient.put('http://localhost:3000/alBack/sections/' + id, section).subscribe(
                 (response) => {
                     resolve(response['message']);
-                    this.emitSectionSubject();
+                    // this.emitSectionSubject();
                     this.router.navigate(['/admin/sectionList']);
                 },
                 (error) => {

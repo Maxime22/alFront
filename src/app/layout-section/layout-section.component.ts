@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SectionService } from '../services/section.service';
 
 @Component({
   selector: 'app-layout-section',
@@ -8,12 +7,9 @@ import { SectionService } from '../services/section.service';
 })
 export class LayoutSectionComponent implements OnInit {
 
-  sectionsTitles: string[];
-
-  constructor(private sectionService: SectionService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.sectionsTitles = this.sectionService.getSectionsTitles();
   }
 
 }

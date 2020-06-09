@@ -12,8 +12,6 @@ export class SectionListComponent implements OnInit {
   sections: any;
   // sectionSubscription: Subscription;
 
-  sectionsTitles: string[];
-  
   constructor(private sectionService: SectionService) { }
 
   ngOnInit() {

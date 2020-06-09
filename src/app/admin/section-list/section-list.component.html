@@ -1,20 +1,22 @@
 <div class="container text-center">
-<table class="tableSections">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Titre</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let section of sections">
-            <td>{{ section._id }}</td>
-            <td>{{ section.title }}</td>
-            <td><a routerLink="editSection/{{ section._id }}"><button class="btn btn-primary">Modifier</button></a></td>
-            <td><button class="btn btn-danger" (click)="onDelete(section._id)">Supprimer</button></td>
-        </tr>
-    </tbody>
-</table>
-<a routerLink="createSection"><button class="btn btn-success">Créer une section</button></a>
+    <table class="tableSections">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let section of sections">
+                <td>{{ section._id }}</td>
+                <td>{{ section.title }}</td>
+                <td><a routerLink="editSection/{{ section._id }}"><button class="btn btn-primary">Modifier</button></a>
+                    <button class="btn btn-danger" (click)="onDelete(section._id)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div><a routerLink="createSection"><button class="btn btn-success">Créer une section</button></a></div>
+    <div class="mt-3"><a routerLink="/admin"><button class="btn btn-primary">Retour Admin</button></a></div>
 </div>

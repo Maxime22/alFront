@@ -9,20 +9,19 @@ import { GroupSectionService } from '../services/group-section.service';
 })
 export class HeaderComponent implements OnInit {
 
-  // @Input() sectionsTitles: Array<String>;
-  sectionsTitles: string[];
-  groupSectionsTitles: string[];
+  sections: any;
+  groupSections: any;
 
   constructor(private sectionService: SectionService, private groupSectionService: GroupSectionService) { }
 
   ngOnInit(): void {
     this.sectionService.getSectionsFromServer().then(
-      () => {
-        this.sectionsTitles = this.sectionService.getSectionsTitles();
+      (response) => {
+        this.sections = response;
     });
     this.groupSectionService.getGroupSectionsFromServer().then(
-      () => {
-        this.groupSectionsTitles = this.groupSectionService.getGroupSectionsTitles();
+      (response) => {
+        this.groupSections = response;
     });
   }
 

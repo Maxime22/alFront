@@ -2,12 +2,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <ul class="nav navbar-nav mx-auto">
-            <li class="nav-item" routerLinkActive="active" *ngFor="let sectionTitle of sectionsTitles">
-                <a class="nav-link" routerLink="/section/{{ sectionTitle | lowercase }}">{{ sectionTitle | titlecase }}</a>
+            <li class="nav-item" routerLinkActive="active" *ngFor="let section of sections">
+                <a class="nav-link" routerLink="/section/{{ section.title | lowercase }}" *ngIf="section.isVisibleInMenu">{{ section.title | titlecase }}</a>
             </li>
-            <li class="nav-item" routerLinkActive="active" *ngFor="let groupSectionTitle of groupSectionsTitles">
-                <a class="nav-link" routerLink="/groupSection/{{ groupSectionTitle | lowercase }}">{{ groupSectionTitle | titlecase }}</a>
+            <li class="nav-item" routerLinkActive="active" *ngFor="let groupSection of groupSections">
+                <a class="nav-link" routerLink="/groupSection/{{ groupSection.title| lowercase }}" *ngIf="groupSection.isVisibleInMenu">{{ groupSection.title | titlecase }}</a>
             </li>
         </ul>
     </div>
 </nav>
+
+<!-- <li class="nav-item" routerLinkActive="active" *ngFor="let section of sections">
+    <a class="nav-link" routerLink="/section/{{ section.title | lowercase }}" *ngIf="{{ section.isVisibleInMenu }}">{{ section.title | titlecase }}</a>
+</li>
+<li class="nav-item" routerLinkActive="active" *ngFor="let groupSection of groupSections">
+    <a class="nav-link" routerLink="/groupSection/{{ groupSection.title| lowercase }}" *ngIf="{{ groupSection.isVisibleInMenu }}">{{ groupSection.title | titlecase }}</a>
+</li> -->

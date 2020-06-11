@@ -17,13 +17,14 @@ export class SectionService {
         this.sectionSubject.next(this.sections.slice());
     }
 
-    getSectionsTitles() {
-        const arrayOfSectionsTitles = [];
-        this.sections.forEach(section => {
-            arrayOfSectionsTitles.push(section.title);
-        });
-        return arrayOfSectionsTitles;
-    }
+    // NOT USED
+    // getSectionsTitles() {
+    //     const arrayOfSectionsTitles = [];
+    //     this.sections.forEach(section => {
+    //         arrayOfSectionsTitles.push(section.title);
+    //     });
+    //     return arrayOfSectionsTitles;
+    // }
 
     getSectionByTitle(title: string) {
         const section = this.sections.find((sectionObject) => {

@@ -34,13 +34,14 @@ export class GroupSectionService {
     return groupSection;
   }
 
-  getGroupSectionsTitles(){
-    const arrayOfGroupSectionsTitles = [];
-        this.groupSections.forEach(groupSection => {
-            arrayOfGroupSectionsTitles.push(groupSection.title);
-        });
-        return arrayOfGroupSectionsTitles;
-  }
+  // NOT USED
+  // getGroupSectionsTitles(){
+  //   const arrayOfGroupSectionsTitles = [];
+  //       this.groupSections.forEach(groupSection => {
+  //           arrayOfGroupSectionsTitles.push(groupSection.title);
+  //       });
+  //       return arrayOfGroupSectionsTitles;
+  // }
 
   getGroupSectionsFromServer() {
     return new Promise((resolve, reject) => {

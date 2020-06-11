@@ -23,14 +23,22 @@ export class CreateSectionComponent implements OnInit {
     this.sectionForm = this.formBuilder.group({
       title:["", Validators.required],
       content:["", Validators.required],
+      isVisibleInMenu: [false, Validators.required]
       // hobbies:this.formBuilder.array([])
     });
   }
 
   onSubmitForm(){
     const formValue = this.sectionForm.value;
+    let isVisibleInMenu = false;
+    if(formValue['isVisibleInMenu'] === "true"){
+      isVisibleInMenu = true;
+    }
+    if(formValue['isVisibleInMenu'] === "false"){
+      isVisibleInMenu = false;
+    }
     const newSection = new Section(
-      formValue['title'].toLowerCase(),formValue['content']
+      formValue['title'].toLowerCase(),formValue['content'], isVisibleInMenu
     );
     this.sectionService.addSection(newSection);
   }

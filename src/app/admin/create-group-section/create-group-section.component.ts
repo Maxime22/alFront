@@ -21,6 +21,7 @@ export class CreateGroupSectionComponent implements OnInit {
     this.initForm();
   }
 
+  // USED IN THE SELECT
   updateServerDatas(){
     this.sectionService.getSectionsFromServer().then(
       (sections) => {
@@ -33,13 +34,21 @@ export class CreateGroupSectionComponent implements OnInit {
     this.groupSectionForm = this.formBuilder.group({
       title:["", Validators.required],
       sectionsIds:[[], Validators.required],
+      isVisibleInMenu: [false, Validators.required],
     });
   }
 
   onSubmitForm(){
     const formValue = this.groupSectionForm.value;
+    let isVisibleInMenu = false;
+    if(formValue['isVisibleInMenu'] === "true"){
+      isVisibleInMenu = true;
+    }
+    if(formValue['isVisibleInMenu'] === "false"){
+      isVisibleInMenu = false;
+    }
     const newGroupSection = new GroupSection(
-      formValue['title'].toLowerCase(),formValue['sectionsIds']
+      formValue['title'].toLowerCase(),formValue['sectionsIds'], isVisibleInMenu
     );
     this.groupSectionService.addGroupSection(newGroupSection);
   }

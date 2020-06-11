@@ -31,6 +31,7 @@ export class EditGroupSectionComponent implements OnInit {
     this.initForm(this.groupSection);
   }
 
+  // USED IN THE SELECT
   updateServerDatas(){
     this.sectionService.getSectionsFromServer().then(
       (sections) => {
@@ -43,14 +44,22 @@ export class EditGroupSectionComponent implements OnInit {
     this.groupSectionForm = this.formBuilder.group({
       title: [groupSection.title, Validators.required],
       sectionsIds:[groupSection.sectionsIds, Validators.required],
+      isVisibleInMenu: [groupSection.isVisibleInMenu, Validators.required],
     });
   }
 
   onSubmitForm() {
     // the datas are in the order of the parameters in the model
     const formValue = this.groupSectionForm.value;
+    let isVisibleInMenu = false;
+    if(formValue['isVisibleInMenu'] === "true"){
+      isVisibleInMenu = true;
+    }
+    if(formValue['isVisibleInMenu'] === "false"){
+      isVisibleInMenu = false;
+    }
     const editedGroupSection = new GroupSection(
-      formValue['title'].toLowerCase(),formValue['sectionsIds']
+      formValue['title'].toLowerCase(),formValue['sectionsIds'], isVisibleInMenu
     );
     this.groupSectionService.editGroupSectionToServer(this.route.params['_value']['id'],editedGroupSection);
   }

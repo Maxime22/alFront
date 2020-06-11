@@ -36,6 +36,7 @@ export class EditSectionComponent implements OnInit {
     this.sectionForm = this.formBuilder.group({
       title: [section.title, Validators.required],
       content: [section.content, Validators.required],
+      isVisibleInMenu: [section.isVisibleInMenu, Validators.required],
       photos: this.formBuilder.array([])
     });
     this.photosToSend = [];
@@ -74,8 +75,15 @@ export class EditSectionComponent implements OnInit {
 
   onSubmitForm() {
     const formValue = this.sectionForm.value;
+    let isVisibleInMenu = false;
+    if(formValue['isVisibleInMenu'] === "true"){
+      isVisibleInMenu = true;
+    }
+    if(formValue['isVisibleInMenu'] === "false"){
+      isVisibleInMenu = false;
+    }
     const editedSection = new Section(
-      formValue['title'].toLowerCase(), formValue['content']
+      formValue['title'].toLowerCase(), formValue['content'], isVisibleInMenu
     );
     this.sectionService.editSectionToServer(this.route.params['_value']['id'],editedSection);
 

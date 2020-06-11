@@ -37,6 +37,7 @@ export class EditSectionComponent implements OnInit {
       title: [section.title, Validators.required],
       content: [section.content, Validators.required],
       isVisibleInMenu: [section.isVisibleInMenu, Validators.required],
+      orderInHeaderMenu: [section.orderInHeaderMenu ? section.orderInHeaderMenu : 1000],
       photos: this.formBuilder.array([])
     });
     this.photosToSend = [];
@@ -44,7 +45,7 @@ export class EditSectionComponent implements OnInit {
 
   photoUploaded(photo: File, index) {
     let photoInformations = photo[0];
-    this.photosToSend[index] = {"photoInformations":photoInformations};
+    this.photosToSend[index] = { "photoInformations": photoInformations };
   }
 
   getPhotos() {
@@ -70,22 +71,28 @@ export class EditSectionComponent implements OnInit {
 
   onDeletePhoto(i) {
     this.getPhotos().removeAt(i);
-    this.photosToSend.splice(i,1);
+    this.photosToSend.splice(i, 1);
   }
 
   onSubmitForm() {
     const formValue = this.sectionForm.value;
     let isVisibleInMenu = false;
-    if(formValue['isVisibleInMenu'] === "true"){
+    if (formValue['isVisibleInMenu'] === "true" || formValue['isVisibleInMenu'] === true) {
       isVisibleInMenu = true;
     }
-    if(formValue['isVisibleInMenu'] === "false"){
+    if (formValue['isVisibleInMenu'] === "false" || formValue['isVisibleInMenu'] === false) {
       isVisibleInMenu = false;
     }
-    const editedSection = new Section(
+    // OBLIGATORY STATEMENT
+    let editedSection = new Section(
       formValue['title'].toLowerCase(), formValue['content'], isVisibleInMenu
     );
-    this.sectionService.editSectionToServer(this.route.params['_value']['id'],editedSection);
+    // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
+    editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
+
+
+    // SEND TO SERVER
+    this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection);
 
     // RAJOUTER LES IMAGES POUR QU'ELLES S'AJOUTENT DANS LA SECTION, S'ENREGISTRENT ET S'UPLOADENT
     // const formData: FormData = new FormData();

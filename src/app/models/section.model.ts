@@ -2,9 +2,9 @@ import { Photo } from './photo.model';
 
 export class Section {
     photos: Photo[]; // array of object Photos ? ou il faut le définir autrement ?
-    orderPhotos: string; // type of template
-    linkedTo: string; // linked to a groupSection
-    displayOrderInMenu: number; // order in the menu
+    templatePhotos: string; // type of template, we will do it when we do the FRONT
+    orderInHeaderMenu: number; // order in the menu
+    mainImgUrl: string; // img used in the groupSections
     constructor(public title: string, public content: string, public isVisibleInMenu: boolean) {
     }
 }

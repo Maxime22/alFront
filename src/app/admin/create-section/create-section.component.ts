@@ -31,15 +31,18 @@ export class CreateSectionComponent implements OnInit {
   onSubmitForm(){
     const formValue = this.sectionForm.value;
     let isVisibleInMenu = false;
-    if(formValue['isVisibleInMenu'] === "true"){
+    if (formValue['isVisibleInMenu'] === "true" || formValue['isVisibleInMenu'] === true) {
       isVisibleInMenu = true;
     }
-    if(formValue['isVisibleInMenu'] === "false"){
+    if (formValue['isVisibleInMenu'] === "false" || formValue['isVisibleInMenu'] === false) {
       isVisibleInMenu = false;
     }
+    // OBLIGATORY STATEMENT
     const newSection = new Section(
       formValue['title'].toLowerCase(),formValue['content'], isVisibleInMenu
     );
+    // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
+    newSection['orderInHeaderMenu'] = 1000;
     this.sectionService.addSection(newSection);
   }
 

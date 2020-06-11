@@ -41,10 +41,10 @@ export class CreateGroupSectionComponent implements OnInit {
   onSubmitForm(){
     const formValue = this.groupSectionForm.value;
     let isVisibleInMenu = false;
-    if(formValue['isVisibleInMenu'] === "true"){
+    if (formValue['isVisibleInMenu'] === "true" || formValue['isVisibleInMenu'] === true) {
       isVisibleInMenu = true;
     }
-    if(formValue['isVisibleInMenu'] === "false"){
+    if (formValue['isVisibleInMenu'] === "false" || formValue['isVisibleInMenu'] === false) {
       isVisibleInMenu = false;
     }
     const newGroupSection = new GroupSection(

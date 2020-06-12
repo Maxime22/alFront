@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { SectionService } from '../../services/section.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Section } from '../../models/section.model';
+import { mimeType } from '../mime-type.validator'; // ?
 
 @Component({
   selector: 'app-edit-section',
@@ -12,12 +13,12 @@ import { Section } from '../../models/section.model';
 export class EditSectionComponent implements OnInit {
 
   sectionForm: FormGroup;
+  userForm: FormGroup;
   newPhotoControl: FormControl;
   section: any;
   photosToSend: any[];
-  // @Input() title: string; // PAS SUR QUE LE INPUT SOIT UTILE
-  // imageURLs: string[];
   // altNames: string[];
+  mainImgPreview: string;
 
   constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private router: Router, private route: ActivatedRoute) { }
 
@@ -29,7 +30,7 @@ export class EditSectionComponent implements OnInit {
     let id = params['id'];
     this.section = this.sectionService.getSectionById(id);
     this.initForm(this.section);
-    this.loadPhotos();
+    // this.loadPhotos();
   }
 
   initForm(section) {
@@ -38,40 +39,35 @@ export class EditSectionComponent implements OnInit {
       content: [section.content, Validators.required],
       isVisibleInMenu: [section.isVisibleInMenu, Validators.required],
       orderInHeaderMenu: [section.orderInHeaderMenu ? section.orderInHeaderMenu : 1000],
+      // MAIN IMG CAN BE A URL OR A FILE WHEN IT IS SENT
+      mainImg: [section.mainImgUrl ? section.mainImgUrl : "", Validators.required, mimeType],
       photos: this.formBuilder.array([])
     });
+    if(section.mainImgUrl){
+      this.mainImgPreview = section.mainImgUrl;
+    }
     this.photosToSend = [];
   }
 
-  photoUploaded(photo: File, index) {
-    let photoInformations = photo[0];
-    this.photosToSend[index] = { "photoInformations": photoInformations };
+  onMainImgPick(event: File) {
+    const file = event[0];
+    this.sectionForm.get('mainImg').patchValue(file);
+    this.sectionForm.get('mainImg').updateValueAndValidity();
+    // CREATE THE PREVIEW
+    this.createPreview(file);
+    
   }
 
-  getPhotos() {
-    return this.sectionForm.get('photos') as FormArray;
-  }
-
-  loadPhotos() {
-    if (this.section.photos !== undefined) {
-      this.section.photos.forEach(photoName => {
-        this.onAddPhoto(photoName);
-      });
-    }
-  }
-
-  onAddPhoto(photo) {
-    if (photo === '') {
-      this.newPhotoControl = this.formBuilder.control(photo, Validators.required)
-    } else {
-      this.newPhotoControl = this.formBuilder.control("/coucou/" + photo, Validators.required)
-    }
-    this.getPhotos().push(this.newPhotoControl);
-  }
-
-  onDeletePhoto(i) {
-    this.getPhotos().removeAt(i);
-    this.photosToSend.splice(i, 1);
+  createPreview(file){
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (this.sectionForm.get('mainImg').valid) {
+        this.mainImgPreview = reader.result as string;
+      } else {
+        this.mainImgPreview = null;
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
   onSubmitForm() {
@@ -90,9 +86,8 @@ export class EditSectionComponent implements OnInit {
     // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
     editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
 
-
-    // SEND TO SERVER
-    this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection);
+    // SEND TO SERVER (MAINIMG IS SENT SEPARATELY)
+    this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection, formValue['mainImg']);
 
     // RAJOUTER LES IMAGES POUR QU'ELLES S'AJOUTENT DANS LA SECTION, S'ENREGISTRENT ET S'UPLOADENT
     // const formData: FormData = new FormData();
@@ -100,5 +95,33 @@ export class EditSectionComponent implements OnInit {
     // this.sectionForm.value['photos'] = this.photosToSend;
     // console.log(formValue);
   }
+
+  photoUploaded(photo: File, index) {
+    let photoInformations = photo[0];
+    this.photosToSend[index] = { "photoInformations": photoInformations };
+  }
+
+  getPhotos() {
+    return this.sectionForm.get('photos') as FormArray;
+  }
+
+  loadPhotos() {
+    if (this.section.photos !== undefined) {
+      this.section.photos.forEach(photo => {
+        this.onAddPhoto(photo.photoTitle,photo.typeOfPhoto);
+      });
+    }
+  }
+
+  onAddPhoto(photoTitle,typeOfPhoto) {
+    // https://stackoverflow.com/questions/42968619/angular-2-how-to-use-array-of-objects-for-controls-in-reactive-forms
+    // https://angular.io/guide/reactive-forms#nested-groups
+    this.getPhotos().push(this.formBuilder.group({photoTitle: [""],typeOfPhoto: [""]}))
+  }
+
+  // onDeletePhoto(i) {
+  //   this.getPhotos().removeAt(i);
+  //   this.photosToSend.splice(i, 1);
+  // }
 
 }

@@ -2,4 +2,7 @@
     <div class="sectionTitleDiv">
         <h1 *ngIf="section">{{ section.title | titlecase }}</h1>
     </div>
+    <div *ngIf="section">
+        <figure *ngIf="section.mainImgUrl"><img class="mainImg" src="{{ section.mainImgUrl }}" alt=""></figure>
+    </div>
 </div>

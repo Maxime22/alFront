@@ -26,6 +26,7 @@ import { GroupSectionService } from './services/group-section.service';
 import { GroupSectionListComponent } from './admin/group-section-list/group-section-list.component';
 import { CreateGroupSectionComponent } from './admin/create-group-section/create-group-section.component';
 import { EditGroupSectionComponent } from './admin/edit-group-section/edit-group-section.component';
+import { PhotoService } from './services/photo.service';
 
 const appRoutes: Routes = [
   { path: 'auth/signUp', component: SignupComponent },
@@ -77,7 +78,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService],
+  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

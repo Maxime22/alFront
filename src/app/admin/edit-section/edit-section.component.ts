@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { SectionService } from '../../services/section.service';
+import { PhotoService } from '../../services/photo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Section } from '../../models/section.model';
 import { mimeType } from '../mime-type.validator'; // ?
@@ -17,10 +18,9 @@ export class EditSectionComponent implements OnInit {
   newPhotoControl: FormControl;
   section: any;
   photosToSend: any[];
-  // altNames: string[];
   mainImgPreview: string;
 
-  constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private photoService: PhotoService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => this.handleRouteChange(params));
@@ -86,14 +86,22 @@ export class EditSectionComponent implements OnInit {
     // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
     editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
 
-    // SEND TO SERVER (MAINIMG IS SENT SEPARATELY)
-    this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection, formValue['mainImg']);
+    this.photoService.editPhotosToServer(this.route.params['_value']['id'],formValue['photos']).then((response)=>{
+      console.log(response)
+
+      // ADD THE ID OF THE RESPONSE HERE
+
+      // SEND TO SERVER (MAINIMG IS SENT SEPARATELY IN THE PARAMETERS)
+      this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection, formValue['mainImg']);
+    })
 
     // RAJOUTER LES IMAGES POUR QU'ELLES S'AJOUTENT DANS LA SECTION, S'ENREGISTRENT ET S'UPLOADENT
-    // const formData: FormData = new FormData();
-    // formData.append('fichier', photoInformations, photoInformations.name);
-    // this.sectionForm.value['photos'] = this.photosToSend;
-    // console.log(formValue);
+    // 1 envoyer une photo sans images et l'enregistrer dans la bdd
+    // relié cette photo sans images à la section dans la bdd
+    // le faire pour 2 photos
+    // ajouter un fichier image dans l'envoi et gérer les nombreux cas
+
+    // checker pour l'envoi d'une relation en Mongo
   }
 
   photoUploaded(photo: File, index) {

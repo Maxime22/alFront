@@ -86,8 +86,8 @@ export class EditSectionComponent implements OnInit {
     // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
     editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
 
-    this.photoService.editPhotosToServer(this.route.params['_value']['id'],formValue['photos']).then((response)=>{
-      console.log(response)
+    this.photoService.editPhotosOfASectionToServer(this.route.params['_value']['id'],formValue['photos']).then((response)=>{
+      console.log("response after then photo server ", response)
 
       // ADD THE ID OF THE RESPONSE HERE
 
@@ -116,15 +116,15 @@ export class EditSectionComponent implements OnInit {
   loadPhotos() {
     if (this.section.photos !== undefined) {
       this.section.photos.forEach(photo => {
-        this.onAddPhoto(photo.photoTitle,photo.typeOfPhoto);
+        this.onAddPhoto(photo.photoTitle,photo.typeOfPhoto,photo.photoImgUrl);
       });
     }
   }
 
-  onAddPhoto(photoTitle,typeOfPhoto) {
+  onAddPhoto(photoTitleParam,typeOfPhotoParam,photoImgParam) {
     // https://stackoverflow.com/questions/42968619/angular-2-how-to-use-array-of-objects-for-controls-in-reactive-forms
     // https://angular.io/guide/reactive-forms#nested-groups
-    this.getPhotos().push(this.formBuilder.group({photoTitle: [""],typeOfPhoto: [""]}))
+    this.getPhotos().push(this.formBuilder.group({photoTitle: [photoTitleParam, Validators.required],typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType]}))
   }
 
   // onDeletePhoto(i) {

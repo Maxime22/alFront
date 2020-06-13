@@ -23,9 +23,6 @@
         <div formArrayName="photos">
             <h3>Photos</h3>
             <div class="form-group" *ngFor="let photoControl of getPhotos().controls, let i = index">
-                <!-- <input type="file" accept="image/*" [formControlName]="i" id="inputGroupFile{{ i }}"
-                    (change)="photoUploaded($event.target.files, i)">
-                <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
                 <div [formGroupName]="i">
                     <label>Titre de la photo</label>
                     <input type="text" class="form-control" formControlName="photoTitle">
@@ -34,9 +31,11 @@
                         <option value="portrait">Portrait</option>
                         <option value="landscape">Paysage</option>
                     </select>
+                    <input type="file" accept="image/*" formControlName="photoImg" (change)="photoUploaded($event.target.files, i)">
+                <!-- <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
                 </div>
             </div>
-            <button type="button" class="btn btn-success" (click)="onAddPhoto('','')">Ajouter une photo</button>
+            <button type="button" class="btn btn-success" (click)="onAddPhoto('','','')">Ajouter une photo</button>
         </div>
 
         <!-- <button class="btn btn-success" type="button" (click)="filePicker.click()">Ajouter image principale</button>

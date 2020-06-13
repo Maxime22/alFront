@@ -1,5 +1,9 @@
 export class Photo {
-    // position = portrait or paysage
-    constructor(public fileName: string, public orderInPhotos: string, public position: string, public altAtt: string) {
+    photoImgUrl: string;
+    photoTitle:string; // altAtt
+    typeOfPhoto:string; // portrait or landscape
+    sectionId: string;
+    orderInPhotos: string;
+    constructor() {
     }
 }

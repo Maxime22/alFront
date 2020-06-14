@@ -80,9 +80,6 @@ export class EditSectionComponent implements OnInit {
 
     this.photoService.editPhotosOfASectionToServer(this.route.params['_value']['id'], formValue['photos']).then((response) => {
       console.log("response after then photo server ", response)
-
-      // ADD THE ID OF THE RESPONSE HERE
-
       // SEND TO SERVER (MAINIMG IS SENT SEPARATELY IN THE PARAMETERS)
       this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection, formValue['mainImg']);
     })

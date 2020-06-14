@@ -8,7 +8,7 @@ export class PhotoService {
 
     constructor(private httpClient: HttpClient, private router: Router) { }
 
-    editPhotosOfASectionToServer(idSection: string, photos: Photo[]) {
+    editPhotosOfASectionToServer(sectionId: string, photos: Photo[]) {
 
         console.log("photos in photoserver ", photos);
 
@@ -23,6 +23,7 @@ export class PhotoService {
                     filename: filename,
                     photoTitle: photos[index]["photoTitle"],
                     typeOfPhoto: photos[index]["typeOfPhoto"],
+                    sectionId:sectionId
                 }
             )
             // IF PHOTOIMG IS AN URL WE PUT THE URL IN THE OBJECT TO SAVE
@@ -42,7 +43,7 @@ export class PhotoService {
         // }
 
         return new Promise((resolve, reject) => {
-            this.httpClient.put('http://localhost:3000/alBack/photos/sections/' + idSection, photoData).subscribe(
+            this.httpClient.put('http://localhost:3000/alBack/photos/sections/' + sectionId, photoData).subscribe(
                 (response) => {
                     resolve(response);
                 },

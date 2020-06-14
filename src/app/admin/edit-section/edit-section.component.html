@@ -31,8 +31,9 @@
                         <option value="portrait">Portrait</option>
                         <option value="landscape">Paysage</option>
                     </select>
-                    <input type="file" accept="image/*" formControlName="photoImg" (change)="photoUploaded($event.target.files, i)">
-                <!-- <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
+                    <input type="file" accept="image/*" formControlName="photoImg"
+                        (change)="onPhotoUploaded($event.target.files, i)">
+                    <!-- <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
                 </div>
             </div>
             <button type="button" class="btn btn-success" (click)="onAddPhoto('','','')">Ajouter une photo</button>
@@ -46,8 +47,13 @@
         </div>
 
         <button class="btn btn-primary" type="submit" [disabled]="sectionForm.invalid">Soumettre</button>
+        <div *ngIf="sectionForm.invalid" class="alert alert-danger">
+            <div *ngIf="getFormValidationErrors()">
+                <p *ngFor="let error of getFormValidationErrors(), let i = index">{{ error }}</p>
+            </div>
+        </div>
     </form>
 </div>
 
-<br>
-  <pre>{{sectionForm.value | json }}</pre>
+<!-- <br>
+<pre>{{sectionForm.value | json }}</pre> -->

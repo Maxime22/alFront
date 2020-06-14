@@ -14,32 +14,32 @@ export class PhotoService {
 
         let photoData = new FormData();
 
-        // WE TAKE THE VALUES BUT NOT THE FILES, THE FILES WILL BE SENT SEPARATELY
         let photosValuesToSend = [];
         let photosImgToSend = [];
         for (let index = 0; index < photos.length; index++) {
+            let filename = photos[index]["photoTitle"].split(' ').join('_');
             photosValuesToSend.push(
                 {
-                    idForApiOrder:index,
+                    filename: filename,
                     photoTitle: photos[index]["photoTitle"],
                     typeOfPhoto: photos[index]["typeOfPhoto"],
                 }
             )
+            // IF PHOTOIMG IS AN URL WE PUT THE URL IN THE OBJECT TO SAVE
             if (typeof photos[index]["photoImg"] === 'string') {
                 photosValuesToSend[index]["imgUrl"] = photos[index]["photoImg"]
             } else {
-                // AVEC CE CODE ON SAIT PAS QUELLE PHOTO CORRESPOND A QUEL ID POUR LE MULTER et le REQ.FILES QUI SUIT ?????????????????????????????????????????????????????????????
-                // PAS SUR QUE LE MULTER RECOIVE BIEN PLUSIEURS FICHIERS NON PLUS
-                // photoData.append('photos', photos[index]["photoImg"], photos[index]["photoTitle"]);
+                let file = photos[index]["photoImg"];
+                photoData.append('photos', file, filename);
             }
         }
 
         photoData.append('photosValues', JSON.stringify(photosValuesToSend));
 
         // DOM ITERABLE : https://stackoverflow.com/questions/50677868/error-ts2339-property-entries-does-not-exist-on-type-formdata
-        for (var pair of photoData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
+        // for (var pair of photoData.entries()) {
+        //     console.log(pair[0] + ', ' + pair[1]);
+        // }
 
         return new Promise((resolve, reject) => {
             this.httpClient.put('http://localhost:3000/alBack/photos/sections/' + idSection, photoData).subscribe(

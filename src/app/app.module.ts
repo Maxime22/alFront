@@ -27,6 +27,7 @@ import { GroupSectionListComponent } from './admin/group-section-list/group-sect
 import { CreateGroupSectionComponent } from './admin/create-group-section/create-group-section.component';
 import { EditGroupSectionComponent } from './admin/edit-group-section/edit-group-section.component';
 import { PhotoService } from './services/photo.service';
+import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
 
 const appRoutes: Routes = [
   { path: 'auth/signUp', component: SignupComponent },
@@ -76,7 +77,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    RxReactiveFormsModule
   ],
   providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService],
   bootstrap: [AppComponent]

@@ -20,6 +20,8 @@ export class EditSectionComponent implements OnInit {
   section: any;
   photosToSend: any[];
   mainImgPreview: string;
+  photosFromServerLinkedToTheSection: any[]
+  photosToDelete: string[]
 
   constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private photoService: PhotoService, private router: Router, private route: ActivatedRoute) { }
 
@@ -31,7 +33,7 @@ export class EditSectionComponent implements OnInit {
     let id = params['id'];
     this.section = this.sectionService.getSectionById(id);
     this.initForm(this.section);
-    // this.loadPhotos();
+    this.loadPhotos();
   }
 
   initForm(section) {
@@ -50,7 +52,7 @@ export class EditSectionComponent implements OnInit {
     this.photosToSend = [];
   }
 
-  createPreview(file) {
+  createMainImgPreview(file) {
     const reader = new FileReader();
     reader.onload = () => {
       if (this.sectionForm.get('mainImg').valid) {
@@ -60,6 +62,18 @@ export class EditSectionComponent implements OnInit {
       }
     };
     reader.readAsDataURL(file);
+  }
+  createPhotoPreview(photoFile, index){
+    const reader = new FileReader();
+    reader.onload = () => {
+      // THE NEXT LINE DOESN'T WORK AND PUT THE IMG TO NULL // TODO
+      if (this.sectionForm.value["photos"][index]["photoImg"].valid) {
+        this.sectionForm.value["photos"][index]["photoImg"] = reader.result as string;
+      } else {
+        this.sectionForm.value["photos"][index]["photoImg"] = null;
+      }
+    };
+    reader.readAsDataURL(photoFile);
   }
 
   onSubmitForm() {
@@ -79,40 +93,25 @@ export class EditSectionComponent implements OnInit {
     editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
 
     this.photoService.editPhotosOfASectionToServer(this.route.params['_value']['id'], formValue['photos']).then((response) => {
-      console.log("response after then photo server ", response)
+      // console.log("response after then photo server ", response)
       // SEND TO SERVER (MAINIMG IS SENT SEPARATELY IN THE PARAMETERS)
       this.sectionService.editSectionToServer(this.route.params['_value']['id'], editedSection, formValue['mainImg']);
     })
-
-    // RAJOUTER LES IMAGES POUR QU'ELLES S'AJOUTENT DANS LA SECTION, S'ENREGISTRENT ET S'UPLOADENT
-    // 1 envoyer une photo sans images et l'enregistrer dans la bdd
-    // relié cette photo sans images à la section dans la bdd
-    // le faire pour 2 photos
-    // ajouter un fichier image dans l'envoi et gérer les nombreux cas
-
-    // checker pour l'envoi d'une relation en Mongo
   }
 
   onMainImgPick(event: File) {
     const file = event[0];
     this.sectionForm.get('mainImg').patchValue(file);
     this.sectionForm.get('mainImg').updateValueAndValidity();
-    console.log(this.sectionForm.get('mainImg'))
     // CREATE THE PREVIEW
-    this.createPreview(file);
-
+    this.createMainImgPreview(file);
   }
 
   onPhotoUploaded(event: File, index) {
     let photoFile = event[0];
-
-    // if (this.photosToSend[index]){
-    //   this.photosToSend[index] = {file:photoFile,indexInForm:index}
-    // }else{
-    //   this.photosToSend.push({file:photoFile,indexInForm:index})
-    // }
     // INDEX OF SECTIONFORM VALUE EXISTS BECAUSE IT HAS BEEN CREATED BEFORE WE CAN USE ONPHOTOUPLOADED AND THE INDEX CORRESPONDS TO THE INDEX OF THE SECTIONFORMVALUE BECAUSE THE FORMGROUP IS MADE BY THE SECTIONFORMVALUE
     this.sectionForm.value["photos"][index]["photoImg"] = photoFile;
+    this.createPhotoPreview(photoFile, index);
   }
 
   getPhotos() {
@@ -120,11 +119,22 @@ export class EditSectionComponent implements OnInit {
   }
 
   loadPhotos() {
-    if (this.section.photos !== undefined) {
-      this.section.photos.forEach(photo => {
-        this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl);
-      });
-    }
+    this.photoService.getPhotosOfASectionFromServer(this.route.params['_value']['id']).then((data) => {
+      if (data['photos']) {
+        this.photosFromServerLinkedToTheSection = data['photos'];
+        if (this.photosFromServerLinkedToTheSection.length > 0) {
+          this.photosFromServerLinkedToTheSection.forEach(photo => {
+            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl);
+          });
+          for (let index = 0; index < this.photosFromServerLinkedToTheSection.length; index++) {
+            const photo = this.photosFromServerLinkedToTheSection[index];
+            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl);
+          }
+          
+        }
+      }
+    })
+
   }
 
   onAddPhoto(photoTitleParam, typeOfPhotoParam, photoImgParam) {
@@ -134,9 +144,13 @@ export class EditSectionComponent implements OnInit {
     this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType] }))
   }
 
-  // onDeletePhoto(i) {
+  // TODO
+  // onDeletePhoto(i, idOfThePhoto = null) {
   //   this.getPhotos().removeAt(i);
   //   this.photosToSend.splice(i, 1);
+  // if(idOfThePhoto !== null){
+  // this.photosToDelete.push(...);
+  // }
   // }
 
   getFormValidationErrors() {
@@ -148,19 +162,19 @@ export class EditSectionComponent implements OnInit {
       if (controlMainErrors != null) {
         Object.keys(controlMainErrors).forEach(keyError => {
           // console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlMainErrors[keyError]);
-          if(key === "photoTitle" && keyError === "unique"){
+          if (key === "photoTitle" && keyError === "unique") {
             errors.push('Au moins 2 titres de photos sont similaires, ils ne doivent pas être similaires')
           }
-          if(key === "photoTitle" && keyError === "required"){
+          if (key === "photoTitle" && keyError === "required") {
             errors.push('Un titre de photo est manquant')
           }
-          if(key === "typeOfPhoto" && keyError === "required"){
+          if (key === "typeOfPhoto" && keyError === "required") {
             errors.push('Un type de photo est manquant')
           }
-          if(key === "photoImg" && keyError === "required"){
+          if (key === "photoImg" && keyError === "required") {
             errors.push("Une image photo n'a pas été uploadée");
           }
-          
+
         });
       }
     });
@@ -174,16 +188,16 @@ export class EditSectionComponent implements OnInit {
           if (controlErrors != null) {
             Object.keys(controlErrors).forEach(keyError => {
               // console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-              if(key === "photoTitle" && keyError === "unique"){
+              if (key === "photoTitle" && keyError === "unique") {
                 errors.push('Au moins 2 titres de photos sont similaires, ils ne doivent pas être similaires')
               }
-              if(key === "photoTitle" && keyError === "required"){
+              if (key === "photoTitle" && keyError === "required") {
                 errors.push('Un titre de photo est manquant')
               }
-              if(key === "typeOfPhoto" && keyError === "required"){
+              if (key === "typeOfPhoto" && keyError === "required") {
                 errors.push('Un type de photo est manquant')
               }
-              if(key === "photoImg" && keyError === "required"){
+              if (key === "photoImg" && keyError === "required") {
                 errors.push("Une image photo n'a pas été uploadée");
               }
             });
@@ -192,7 +206,7 @@ export class EditSectionComponent implements OnInit {
       }
 
       return errors;
-      
+
     }
   }
 

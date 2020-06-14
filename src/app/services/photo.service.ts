@@ -1,21 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Photo } from '../models/photo.model';
 
 @Injectable()
 export class PhotoService {
 
-    constructor(private httpClient: HttpClient, private router: Router) { }
+    constructor(private httpClient: HttpClient) { }
 
     editPhotosOfASectionToServer(sectionId: string, photos: Photo[]) {
-
-        console.log("photos in photoserver ", photos);
 
         let photoData = new FormData();
 
         let photosValuesToSend = [];
-        let photosImgToSend = [];
         for (let index = 0; index < photos.length; index++) {
             let filename = photos[index]["photoTitle"].split(' ').join('_');
             photosValuesToSend.push(
@@ -44,6 +40,19 @@ export class PhotoService {
 
         return new Promise((resolve, reject) => {
             this.httpClient.put('http://localhost:3000/alBack/photos/sections/' + sectionId, photoData).subscribe(
+                (response) => {
+                    resolve(response);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getPhotosOfASectionFromServer(sectionId: string){
+        return new Promise((resolve, reject) => {
+            this.httpClient.get('http://localhost:3000/alBack/photos/sections/' + sectionId).subscribe(
                 (response) => {
                     resolve(response);
                 },

@@ -14,14 +14,15 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 })
 export class EditSectionComponent implements OnInit {
 
+  // THEY NEED TO BE INITIALIZED IN THE ONINIT
   sectionForm: FormGroup;
   userForm: FormGroup;
   newPhotoControl: FormControl;
   section: any;
-  photosToSend: any[];
   mainImgPreview: string;
   photosFromServerLinkedToTheSection: any[]
   photosToDelete: string[]
+  photoImgPreviews: string[];
 
   constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private photoService: PhotoService, private router: Router, private route: ActivatedRoute) { }
 
@@ -49,7 +50,7 @@ export class EditSectionComponent implements OnInit {
     if (section.mainImgUrl) {
       this.mainImgPreview = section.mainImgUrl;
     }
-    this.photosToSend = [];
+    this.photoImgPreviews = [];
   }
 
   createMainImgPreview(file) {
@@ -63,15 +64,10 @@ export class EditSectionComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-  createPhotoPreview(photoFile, index){
+  createPhotoPreview(photoFile, index) {
     const reader = new FileReader();
     reader.onload = () => {
-      // THE NEXT LINE DOESN'T WORK AND PUT THE IMG TO NULL // TODO
-      if (this.sectionForm.value["photos"][index]["photoImg"].valid) {
-        this.sectionForm.value["photos"][index]["photoImg"] = reader.result as string;
-      } else {
-        this.sectionForm.value["photos"][index]["photoImg"] = null;
-      }
+      this.photoImgPreviews[index] = reader.result as string;
     };
     reader.readAsDataURL(photoFile);
   }
@@ -103,14 +99,14 @@ export class EditSectionComponent implements OnInit {
     const file = event[0];
     this.sectionForm.get('mainImg').patchValue(file);
     this.sectionForm.get('mainImg').updateValueAndValidity();
-    // CREATE THE PREVIEW
+    // CREATE THE PREVIEW MAIN IMG
     this.createMainImgPreview(file);
   }
 
   onPhotoUploaded(event: File, index) {
     let photoFile = event[0];
     // INDEX OF SECTIONFORM VALUE EXISTS BECAUSE IT HAS BEEN CREATED BEFORE WE CAN USE ONPHOTOUPLOADED AND THE INDEX CORRESPONDS TO THE INDEX OF THE SECTIONFORMVALUE BECAUSE THE FORMGROUP IS MADE BY THE SECTIONFORMVALUE
-    this.sectionForm.value["photos"][index]["photoImg"] = photoFile;
+    this.sectionForm.value["photos"][index]["photoImg"] = photoFile
     this.createPhotoPreview(photoFile, index);
   }
 
@@ -123,25 +119,23 @@ export class EditSectionComponent implements OnInit {
       if (data['photos']) {
         this.photosFromServerLinkedToTheSection = data['photos'];
         if (this.photosFromServerLinkedToTheSection.length > 0) {
-          this.photosFromServerLinkedToTheSection.forEach(photo => {
-            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl);
-          });
           for (let index = 0; index < this.photosFromServerLinkedToTheSection.length; index++) {
             const photo = this.photosFromServerLinkedToTheSection[index];
-            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl);
+            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl, photo._id);
           }
-          
         }
       }
     })
 
   }
 
-  onAddPhoto(photoTitleParam, typeOfPhotoParam, photoImgParam) {
+  onAddPhoto(photoTitleParam, typeOfPhotoParam, photoImgParam, photoId = null) {
+    // WE CREATE A NEW INDEX FOR EACH PHOTOIMGPREVIEWS
+    this.photoImgPreviews.push(photoImgParam);
     // https://stackoverflow.com/questions/42968619/angular-2-how-to-use-array-of-objects-for-controls-in-reactive-forms
     // https://angular.io/guide/reactive-forms#nested-groups
     // CREATE CONTROLS
-    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType] }))
+    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType], photoId:photoId }))
   }
 
   // TODO

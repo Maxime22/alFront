@@ -22,6 +22,9 @@ export class PhotoService {
                     sectionId:sectionId
                 }
             )
+            if(photos[index]["photoId"] !== null && photos[index]["photoId"] !== undefined){
+                photosValuesToSend[index]["_id"] = photos[index]["photoId"];
+            }
             // IF PHOTOIMG IS AN URL WE PUT THE URL IN THE OBJECT TO SAVE
             if (typeof photos[index]["photoImg"] === 'string') {
                 photosValuesToSend[index]["imgUrl"] = photos[index]["photoImg"]

@@ -33,9 +33,9 @@
                     </select>
                     <input type="file" accept="image/*" formControlName="photoImg"
                         (change)="onPhotoUploaded($event.target.files, i)">
-                    <!-- <div class="image-preview" *ngIf="photoImg">
-                        <img [src]="photoImg" alt="">
-                    </div> -->
+                    <div class="image-preview" *ngIf="photoImgPreviews[i]">
+                        <img [src]="photoImgPreviews[i]" alt="">
+                    </div>
                     <!-- <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
                 </div>
             </div>

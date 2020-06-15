@@ -2,8 +2,24 @@
 //     visibility: hidden;
 //   }
 
+.titleSectionEdit{
+    color: #fdccff;
+}
+
 .image-preview {
     img {
         max-width: 100%;
     }
 }
+
+.photoObjectContainer{
+    padding: 5px;
+}
+
+.photoObjectBorder{
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+

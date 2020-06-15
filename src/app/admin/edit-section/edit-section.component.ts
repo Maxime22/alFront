@@ -205,3 +205,6 @@ export class EditSectionComponent implements OnInit {
   }
 
 }
+
+// DELETE QUAND ON DELETE A PARTIR DE L'ADMIN !!!!
+// COMPRENDRE POURQUOI J'AI PAS PU EN CHARGER BEAUCOUP (peut être quand c'est une modif et pas un ajout ?) ET COMMENT ATTENDRE LA RESPONSE

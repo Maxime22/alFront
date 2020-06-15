@@ -27,7 +27,7 @@ export class PhotoService {
             }
             // IF PHOTOIMG IS AN URL WE PUT THE URL IN THE OBJECT TO SAVE
             if (typeof photos[index]["photoImg"] === 'string') {
-                photosValuesToSend[index]["imgUrl"] = photos[index]["photoImg"]
+                photosValuesToSend[index]["photoImgUrl"] = photos[index]["photoImg"]
             } else {
                 let file = photos[index]["photoImg"];
                 photoData.append('photos', file, filename);

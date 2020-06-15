@@ -1,62 +1,88 @@
-<div class="col-sm-8 col-sm-offset-2">
+<div class="container-fluid">
+    <div class="text-center titleSectionEdit">
+        <h1>Gestion de section</h1>
+    </div>
     <form [formGroup]="sectionForm" (ngSubmit)="onSubmitForm()">
-        <div class="form-group">
-            <label for="title">Titre</label>
-            <input type="text" class="form-control" id="title" formControlName="title">
-        </div>
-        <div class="form-group">
-            <label for="content">Contenu</label>
-            <textarea class="form-control" id="content" formControlName="content"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="isVisibleInMenu">Visible dans le menu</label>
-            <select id="isVisibleInMenu" class="form-control" formControlName="isVisibleInMenu">
-                <option value="true">Oui</option>
-                <option value="false">Non</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="orderInHeaderMenu">Ordre dans le menu Header</label>
-            <input type="number" class="form-control" id="orderInHeaderMenu" formControlName="orderInHeaderMenu">
-        </div>
-
-        <div formArrayName="photos">
-            <h3>Photos</h3>
-            <div class="form-group" *ngFor="let photoControl of getPhotos().controls, let i = index">
-                <div [formGroupName]="i">
-                    <label>Titre de la photo</label>
-                    <input type="text" class="form-control" formControlName="photoTitle">
-                    <label>Type de photo</label>
-                    <select class="form-control" formControlName="typeOfPhoto">
-                        <option value="portrait">Portrait</option>
-                        <option value="landscape">Paysage</option>
-                    </select>
-                    <input type="file" accept="image/*" formControlName="photoImg"
-                        (change)="onPhotoUploaded($event.target.files, i)">
-                    <div class="image-preview" *ngIf="photoImgPreviews[i]">
-                        <img [src]="photoImgPreviews[i]" alt="">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="title">Titre de la section</label>
+                <input type="text" class="form-control" id="title" formControlName="title">
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span>Image principale de la section</span>
                     </div>
-                    <!-- <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
+                    <div class="form-group col-sm-6 offset-sm-3">
+                        <input type="file" (change)="onMainImgPick($event.target.files)">
+                        <div class="image-preview" *ngIf="mainImgPreview">
+                            <img [src]="mainImgPreview" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-success" (click)="onAddPhoto('','','')">Ajouter une photo</button>
-        </div>
+            <div class="form-group col-sm-6">
+                <label for="isVisibleInMenu">Visible dans le menu</label>
+                <select id="isVisibleInMenu" class="form-control" formControlName="isVisibleInMenu">
+                    <option value="true">Oui</option>
+                    <option value="false">Non</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="orderInHeaderMenu">Ordre dans le menu</label>
+                <input type="number" class="form-control" id="orderInHeaderMenu" formControlName="orderInHeaderMenu">
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="content">Contenu de la section</label>
+                <textarea class="form-control" id="content" formControlName="content"></textarea>
+            </div>
 
-        <!-- <button class="btn btn-success" type="button" (click)="filePicker.click()">Ajouter image principale</button>
-        <input type="file" #filePicker (change)="onImagePick($event)"> -->
-        <input type="file" (change)="onMainImgPick($event.target.files)">
-        <div class="image-preview" *ngIf="mainImgPreview">
-            <img [src]="mainImgPreview" alt="">
-        </div>
+            <div class="container" formArrayName="photos">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Photos</h3>
+                    </div>
+                    <div class="photoObjectContainer col-sm-4 form-group"
+                        *ngFor="let photoControl of getPhotos().controls, let i = index">
+                        <div class="photoObjectBorder" [formGroupName]="i">
+                            <div>
+                                <label>Titre de la photo</label>
+                                <input type="text" class="form-control" formControlName="photoTitle">
+                            </div>
+                            <div class="mt-3">
+                                <label>Type de photo</label>
+                                <select class="form-control" formControlName="typeOfPhoto">
+                                    <option value="portrait">Portrait</option>
+                                    <option value="landscape">Paysage</option>
+                                </select>
+                            </div>
+                            <div class="mt-3">
+                                <input type="file" accept="image/*" formControlName="photoImg"
+                                    (change)="onPhotoUploaded($event.target.files, i)">
+                                <div class="image-preview mt-2" *ngIf="photoImgPreviews[i]">
+                                    <img [src]="photoImgPreviews[i]" alt="">
+                                </div>
+                            </div>
+                            <!-- <button type="button" class="btn btn-danger" (click)="onDeletePhoto(i)">Supprimer cette photo</button> -->
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <button type="button" class="btn btn-success" (click)="onAddPhoto('','','')">Ajouter une
+                            photo</button>
+                    </div>
+                </div>
+            </div>
 
-        <button class="btn btn-primary" type="submit" [disabled]="sectionForm.invalid">Soumettre</button>
-        <div *ngIf="sectionForm.invalid" class="alert alert-danger">
-            <div *ngIf="getFormValidationErrors()">
-                <p *ngFor="let error of getFormValidationErrors(), let i = index">{{ error }}</p>
+            <div class="form-group col-sm-12 text-center">
+                <button class="btn btn-primary" type="submit" [disabled]="sectionForm.invalid">Soumettre</button>
+                <div *ngIf="sectionForm.invalid" class="alert alert-danger">
+                    <div *ngIf="getFormValidationErrors()">
+                        <p *ngFor="let error of getFormValidationErrors(), let i = index">{{ error }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
 
-<!-- <br>
-<pre>{{sectionForm.value | json }}</pre> -->
+<!-- <br> <pre>{{sectionForm.value | json }}</pre> -->

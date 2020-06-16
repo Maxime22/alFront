@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormArray, FormControl } from '@angular/forms';
 import { SectionService } from '../../services/section.service';
 import { PhotoService } from '../../services/photo.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Section } from '../../models/section.model';
 import { mimeType } from '../mime-type.validator'; // ?
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
@@ -21,10 +21,10 @@ export class EditSectionComponent implements OnInit {
   section: any;
   mainImgPreview: string;
   photosFromServerLinkedToTheSection: any[]
-  photosToDelete: string[]
+  photosToDelete: string[];
   photoImgPreviews: string[];
 
-  constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private photoService: PhotoService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private photoService: PhotoService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => this.handleRouteChange(params));
@@ -142,7 +142,7 @@ export class EditSectionComponent implements OnInit {
     // https://stackoverflow.com/questions/42968619/angular-2-how-to-use-array-of-objects-for-controls-in-reactive-forms
     // https://angular.io/guide/reactive-forms#nested-groups
     // CREATE CONTROLS
-    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType],orderInPhotos:[orderInPhotosParam, Validators.required], photoId: photoId }))
+    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType], orderInPhotos: [orderInPhotosParam, Validators.required], photoId: photoId }))
   }
 
   onDeletePhoto(i) {
@@ -222,5 +222,5 @@ export class EditSectionComponent implements OnInit {
 // 3. CKEDITOR
 // 4. Pages (réfléchir à tous les attributs et à la page contact aussi)
 // 5. Auth
-// 6. Front
+// 6. Front et loading dans l'admin section
 // 7. Test en ligne

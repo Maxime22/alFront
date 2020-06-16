@@ -41,7 +41,9 @@
             </div>
             <div class="form-group col-sm-12">
                 <label for="content">Contenu de la section</label>
-                <textarea class="form-control" id="content" formControlName="content"></textarea>
+                <!-- <textarea class="form-control" id="content" formControlName="content"></textarea> -->
+                <!-- <ckeditor [config]="configCK" [editor]="Editor" id="content" formControlName="content"></ckeditor> -->
+                <ckeditor [config]="{ allowedContent : true }" id="content" formControlName="content"></ckeditor>
             </div>
 
             <div class="container" formArrayName="photos">
@@ -98,5 +100,6 @@
         </div>
     </form>
 </div>
+
 
 <!-- <br> <pre>{{sectionForm.value | json }}</pre> -->

@@ -51,6 +51,7 @@ export class EditSectionComponent implements OnInit {
       this.mainImgPreview = section.mainImgUrl;
     }
     this.photoImgPreviews = [];
+    this.photosToDelete = [];
   }
 
   createMainImgPreview(file) {
@@ -88,6 +89,10 @@ export class EditSectionComponent implements OnInit {
     // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
     editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
 
+    if (this.photosToDelete.length > 0) {
+      this.photoService.deletePhotosOfASectionToServer(this.photosToDelete);
+    }
+
     this.photoService.editPhotosOfASectionToServer(this.route.params['_value']['id'], formValue['photos']).then((response) => {
       // console.log("response after then photo server ", response)
       // SEND TO SERVER (MAINIMG IS SENT SEPARATELY IN THE PARAMETERS)
@@ -108,6 +113,7 @@ export class EditSectionComponent implements OnInit {
     // INDEX OF SECTIONFORM VALUE EXISTS BECAUSE IT HAS BEEN CREATED BEFORE WE CAN USE ONPHOTOUPLOADED AND THE INDEX CORRESPONDS TO THE INDEX OF THE SECTIONFORMVALUE BECAUSE THE FORMGROUP IS MADE BY THE SECTIONFORMVALUE
     this.sectionForm.value["photos"][index]["photoImg"] = photoFile
     this.createPhotoPreview(photoFile, index);
+    console.log("this.sectionForm.value ", this.sectionForm.value)
   }
 
   getPhotos() {
@@ -135,17 +141,20 @@ export class EditSectionComponent implements OnInit {
     // https://stackoverflow.com/questions/42968619/angular-2-how-to-use-array-of-objects-for-controls-in-reactive-forms
     // https://angular.io/guide/reactive-forms#nested-groups
     // CREATE CONTROLS
-    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType], photoId:photoId }))
+    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType], photoId: photoId }))
   }
 
-  // TODO
-  // onDeletePhoto(i, idOfThePhoto = null) {
-  //   this.getPhotos().removeAt(i);
-  //   this.photosToSend.splice(i, 1);
-  // if(idOfThePhoto !== null){
-  // this.photosToDelete.push(...);
-  // }
-  // }
+  onDeletePhoto(i) {
+    if (confirm("Sûre de vouloir supprimer la photo ?")) {
+
+      let idOfThePhoto = this.getPhotos().controls[i].value["photoId"]
+      if (idOfThePhoto !== null && idOfThePhoto !== undefined) {
+        this.photosToDelete.push(idOfThePhoto);
+      }
+      this.getPhotos().removeAt(i);
+      this.photoImgPreviews.splice(i, 1);
+    }
+  }
 
   getFormValidationErrors() {
     let photoArray = this.getPhotos();
@@ -208,3 +217,5 @@ export class EditSectionComponent implements OnInit {
 
 // DELETE QUAND ON DELETE A PARTIR DE L'ADMIN !!!!
 // COMPRENDRE POURQUOI J'AI PAS PU EN CHARGER BEAUCOUP (peut être quand c'est une modif et pas un ajout ?) ET COMMENT ATTENDRE LA RESPONSE
+// POURQUOI DES FOIS IL PREND LE FAKEPATH ?
+// console.log("this.sectionForm.value ",this.sectionForm.value)

@@ -218,9 +218,9 @@ export class EditSectionComponent implements OnInit {
 
 // POURQUOI DES FOIS IL PREND LE FAKEPATH QUAND ON EN MET BEAUCOUP, COMMENT FAIRE UN LOADING ?
 // 1. OrderInPhotos (photo) OK ?
-// 2. Type Of Template (section)
-// 2. CKEDITOR
-// 3. Pages (réfléchir à tous les attributs et à la page contact aussi)
-// 4. Auth
-// 5. Front
-// 6. Test en ligne
+// 2. Type Of Template (section) OK ?
+// 3. CKEDITOR
+// 4. Pages (réfléchir à tous les attributs et à la page contact aussi)
+// 5. Auth
+// 6. Front
+// 7. Test en ligne

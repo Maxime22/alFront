@@ -15,7 +15,6 @@ import { AuthService } from './services/auth.service';
 import { Routes, RouterModule } from "@angular/router";
 import { SignupComponent } from './auth/signup/signup.component';
 import { SectionService } from './services/section.service';
-import { HomeComponent } from './home/home.component';
 import { LayoutSectionComponent } from './layout-section/layout-section.component';
 import { AdminComponent } from './admin/admin.component';
 import { SectionListComponent } from './admin/section-list/section-list.component';
@@ -41,7 +40,9 @@ const appRoutes: Routes = [
   { path: 'admin/groupSectionList/createGroupSection', component: CreateGroupSectionComponent },
   { path: 'section/:sectionTitle', component: LayoutSectionComponent },
   { path: 'groupSection/:groupSectionTitle', component: LayoutGroupSectionComponent },
-  { path: '', component: HomeComponent },
+  { path: 'price', component: PageComponent },
+  { path: 'contact', component: PageComponent },
+  { path: '', component: PageComponent },
   // {
   //   path: 'not-found',
   //   component: FourOhFourComponent
@@ -61,7 +62,6 @@ const appRoutes: Routes = [
     SectionComponent,
     PageComponent,
     SignupComponent,
-    HomeComponent,
     LayoutSectionComponent,
     AdminComponent,
     SectionListComponent,

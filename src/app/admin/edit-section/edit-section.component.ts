@@ -43,6 +43,7 @@ export class EditSectionComponent implements OnInit {
       content: [section.content, Validators.required],
       isVisibleInMenu: [section.isVisibleInMenu, Validators.required],
       orderInHeaderMenu: [section.orderInHeaderMenu ? section.orderInHeaderMenu : 1000],
+      templatePhotos: [section.templatePhotos ? section.templatePhotos : "template1"],
       // MAIN IMG CAN BE A URL OR A FILE WHEN IT IS SENT
       mainImg: [section.mainImgUrl ? section.mainImgUrl : "", Validators.required, mimeType],
       photos: this.formBuilder.array([])
@@ -88,6 +89,7 @@ export class EditSectionComponent implements OnInit {
     );
     // NON OBLIGATORY STATEMENT (NOT IN THE CREATION SECTION OF SECTION)
     editedSection['orderInHeaderMenu'] = formValue['orderInHeaderMenu'];
+    editedSection['templatePhotos'] = formValue['templatePhotos'];
 
     if (this.photosToDelete.length > 0) {
       this.photoService.deletePhotosOfASectionToServer(this.photosToDelete);
@@ -126,7 +128,7 @@ export class EditSectionComponent implements OnInit {
         if (this.photosFromServerLinkedToTheSection.length > 0) {
           for (let index = 0; index < this.photosFromServerLinkedToTheSection.length; index++) {
             const photo = this.photosFromServerLinkedToTheSection[index];
-            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl, photo._id);
+            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl, photo._id, 1000);
           }
         }
       }
@@ -134,13 +136,13 @@ export class EditSectionComponent implements OnInit {
 
   }
 
-  onAddPhoto(photoTitleParam, typeOfPhotoParam, photoImgParam, photoId = null) {
+  onAddPhoto(photoTitleParam, typeOfPhotoParam, photoImgParam, photoId = null, orderInPhotosParam = 1000) {
     // WE CREATE A NEW INDEX FOR EACH PHOTOIMGPREVIEWS
     this.photoImgPreviews.push(photoImgParam);
     // https://stackoverflow.com/questions/42968619/angular-2-how-to-use-array-of-objects-for-controls-in-reactive-forms
     // https://angular.io/guide/reactive-forms#nested-groups
     // CREATE CONTROLS
-    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType], photoId: photoId }))
+    this.getPhotos().push(this.formBuilder.group({ photoTitle: [photoTitleParam, [Validators.required, RxwebValidators.unique()]], typeOfPhoto: [typeOfPhotoParam, Validators.required], photoImg: [photoImgParam, Validators.required, mimeType],orderInPhotos:[orderInPhotosParam, Validators.required], photoId: photoId }))
   }
 
   onDeletePhoto(i) {
@@ -214,7 +216,11 @@ export class EditSectionComponent implements OnInit {
 
 }
 
-// DELETE QUAND ON DELETE A PARTIR DE L'ADMIN !!!!
-// COMPRENDRE POURQUOI J'AI PAS PU EN CHARGER BEAUCOUP (peut être quand c'est une modif et pas un ajout ?) ET COMMENT ATTENDRE LA RESPONSE
-// POURQUOI DES FOIS IL PREND LE FAKEPATH ?
-// console.log("this.sectionForm.value ",this.sectionForm.value)
+// POURQUOI DES FOIS IL PREND LE FAKEPATH QUAND ON EN MET BEAUCOUP, COMMENT FAIRE UN LOADING ?
+// 1. OrderInPhotos (photo) OK ?
+// 2. Type Of Template (section)
+// 2. CKEDITOR
+// 3. Pages (réfléchir à tous les attributs et à la page contact aussi)
+// 4. Auth
+// 5. Front
+// 6. Test en ligne

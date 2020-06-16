@@ -113,7 +113,6 @@ export class EditSectionComponent implements OnInit {
     // INDEX OF SECTIONFORM VALUE EXISTS BECAUSE IT HAS BEEN CREATED BEFORE WE CAN USE ONPHOTOUPLOADED AND THE INDEX CORRESPONDS TO THE INDEX OF THE SECTIONFORMVALUE BECAUSE THE FORMGROUP IS MADE BY THE SECTIONFORMVALUE
     this.sectionForm.value["photos"][index]["photoImg"] = photoFile
     this.createPhotoPreview(photoFile, index);
-    console.log("this.sectionForm.value ", this.sectionForm.value)
   }
 
   getPhotos() {

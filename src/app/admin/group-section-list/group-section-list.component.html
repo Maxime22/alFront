@@ -12,7 +12,7 @@
                 <td>{{ groupSection._id }}</td>
                 <td>{{ groupSection.title }}</td>
                 <td>
-                    <a routerLink="editGroupSection/{{ groupSection._id }}"><button
+                    <a routerLink="editGroupSection/{{ groupSection._id }}" class="mr-3"><button
                             class="btn btn-primary">Modifier</button></a>
                     <button class="btn btn-danger" (click)="onDelete(groupSection._id)">Supprimer</button>
                 </td>

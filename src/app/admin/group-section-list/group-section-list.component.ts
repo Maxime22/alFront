@@ -16,16 +16,18 @@ export class GroupSectionListComponent implements OnInit {
     this.updateServerDatas();
   }
 
-  onDelete(id){
-    this.groupSectionService.deleteGroupSectionInServer(id);
-    this.updateServerDatas();
+  onDelete(id) {
+    if (confirm("Sûre de vouloir supprimer ?")) {
+      this.groupSectionService.deleteGroupSectionInServer(id);
+      this.updateServerDatas();
+    }
   }
 
-  updateServerDatas(){
+  updateServerDatas() {
     this.groupSectionService.getGroupSectionsFromServer().then(
       (groupSections) => {
         this.groupSections = groupSections;
-    }
+      }
     );
   }
 

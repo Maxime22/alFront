@@ -17,16 +17,18 @@ export class SectionListComponent implements OnInit {
     this.updateServerDatas();
   }
 
-  onDelete(id){
-    this.sectionService.deleteSectionInServer(id);
-    this.updateServerDatas();
+  onDelete(id) {
+    if (confirm("Sûre de vouloir supprimer ?")) {
+      this.sectionService.deleteSectionInServer(id);
+      this.updateServerDatas();
+    }
   }
 
-  updateServerDatas(){
+  updateServerDatas() {
     this.sectionService.getSectionsFromServer().then(
       (sections) => {
         this.sections = sections;
-    }
+      }
     );
   }
 }

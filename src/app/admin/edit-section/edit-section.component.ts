@@ -220,12 +220,3 @@ export class EditSectionComponent implements OnInit {
   }
 
 }
-
-// POURQUOI DES FOIS IL PREND LE FAKEPATH QUAND ON EN MET BEAUCOUP, COMMENT FAIRE UN LOADING ?
-// 1. OrderInPhotos (photo) OK ?
-// 2. Type Of Template (section) OK ?
-// 3. CKEDITOR4 OK
-// 4. Pages (réfléchir à tous les attributs et à la page contact aussi)
-// 5. Auth
-// 6. Front et loading dans l'admin section
-// 7. Test en ligne + HTTPS avec certbot et redirection

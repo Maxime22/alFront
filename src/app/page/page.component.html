@@ -1,15 +1,15 @@
 <div *ngIf="getHeaderAndFooter()">
     <app-header></app-header>
-
-    <div class="container">
+    <div class="container" *ngIf="isPageContact">
         <div><a routerLink="/admin">Admin</a></div>
     </div>
-
+    <div class="container" *ngIf="isPagePrice">
+        <div><a routerLink="/admin">Admin</a></div>
+    </div>
     <app-footer></app-footer>
 </div>
 
 <div *ngIf="!getHeaderAndFooter() && page">
-
     <div class="container-fluid">
         <figure class="homeFigure">
             <img class="homeImg" src="{{page.mainImgUrl}}" />
@@ -19,5 +19,4 @@
             </figcaption>
         </figure>
     </div>
-
 </div>

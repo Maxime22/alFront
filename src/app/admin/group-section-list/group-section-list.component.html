@@ -1,15 +1,13 @@
-<div class="container text-center">
-    <table>
+<div class="container text-center mt-3">
+    <table class="tableSections table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Titre</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let groupSection of groupSections">
-                <td>{{ groupSection._id }}</td>
                 <td>{{ groupSection.title }}</td>
                 <td>
                     <a routerLink="editGroupSection/{{ groupSection._id }}" class="mr-3"><button

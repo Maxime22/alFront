@@ -23,11 +23,13 @@ export class EditSectionComponent implements OnInit {
   photosFromServerLinkedToTheSection: any[]
   photosToDelete: string[];
   photoImgPreviews: string[];
+  alreadySubmitted:boolean;
 
   constructor(private formBuilder: FormBuilder, private sectionService: SectionService, private photoService: PhotoService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => this.handleRouteChange(params));
+    this.alreadySubmitted= false;
   }
 
   handleRouteChange(params) {
@@ -50,6 +52,8 @@ export class EditSectionComponent implements OnInit {
     });
     if (section.mainImgUrl) {
       this.mainImgPreview = section.mainImgUrl;
+    }else{
+      this.mainImgPreview = null;
     }
     this.photoImgPreviews = [];
     this.photosToDelete = [];
@@ -75,6 +79,7 @@ export class EditSectionComponent implements OnInit {
   }
 
   onSubmitForm() {
+    this.alreadySubmitted= true;
     const formValue = this.sectionForm.value;
     let isVisibleInMenu = false;
     if (formValue['isVisibleInMenu'] === "true" || formValue['isVisibleInMenu'] === true) {
@@ -219,8 +224,9 @@ export class EditSectionComponent implements OnInit {
 // POURQUOI DES FOIS IL PREND LE FAKEPATH QUAND ON EN MET BEAUCOUP, COMMENT FAIRE UN LOADING ?
 // 1. OrderInPhotos (photo) OK ?
 // 2. Type Of Template (section) OK ?
-// 3. CKEDITOR
+// 3. CKEDITOR4 OK
 // 4. Pages (réfléchir à tous les attributs et à la page contact aussi)
-// 5. Auth
-// 6. Front et loading dans l'admin section
-// 7. Test en ligne
+// 5. Not found and redirection OK ?
+// 6. Auth
+// 7. Front et loading dans l'admin section
+// 8. Test en ligne + HTTPS avec certbot et redirection

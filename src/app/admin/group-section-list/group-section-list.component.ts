@@ -18,8 +18,9 @@ export class GroupSectionListComponent implements OnInit {
 
   onDelete(id) {
     if (confirm("Sûre de vouloir supprimer ?")) {
-      this.groupSectionService.deleteGroupSectionInServer(id);
-      this.updateServerDatas();
+      this.groupSectionService.deleteGroupSectionInServer(id).then(()=>{
+        this.updateServerDatas();
+      });
     }
   }
 

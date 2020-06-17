@@ -15,6 +15,7 @@ export class EditGroupSectionComponent implements OnInit {
   groupSectionForm: FormGroup;
   groupSection: any;
   sections: any;
+  alreadySubmitted:boolean;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private groupSectionService: GroupSectionService, private sectionService: SectionService){
 
@@ -22,6 +23,7 @@ export class EditGroupSectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => this.handleRouteChange(params));
+    this.alreadySubmitted= false;
   }
 
   handleRouteChange(params) {
@@ -49,6 +51,7 @@ export class EditGroupSectionComponent implements OnInit {
   }
 
   onSubmitForm() {
+    this.alreadySubmitted= true;
     // the datas are in the order of the parameters in the model
     const formValue = this.groupSectionForm.value;
     let isVisibleInMenu = false;

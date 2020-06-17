@@ -1,0 +1,20 @@
+<div class="container text-center mt-3">
+    <table class="tableSections table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let page of pages">
+                <td>{{ page.title }}</td>
+                <td>
+                    <a routerLink="editPage/{{ page._id }}"><button class="btn btn-primary">Modifier</button></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <div><a routerLink="createPage"><button class="btn btn-success">Créer une page</button></a></div> -->
+    <div class="mt-3"><a routerLink="/admin"><button class="btn btn-primary">Retour Admin</button></a></div>
+</div>

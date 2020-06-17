@@ -12,11 +12,13 @@ import { Section } from '../../models/section.model';
 export class CreateSectionComponent implements OnInit {
 
   sectionForm: FormGroup;
+  alreadySubmitted: boolean;
 
   constructor(private formBuilder: FormBuilder, private sectionService: SectionService) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.alreadySubmitted= false;
   }
 
   initForm(){
@@ -29,6 +31,7 @@ export class CreateSectionComponent implements OnInit {
   }
 
   onSubmitForm(){
+    this.alreadySubmitted= true;
     const formValue = this.sectionForm.value;
     let isVisibleInMenu = false;
     if (formValue['isVisibleInMenu'] === "true" || formValue['isVisibleInMenu'] === true) {

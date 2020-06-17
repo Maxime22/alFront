@@ -29,6 +29,10 @@ import { PhotoService } from './services/photo.service';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
 
 import { CKEditorModule } from 'ckeditor4-angular';
+import { EditPageComponent } from './admin/edit-page/edit-page.component';
+import { CreatePageComponent } from './admin/create-page/create-page.component';
+import { PageListComponent } from './admin/page-list/page-list.component';
+import { PageService } from './services/page.service';
 
 const appRoutes: Routes = [
   { path: 'auth/signUp', component: SignupComponent },
@@ -40,15 +44,14 @@ const appRoutes: Routes = [
   { path: 'admin/groupSectionList', component: GroupSectionListComponent },
   { path: 'admin/groupSectionList/editGroupSection/:id', component: EditGroupSectionComponent },
   { path: 'admin/groupSectionList/createGroupSection', component: CreateGroupSectionComponent },
+  { path: 'admin/pageList', component: PageListComponent },
+  { path: 'admin/pageList/createPage', component: CreatePageComponent },
+  { path: 'admin/pageList/editPage/:id', component: EditPageComponent },
   { path: 'section/:sectionTitle', component: LayoutSectionComponent },
   { path: 'groupSection/:groupSectionTitle', component: LayoutGroupSectionComponent },
   { path: 'price', component: PageComponent },
   { path: 'contact', component: PageComponent },
   { path: '', component: PageComponent },
-  // {
-  //   path: 'not-found',
-  //   component: FourOhFourComponent
-  // },
   {
     path: "**", redirectTo: ''
   }
@@ -72,7 +75,10 @@ const appRoutes: Routes = [
     LayoutGroupSectionComponent,
     GroupSectionListComponent,
     CreateGroupSectionComponent,
-    EditGroupSectionComponent
+    EditGroupSectionComponent,
+    EditPageComponent,
+    CreatePageComponent,
+    PageListComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +89,7 @@ const appRoutes: Routes = [
     RxReactiveFormsModule,
     CKEditorModule
   ],
-  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService],
+  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

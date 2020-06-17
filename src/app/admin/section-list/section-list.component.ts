@@ -19,8 +19,9 @@ export class SectionListComponent implements OnInit {
 
   onDelete(id) {
     if (confirm("Sûre de vouloir supprimer ?")) {
-      this.sectionService.deleteSectionInServer(id);
-      this.updateServerDatas();
+      this.sectionService.deleteSectionInServer(id).then(()=>{
+        this.updateServerDatas();
+      });
     }
   }
 

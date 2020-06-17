@@ -1,4 +1,4 @@
-<div class="col-sm-8 col-sm-offset-2">
+<div class="col-sm-12">
     <form [formGroup]="groupSectionForm" (ngSubmit)="onSubmitForm()">
         <div class="form-group">
             <label for="title">Titre</label>
@@ -17,6 +17,8 @@
                 <option value="false">Non</option>
             </select>
         </div>
-        <button class="btn btn-primary" type="submit" [disabled]="groupSectionForm.invalid">Soumettre</button>
+        <div class="col-sm-12 text-center">
+            <button class="btn btn-primary" type="submit" [disabled]="groupSectionForm.invalid && !alreadySubmitted">Soumettre</button>
+        </div>
     </form>
 </div>

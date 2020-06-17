@@ -1,5 +1,10 @@
 <div class="container">
-    <p *ngFor="let section of sections">
-        {{ section.title }}
-    </p>
+    <div class="row">
+        <div class="col-md-3" *ngFor="let section of sections">
+            <figure>
+                <a routerLink="/section/{{ section.title }}"><img class="mainImgSection" src="{{ section.mainImgUrl }}"
+                        alt="{{ section.title }} image"></a>
+            </figure>
+        </div>
+    </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {GroupSectionService } from '../../services/group-section.service';
 import { GroupSection } from '../../models/group-section.model';
 import { SectionService } from '../../services/section.service';
@@ -13,12 +13,14 @@ export class CreateGroupSectionComponent implements OnInit {
 
   groupSectionForm: FormGroup;
   sections: any;
+  alreadySubmitted: boolean;
 
   constructor(private formBuilder: FormBuilder, private groupSectionService: GroupSectionService, private sectionService: SectionService) { }
 
   ngOnInit(): void {
     this.updateServerDatas();
     this.initForm();
+    this.alreadySubmitted = false;
   }
 
   // USED IN THE SELECT
@@ -39,6 +41,7 @@ export class CreateGroupSectionComponent implements OnInit {
   }
 
   onSubmitForm(){
+    this.alreadySubmitted = true;
     const formValue = this.groupSectionForm.value;
     let isVisibleInMenu = false;
     if (formValue['isVisibleInMenu'] === "true" || formValue['isVisibleInMenu'] === true) {

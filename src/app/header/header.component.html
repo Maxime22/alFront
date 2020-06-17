@@ -8,6 +8,12 @@
             <li class="nav-item" routerLinkActive="active" *ngFor="let groupSection of groupSections">
                 <a class="nav-link" routerLink="/groupSection/{{ groupSection.title| lowercase }}" *ngIf="groupSection.isVisibleInMenu">{{ groupSection.title | titlecase }}</a>
             </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/price">Tarifs</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/contact">Contact</a>
+            </li>
         </ul>
     </div>
 </nav>

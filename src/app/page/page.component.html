@@ -1,8 +1,23 @@
-<app-header></app-header>
+<div *ngIf="getHeaderAndFooter()">
+    <app-header></app-header>
 
-<div class="homeContainer container">
-    <div><a routerLink="admin">Admin</a></div>
+    <div class="container">
+        <div><a routerLink="/admin">Admin</a></div>
+    </div>
+
+    <app-footer></app-footer>
 </div>
-<figure class="homeFigure"><img class="homeImg" src="assets/images/img/cam.jpg" /></figure>
 
-<app-footer></app-footer>
+<div *ngIf="!getHeaderAndFooter() && page">
+
+    <div class="container-fluid">
+        <figure class="homeFigure">
+            <img class="homeImg" src="{{page.mainImgUrl}}" />
+            <figcaption class="homeFigcaption">
+                <div><a class="homeLink" routerLink="/section/portrait">Anne Lods Photographie</a></div>
+                <div><a class="homeLink" routerLink="/section/portrait">Entrez</a></div>
+            </figcaption>
+        </figure>
+    </div>
+
+</div>

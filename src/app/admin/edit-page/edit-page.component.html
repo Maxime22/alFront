@@ -3,10 +3,10 @@
         <h1>Gestion de page</h1>
     </div>
     <form [formGroup]="pageForm" (ngSubmit)="onSubmitForm()">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="title">Titre</label>
             <input type="text" class="form-control" id="title" formControlName="title">
-        </div>
+        </div> -->
         <div class="form-group">
             <label for="content">Contenu</label>
             <ckeditor [config]="{ allowedContent : true }" id="content" formControlName="content"></ckeditor>

@@ -8,7 +8,6 @@ import { HeaderComponent } from './header/header.component';
 import { GroupSectionComponent } from './group-section/group-section.component';
 import { SectionComponent } from './section/section.component';
 import { PageComponent } from './page/page.component';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
@@ -33,10 +32,14 @@ import { EditPageComponent } from './admin/edit-page/edit-page.component';
 import { CreatePageComponent } from './admin/create-page/create-page.component';
 import { PageListComponent } from './admin/page-list/page-list.component';
 import { PageService } from './services/page.service';
+import { EditUserComponent } from './admin/edit-user/edit-user.component';
+
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 const appRoutes: Routes = [
-  { path: 'auth/signUp', component: SignupComponent },
-  { path: 'auth/signIn', component: SigninComponent },
+  { path: 'auth/signup', component: SignupComponent },
+  { path: 'auth/signin', component: SigninComponent },
   { path: 'section/:sectionTitle', component: LayoutSectionComponent },
   { path: 'groupSection/:groupSectionTitle', component: LayoutGroupSectionComponent },
   { path: 'price', component: PageComponent },
@@ -51,6 +54,7 @@ const appRoutes: Routes = [
   { path: 'admin/pageList', canActivate: [AuthGuardService], component: PageListComponent },
   { path: 'admin/pageList/createPage', canActivate: [AuthGuardService],component: CreatePageComponent },
   { path: 'admin/pageList/editPage/:id', canActivate: [AuthGuardService],component: EditPageComponent },
+  { path: 'admin/editUserAnne', canActivate: [AuthGuardService],component: EditUserComponent },
   { path: '', component: PageComponent },
   {
     path: "**", redirectTo: ''
@@ -78,7 +82,8 @@ const appRoutes: Routes = [
     EditGroupSectionComponent,
     EditPageComponent,
     CreatePageComponent,
-    PageListComponent
+    PageListComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -87,9 +92,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     RxReactiveFormsModule,
-    CKEditorModule
+    CKEditorModule,
   ],
-  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService],
+  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

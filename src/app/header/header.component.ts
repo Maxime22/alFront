@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SectionService } from '../services/section.service';
 import { GroupSectionService } from '../services/group-section.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   sections: any;
   groupSections: any;
 
-  constructor(private sectionService: SectionService, private groupSectionService: GroupSectionService) { }
+  isAuth: boolean;
+  private isAuthSub: Subscription;
+
+  constructor(private sectionService: SectionService, private groupSectionService: GroupSectionService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.sectionService.getSectionsFromServer().then(
@@ -28,5 +33,18 @@ export class HeaderComponent implements OnInit {
       (response) => {
         this.groupSections = response;
       });
+    this.isAuthSub = this.authService.isAuth$.subscribe(
+      (auth) => {
+        this.isAuth = auth;
+      }
+    );
+  }
+
+  onSignOut() {
+    this.authService.signOutUser();
+  }
+
+  ngOnDestroy() {
+    this.isAuthSub.unsubscribe();
   }
 }

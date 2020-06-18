@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
+<div class="container row text-center">
+    <div class="col-sm-9 offset-sm-3">
         <h2>Se connecter</h2>
         <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -10,8 +10,11 @@
                 <label for="password">Mot de passe</label>
                 <input type="password" id="password" class="form-control" formControlName="password">
             </div>
-            <button class="btn btn-primary" type="submit" [disabled]="signinForm.invalid">Créer mon compte</button>
+            <button class="btn btn-primary" type="submit" [disabled]="signinForm.invalid">Se connecter</button>
         </form>
-        <p class="text-danger">{{ errorMessage }}</p>
+        <p class="text-danger">{{ errorMessage | json }}</p>
+        <div>
+            <a routerLink="/"><button class="btn btn-secondary mt-3">Retour accueil</button></a>
+        </div>
     </div>
 </div>

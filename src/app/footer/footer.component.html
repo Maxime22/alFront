@@ -1,12 +1,15 @@
 <div class="footerDiv container-fluid">
     <div class="container">
-    <div class="row">
-        <div class="col-md-2" routerLinkActive="active">
-            <a routerLink="/auth/signup">Créer un compte</a>
+        <div class="row">
+            <div class="col-md-2" *ngIf="isAuth">
+                <a routerLink="/auth/signin">Déconnexion</a>
+            </div>
+            <div class="col-md-2" *ngIf="isAuth">
+                <a routerLink="/admin">Admin</a>
+            </div>
+            <div class="col-md-2" *ngIf="!isAuth">
+                <a routerLink="/auth/signin">Connexion</a>
+            </div>
         </div>
-        <div class="col-md-2" routerLinkActive="active">
-            <a routerLink="/auth/signin">Connexion</a>
-        </div>
-    </div>
     </div>
 </div>

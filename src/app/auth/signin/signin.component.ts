@@ -13,14 +13,12 @@ export class SigninComponent implements OnInit {
 
   signinForm: FormGroup;
   errorMessage: string;
-  // authStatus: boolean;
 
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
-    // this.authStatus = this.authService.isAuth;
     this.initForm();
   }
 
@@ -39,8 +37,6 @@ export class SigninComponent implements OnInit {
 
     this.authService.signIn(user).then(
       () => {
-        //       console.log('Sign in successful!');
-        //       this.authStatus = this.authService.isAuth;
         this.router.navigate(['/admin']);
       },
       (error) => {

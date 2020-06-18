@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SectionService } from '../services/section.service';
 import { GroupSectionService } from '../services/group-section.service';
 

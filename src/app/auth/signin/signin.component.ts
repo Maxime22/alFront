@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-signin',
@@ -7,9 +11,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SigninComponent implements OnInit {
 
-  constructor() { }
+  signinForm: FormGroup;
+  errorMessage: string;
+  // authStatus: boolean;
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router) { }
+
+  ngOnInit() {
+    // this.authStatus = this.authService.isAuth;
+    this.initForm();
+  }
+
+  initForm() {
+    this.signinForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]]
+    });
+  }
+
+  onSubmit() {
+    const email = this.signinForm.get('email').value;
+    const password = this.signinForm.get('password').value;
+
+    const user = new User(email, password);
+
+    this.authService.signIn(user).then(
+      () => {
+        //       console.log('Sign in successful!');
+        //       this.authStatus = this.authService.isAuth;
+        this.router.navigate(['/admin']);
+      },
+      (error) => {
+        this.errorMessage = error;
+      }
+    );
   }
 
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../services/page.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page',
@@ -15,7 +17,7 @@ export class PageComponent implements OnInit {
   isPagePrice: boolean;
   contactForm: FormGroup;
 
-  constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.isPageContact = false;
@@ -68,18 +70,37 @@ export class PageComponent implements OnInit {
   initForm(){
     this.contactForm = this.formBuilder.group({
       name:["", Validators.required],
-      email:["", Validators.required],
+      subject:["", Validators.required],
+      email:["", [Validators.required, Validators.email]],
+      message:["",Validators.required]
     });
+  }
+
+  onSubmitMailForm(){
+    const formValue = this.contactForm.value;
+    
+    const mail = {
+      name: formValue['name'],
+      subject: formValue['subject'],
+      email: formValue['email'],
+      message: formValue['message'],
+    }
+    
+    this.httpClient.post('http://localhost:3000/alBack/mail/contact', mail).subscribe(
+      (resApi) => {
+          this.router.navigate(['/section/portrait']);
+      },
+      (error) => {
+          console.log('fail enregistrement ' + error)
+      }
+  )
+
   }
 
 }
 
+// TODO
 // POURQUOI DES FOIS IL PREND LE FAKEPATH QUAND ON EN MET BEAUCOUP DANS EDITCOMPONENT, COMMENT FAIRE UN LOADING ?
-// 1. OrderInPhotos (photo) OK ?
-// 2. Type Of Template (section) OK ?
-// 3. CKEDITOR4 OK
-// 4. Pages OK
-// 5. Formulaire de contact
-// 5. Auth
-// 6. Front et loading dans l'admin section
-// 7. Test en ligne + HTTPS avec certbot et redirection
+// 1. Front (types of template section et page + footer + autre ?) et loading dans l'admin section
+// 2. Auth
+// 3. Test en ligne + HTTPS avec certbot et redirection (faire attention à ce qui n'a pas été envoyé au git (mailconfig, passwordwonfig pour mongo, images sur le serveur et sur le front etc...))

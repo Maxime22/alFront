@@ -15,25 +15,31 @@ export class GroupSectionComponent implements OnInit {
   groupSections: any;
   groupSection: any;
   groupSectionSubscription: Subscription;
+  loading: boolean;
 
   constructor(private sectionService: SectionService, private groupSectionService: GroupSectionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.route.params.subscribe(params => this.handleRouteChange(params));
   }
 
   handleRouteChange(params) {
     this.groupSectionService.getOneGroupSectionFromServerWithTitle(params['groupSectionTitle']).then(
       (response) => {
-          this.groupSection = response;
+        // we can put the settimeout here because it is asynchronous
+        setTimeout(() => {
+          this.loading = false;
+        }, 3000)
+        this.groupSection = response;
         this.sectionService.getSeveralSectionsFromServer(response['sectionsIds']).then(
           (response) => {
             this.sections = response;
-        });
+          });
       });
 
-    
-    
+
+
   }
 
 }

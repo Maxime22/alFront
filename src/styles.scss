@@ -20,3 +20,36 @@ a, a:hover, a:visited, a:active{
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
+.loadingFigure {
+    height: 100vh;
+    background-color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation-name: loading;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+}
+
+.loadingImg {
+    width:250px;
+    height: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-name: loading;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+}
+
+@keyframes loading {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

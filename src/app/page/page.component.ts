@@ -16,6 +16,7 @@ export class PageComponent implements OnInit {
   isPageContact: boolean;
   isPagePrice: boolean;
   contactForm: FormGroup;
+  loading: boolean;
 
   constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router) { }
 
@@ -30,6 +31,7 @@ export class PageComponent implements OnInit {
     let pathOfRoute = this.route.snapshot.routeConfig.path;
     if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "") {
       if (pathOfRoute === "") {
+        this.loading = false;
         this.pageService.getOnePageFromServerWithTitle("home").then(
           (response) => {
             this.page = response;
@@ -37,8 +39,12 @@ export class PageComponent implements OnInit {
             this.isPagePrice = false;
           });
       } else {
+        this.loading = true;
         this.pageService.getOnePageFromServerWithTitle(pathOfRoute).then(
           (response) => {
+            setTimeout(() => {
+              this.loading = false;
+            }, 3000)
             this.page = response;
             if (pathOfRoute === "contact") {
               this.initForm();
@@ -67,33 +73,33 @@ export class PageComponent implements OnInit {
     }
   }
 
-  initForm(){
+  initForm() {
     this.contactForm = this.formBuilder.group({
-      name:["", Validators.required],
-      subject:["", Validators.required],
-      email:["", [Validators.required, Validators.email]],
-      message:["",Validators.required]
+      name: ["", Validators.required],
+      subject: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      message: ["", Validators.required]
     });
   }
 
-  onSubmitMailForm(){
+  onSubmitMailForm() {
     const formValue = this.contactForm.value;
-    
+
     const mail = {
       name: formValue['name'],
       subject: formValue['subject'],
       email: formValue['email'],
       message: formValue['message'],
     }
-    
+
     this.httpClient.post('http://localhost:3000/alBack/mail/contact', mail).subscribe(
       (resApi) => {
-          this.router.navigate(['/section/portrait']);
+        this.router.navigate(['/section/portrait']);
       },
       (error) => {
-          console.log('fail enregistrement ' + error)
+        console.log('fail enregistrement ' + error)
       }
-  )
+    )
 
   }
 

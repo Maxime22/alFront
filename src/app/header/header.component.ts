@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private sectionService: SectionService, private groupSectionService: GroupSectionService, private authService: AuthService) { }
 
+  // DON'T KNOW WHY BUT THIS ONE IS RECALLED BETWEEN section/:sectionTitle and groupSection/:groupSectionTitle
   ngOnInit(): void {
     this.sectionService.getSectionsFromServer().then(
       (response: any) => {

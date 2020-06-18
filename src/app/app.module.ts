@@ -14,12 +14,10 @@ import { AuthService } from './services/auth.service';
 import { Routes, RouterModule } from "@angular/router";
 import { SignupComponent } from './auth/signup/signup.component';
 import { SectionService } from './services/section.service';
-import { LayoutSectionComponent } from './layout-section/layout-section.component';
 import { AdminComponent } from './admin/admin.component';
 import { SectionListComponent } from './admin/section-list/section-list.component';
 import { EditSectionComponent } from './admin/edit-section/edit-section.component';
 import { CreateSectionComponent } from './admin/create-section/create-section.component';
-import { LayoutGroupSectionComponent } from './layout-group-section/layout-group-section.component';
 import { GroupSectionService } from './services/group-section.service';
 import { GroupSectionListComponent } from './admin/group-section-list/group-section-list.component';
 import { CreateGroupSectionComponent } from './admin/create-group-section/create-group-section.component';
@@ -37,11 +35,14 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 
+import { RouteHistory } from './services/routeHistory.service';
+import { LayoutGroupAndSectionComponent } from './layout-group-and-section/layout-group-and-section.component';
+
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
-  { path: 'section/:sectionTitle', component: LayoutSectionComponent },
-  { path: 'groupSection/:groupSectionTitle', component: LayoutGroupSectionComponent },
+  { path: 'section/:sectionTitle', component: LayoutGroupAndSectionComponent },
+  { path: 'groupSection/:groupSectionTitle', component: LayoutGroupAndSectionComponent },
   { path: 'price', component: PageComponent },
   { path: 'contact', component: PageComponent },
   { path: 'admin', canActivate: [AuthGuardService], component: AdminComponent },
@@ -71,19 +72,18 @@ const appRoutes: Routes = [
     SectionComponent,
     PageComponent,
     SignupComponent,
-    LayoutSectionComponent,
     AdminComponent,
     SectionListComponent,
     EditSectionComponent,
     CreateSectionComponent,
-    LayoutGroupSectionComponent,
     GroupSectionListComponent,
     CreateGroupSectionComponent,
     EditGroupSectionComponent,
     EditPageComponent,
     CreatePageComponent,
     PageListComponent,
-    EditUserComponent
+    EditUserComponent,
+    LayoutGroupAndSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +94,7 @@ const appRoutes: Routes = [
     RxReactiveFormsModule,
     CKEditorModule,
   ],
-  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, RouteHistory],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

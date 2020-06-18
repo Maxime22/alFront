@@ -2,14 +2,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2" *ngIf="isAuth">
-                <a routerLink="/auth/signin">Déconnexion</a>
+                <span class="spanSignOut" (click)="onSignOut()">Déconnexion</span>
             </div>
             <div class="col-md-2" *ngIf="isAuth">
                 <a routerLink="/admin">Admin</a>
             </div>
-            <div class="col-md-2" *ngIf="!isAuth">
+            <!-- <div class="col-md-2" *ngIf="!isAuth">
                 <a routerLink="/auth/signin">Connexion</a>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

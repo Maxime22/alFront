@@ -35,8 +35,13 @@ export class SectionComponent implements OnInit {
         setTimeout(() => {
           this.loading = false;
         }, 3000)
-        this.photoService.getPhotosOfASectionFromServer(response["_id"]).then((photos) => {
-          console.log(photos)
+        this.photoService.getPhotosOfASectionFromServer(response["_id"]).then((response: any) => {
+          let photosInOrder = response.photos;
+          photosInOrder.sort(function (a, b) {
+            return Number(a.orderInPhotos) - Number(b.orderInPhotos);
+          });
+          this.photosInTheSection = photosInOrder;
+          // console.log(this.photosInTheSection)
         })
       });
   }

@@ -133,7 +133,11 @@ export class EditSectionComponent implements OnInit {
         if (this.photosFromServerLinkedToTheSection.length > 0) {
           for (let index = 0; index < this.photosFromServerLinkedToTheSection.length; index++) {
             const photo = this.photosFromServerLinkedToTheSection[index];
-            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl, photo._id, 1000);
+            let orderInPhotos = 1000;
+            if(photo.orderInPhotos){
+              orderInPhotos = photo.orderInPhotos
+            }
+            this.onAddPhoto(photo.photoTitle, photo.typeOfPhoto, photo.photoImgUrl, photo._id, orderInPhotos);
           }
         }
       }

@@ -1,11 +1,20 @@
 <div class="sectionContainer container-fluid">
-    <div class="sectionTitleDiv">
-        <h1 *ngIf="section">{{ section.title | titlecase }}</h1>
-    </div>
-    <div *ngIf="section">
-        <figure *ngIf="section.mainImgUrl"><img class="mainImg" src="{{ section.mainImgUrl }}" alt=""></figure>
-        <div class="mt-3 mb-3" *ngIf="photosInTheSection">
-
+    <div class="row">
+        <div class="sectionTitleDiv text-center mt-3">
+            <h1 *ngIf="section">{{ section.title | titlecase }}</h1>
+        </div>
+        <div *ngIf="section">
+            <figure *ngIf="section.mainImgUrl"><img class="mainImg" src="{{ section.mainImgUrl }}" alt=""></figure>
+            <div class="container mt-3 mb-3" *ngIf="photosInTheSection">
+                <span *ngFor="let photo of photosInTheSection">
+                    <figure class="figurePhotoLandscape" *ngIf="photo.typeOfPhoto === 'landscape'">
+                        <img class="landscapeImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}">
+                    </figure>
+                    <figure class="figurePhotoPortrait" *ngIf="photo.typeOfPhoto === 'portrait'">
+                        <img class="portraitImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}">
+                    </figure>
+                </span>
+            </div>
         </div>
     </div>
 </div>

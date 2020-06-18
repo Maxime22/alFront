@@ -19,6 +19,7 @@ export class PhotoService {
                     filename: filename,
                     photoTitle: photos[index]["photoTitle"],
                     typeOfPhoto: photos[index]["typeOfPhoto"],
+                    orderInPhotos: photos[index]["orderInPhotos"],
                     sectionId:sectionId
                 }
             )

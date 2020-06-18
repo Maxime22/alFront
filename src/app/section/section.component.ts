@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SectionService } from '../services/section.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouteHistory } from '../services/routeHistory.service';
+import { PhotoService } from '../services/photo.service';
 
 @Component({
   selector: 'app-section',
@@ -12,8 +13,9 @@ export class SectionComponent implements OnInit {
 
   section: any;
   loading: boolean;
+  photosInTheSection: any;
 
-  constructor(private sectionService: SectionService, private route: ActivatedRoute, private routeHistory: RouteHistory) { }
+  constructor(private sectionService: SectionService, private photoService: PhotoService, private route: ActivatedRoute, private routeHistory: RouteHistory) { }
 
   // https://www.it-swarm.dev/fr/angular/angular-4-composant-ngoninit-non-appele-chaque-demande-de-route/832647952/
   // https://blog.hackages.io/our-solution-to-get-a-previous-route-with-angular-5-601c16621cf0
@@ -33,6 +35,9 @@ export class SectionComponent implements OnInit {
         setTimeout(() => {
           this.loading = false;
         }, 3000)
+        this.photoService.getPhotosOfASectionFromServer(response["_id"]).then((photos) => {
+          console.log(photos)
+        })
       });
   }
 

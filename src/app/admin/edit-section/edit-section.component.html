@@ -90,7 +90,7 @@
             </div>
 
             <div class="col-sm-12 text-center">
-                <button class="btn btn-primary mt-3" type="submit" [disabled]="sectionForm.invalid && !alreadySubmitted">Soumettre</button>
+                <button class="btn btn-primary mt-3 mb-3" type="submit" [disabled]="sectionForm.invalid && !alreadySubmitted">Soumettre</button>
                 <div *ngIf="sectionForm.invalid" class="alert alert-danger mt-3">
                     <div *ngIf="getFormValidationErrors()">
                         <p *ngFor="let error of getFormValidationErrors(), let i = index">{{ error }}</p>

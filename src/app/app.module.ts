@@ -37,6 +37,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 import { RouteHistory } from './services/routeHistory.service';
 import { LayoutGroupAndSectionComponent } from './layout-group-and-section/layout-group-and-section.component';
+import { SlideComponent } from './slide/slide.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -83,7 +86,8 @@ const appRoutes: Routes = [
     CreatePageComponent,
     PageListComponent,
     EditUserComponent,
-    LayoutGroupAndSectionComponent
+    LayoutGroupAndSectionComponent,
+    SlideComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +97,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     RxReactiveFormsModule,
     CKEditorModule,
+    BrowserAnimationsModule,
+    NgxMasonryModule
   ],
   providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, RouteHistory],
   bootstrap: [AppComponent]

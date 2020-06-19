@@ -1,0 +1,24 @@
+.divSlideContainer {
+    height: 100vh;
+    background-color: white;
+    position: fixed;
+    padding-top: 10px;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.imgSlide {
+    object-fit:fill;
+}
+
+.portrait{
+    height: 450px;
+    width: 300px;
+}
+
+.landscape{
+    height: 400px;
+    width: 600px;
+}

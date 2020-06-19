@@ -1,19 +1,34 @@
 <div class="sectionContainer container-fluid">
     <div class="row">
-        <div class="sectionTitleDiv text-center mt-3">
-            <h1 *ngIf="section">{{ section.title | titlecase }}</h1>
-        </div>
-        <div *ngIf="section">
-            <figure *ngIf="section.mainImgUrl"><img class="mainImg" src="{{ section.mainImgUrl }}" alt=""></figure>
-            <div class="container mt-3 mb-3" *ngIf="photosInTheSection">
-                <span *ngFor="let photo of photosInTheSection">
+        <div class="container mt-3 mb-3" *ngIf="section">
+            <ngx-masonry
+                [options]="{ fitWidth: true, horizontalOrder: true, containerStyle:{position:'relative', margin:'auto'} }"
+                *ngIf="photosInTheSection && !innerWidthMobile">
+                <!-- ng-container -->
+                <div ngxMasonryItem class="photoContainer" *ngFor="let photo of photosInTheSection, let i = index">
                     <figure class="figurePhotoLandscape" *ngIf="photo.typeOfPhoto === 'landscape'">
-                        <img class="landscapeImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}">
+                        <img class="landscapeImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                            (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'landscape'">
                     </figure>
                     <figure class="figurePhotoPortrait" *ngIf="photo.typeOfPhoto === 'portrait'">
-                        <img class="portraitImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}">
+                        <img class="portraitImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                            (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'portrait'">
                     </figure>
-                </span>
+                </div>
+            </ngx-masonry>
+            <div *ngIf="photosInTheSection && innerWidthMobile">
+                <ng-container *ngFor="let photo of photosInTheSection, let i = index">
+                    <div class="text-center">
+                        <figure class="figurePhotoLandscape" *ngIf="photo.typeOfPhoto === 'landscape'">
+                            <img class="landscapeImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                                (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'landscape'">
+                        </figure>
+                        <figure class="figurePhotoPortrait" *ngIf="photo.typeOfPhoto === 'portrait'">
+                            <img class="portraitImg" src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                                (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'portrait'">
+                        </figure>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>
@@ -24,3 +39,12 @@
         <img class="loadingImg" src="assets/images/img/hug.gif">
     </figure>
 </div>
+
+<div *ngIf="showSlide && photosInTheSection">
+    <div class="divExit">
+        <button (click)="onExitSlide()">X</button>
+    </div>
+    <app-slide [listImages]="photosInTheSection" [imageSelected]="imageSelected"></app-slide>
+</div>
+
+<div (window:resize)="onResize($event)"></div>

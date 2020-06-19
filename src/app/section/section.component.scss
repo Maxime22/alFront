@@ -19,31 +19,51 @@
     width: 100%;
 }
 
-.mainImg {
+.photoContainer {
+    // margin: 0 auto;
+    width: 300px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.landscapeImg,
+.portraitImg {
+    cursor: pointer;
     width: 100%;
-    height: 200px;
     object-fit: cover;
 }
 
 .landscapeImg {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+    height: 200px;
 }
 
 .portraitImg {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+    height: 450px;
 }
 
-.figurePhotoLandscape {
-    display: inline-block;
-    width: 63%;
-    margin-right: 3%;
-}
+.figurePhotoLandscape,
 .figurePhotoPortrait {
-    display: inline-block;
-    width: 30%;
-    margin-right: 3%;
+    margin-bottom: 0px;
+}
+
+.divExit {
+    text-align: right;
+    width: 100%;
+    padding: 5px 5px 0 0;
+    height: 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+
+@media all and (max-width: 845px) {
+    .figurePhotoLandscape,
+    .figurePhotoPortrait {
+        margin-bottom: 10px;
+    }
+    .landscapeImg,
+    .portraitImg {
+        width: 300px;
+    }
 }

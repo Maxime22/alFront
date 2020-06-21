@@ -1,6 +1,7 @@
 <div *ngIf="getHeaderAndFooter()">
     <app-header></app-header>
-    <div class="container" *ngIf="isPageContact">
+    <div class="container" *ngIf="page && isPageContact">
+        <div [innerHtml]="page.content"></div>
         <form [formGroup]="contactForm" (ngSubmit)="onSubmitMailForm()">
             <div class="form-group">
                 <label for="name">Votre nom</label>
@@ -23,10 +24,23 @@
             </div>
         </form>
     </div>
-    <div class="container" *ngIf="isPagePrice">
-        
+    <div class="container" *ngIf="page && isPagePrice">
+        <div [innerHtml]="page.content"></div>
+        <ng-container *ngIf="prices">
+            <div class="row">
+                <div class="col-md-3" *ngFor="let price of prices, let i = index">
+                    <h2>{{ price.priceTitle }}</h2>
+                    <figure>
+                        <img class="imgPrice" src={{price.priceImgUrl}} alt={{price.priceTitle}}>
+                    </figure>
+                    <div [innerHtml]="price.content"></div>
+                    <div class="line text-center" ></div>
+                    <div>Tarif : {{ price.priceNumber }}</div>
+                </div>
+            </div>
+        </ng-container>
 
-        
+
     </div>
     <app-footer></app-footer>
 </div>

@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" *ngIf="groupSection">
+    <div [innerHtml]="groupSection.content"></div>
     <div class="row">
         <div class="col-md-3" *ngFor="let section of sections">
             <figure>

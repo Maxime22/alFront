@@ -3,10 +3,6 @@
         <h1>Gestion de page</h1>
     </div>
     <form [formGroup]="pageForm" (ngSubmit)="onSubmitForm()">
-        <!-- <div class="form-group">
-            <label for="title">Titre</label>
-            <input type="text" class="form-control" id="title" formControlName="title">
-        </div> -->
         <div class="form-group">
             <label for="content">Contenu</label>
             <ckeditor [config]="{ allowedContent : true }" id="content" formControlName="content"></ckeditor>
@@ -24,14 +20,49 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="form-group col-sm-12">
-            <label for="typeOfTemplate">Type de template</label>
-            <select id="typeOfTemplate" class="form-control" formControlName="typeOfTemplate">
-                <option value="contact">Contact</option>
-                <option value="prices">Tarifs</option>
-                <option value="home">Home</option>
-            </select>
-        </div> -->
+        <div *ngIf="isPricePage" class="container" formArrayName="prices">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Tarifs</h3>
+                </div>
+                <div class="col-sm-6 form-group"
+                    *ngFor="let priceControl of getPrices().controls, let i = index">
+                    <div class="borderPrices" [formGroupName]="i">
+                        <div>
+                            <label>Titre du tarif</label>
+                            <input type="text" class="form-control" formControlName="priceTitle">
+                        </div>
+                        <div class="mt-3">
+                            <label>Ordre du tarif</label>
+                            <input type="number" class="form-control" formControlName="orderInPrices">
+                        </div>
+                        <div class="mt-3">
+                            <label>Contenu du tarif</label>
+                            <ckeditor [config]="{ allowedContent : true }" formControlName="contentPrice"></ckeditor>
+                        </div>
+                        <div class="mt-3">
+                            <label>Prix du tarif</label>
+                            <input type="number" class="form-control" formControlName="priceNumber">
+                        </div>
+                        <div class="mt-3">
+                            <input type="file" accept="image/*" formControlName="priceImg"
+                                (change)="onPriceUploaded($event.target.files, i)">
+                            <div class="image-preview mt-2" *ngIf="priceImgPreviews[i]">
+                                <img [src]="priceImgPreviews[i]" alt="">
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-danger mt-2" (click)="onDeletePrice(i)">Supprimer
+                                ce tarif</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-center">
+                    <button type="button" class="btn btn-success" (click)="onAddPrice('','','')">Ajouter un
+                        tarif</button>
+                </div>
+            </div>
+        </div>
 
         <div class="col-sm-12 text-center">
             <button class="btn btn-primary mb-3" type="submit"

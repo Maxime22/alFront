@@ -47,6 +47,7 @@ export class EditGroupSectionComponent implements OnInit {
       title: [groupSection.title, Validators.required],
       sectionsIds:[groupSection.sectionsIds, Validators.required],
       isVisibleInMenu: [groupSection.isVisibleInMenu, Validators.required],
+      content: [groupSection.content ? groupSection.content : ""]
     });
   }
 
@@ -64,6 +65,7 @@ export class EditGroupSectionComponent implements OnInit {
     const editedGroupSection = new GroupSection(
       formValue['title'].toLowerCase(),formValue['sectionsIds'], isVisibleInMenu
     );
+    editedGroupSection['content'] = formValue['content'];
     this.groupSectionService.editGroupSectionToServer(this.route.params['_value']['id'],editedGroupSection);
   }
 

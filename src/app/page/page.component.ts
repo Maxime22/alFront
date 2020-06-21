@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { PriceService } from '../services/price.service';
 
 @Component({
   selector: 'app-page',
@@ -17,8 +18,9 @@ export class PageComponent implements OnInit {
   isPagePrice: boolean;
   contactForm: FormGroup;
   loading: boolean;
+  prices: any;
 
-  constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router) { }
+  constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router, private priceService: PriceService) { }
 
   ngOnInit(): void {
     this.isPageContact = false;
@@ -47,11 +49,14 @@ export class PageComponent implements OnInit {
             }, 3000)
             this.page = response;
             if (pathOfRoute === "contact") {
-              this.initForm();
+              this.initContactForm();
               this.isPageContact = true;
               this.isPagePrice = false;
             }
             if (pathOfRoute === "price") {
+              this.priceService.getPricesFromServer().then((data) => {
+                this.prices = data;
+              });
               this.isPageContact = false;
               this.isPagePrice = true;
             }
@@ -73,7 +78,7 @@ export class PageComponent implements OnInit {
     }
   }
 
-  initForm() {
+  initContactForm() {
     this.contactForm = this.formBuilder.group({
       name: ["", Validators.required],
       subject: ["", Validators.required],

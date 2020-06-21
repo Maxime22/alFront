@@ -16,8 +16,6 @@ export class EditSectionComponent implements OnInit {
 
   // THEY NEED TO BE INITIALIZED IN THE ONINIT
   sectionForm: FormGroup;
-  userForm: FormGroup;
-  newPhotoControl: FormControl;
   section: any;
   mainImgPreview: string;
   photosFromServerLinkedToTheSection: any[]

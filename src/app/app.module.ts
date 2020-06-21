@@ -40,6 +40,7 @@ import { LayoutGroupAndSectionComponent } from './layout-group-and-section/layou
 import { SlideComponent } from './slide/slide.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { PriceService } from './services/price.service';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -100,7 +101,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     NgxMasonryModule
   ],
-  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, RouteHistory],
+  providers: [AuthService, AuthGuardService, SectionService, GroupSectionService, PhotoService, PageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, RouteHistory, PriceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

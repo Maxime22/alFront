@@ -34,9 +34,10 @@
 
 button,
 button:hover,
-button:active {
+button:active, button:focus {
     border: none;
     background-color: white;
+    outline: none;
 }
 
 .divBtn {

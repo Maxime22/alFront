@@ -35,6 +35,8 @@ export class SlideComponent implements OnInit {
     this.image1 = this.listImages[this.imageSelected];
     this.image2 = this.listImages[this.imageSelected]; // AVOID AN ERROR IN THE CONSOLE
     this.isActualImage = this.listImages[this.imageSelected];
+    let element = document.getElementById("previousBtn");
+    element.focus();
   }
 
   changeState() {
@@ -72,6 +74,10 @@ export class SlideComponent implements OnInit {
       this.isActualImage = this.listImages[this.imageSelected];
     }
     this.changeState();
+  }
+
+  onKeydown(a){
+    console.log("coucou")
   }
 
 }

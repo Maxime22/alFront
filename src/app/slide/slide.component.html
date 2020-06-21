@@ -2,7 +2,7 @@
     <div class="container-fluid text-center">
         <div class="row">
             <div class="col-md-1 divBtn">
-                <button class="previousBtn" (click)="onPrevious()"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+                <button class="previousBtn" id="previousBtn" (click)="onPrevious()" (keydown.arrowleft)="onPrevious()" (keydown.arrowright)="onNext()"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
             </div>
             <div class="col-md-10 divFigureContainer">
                 <figure *ngIf="isActualImage">
@@ -11,7 +11,7 @@
                 </figure>
             </div>
             <div class="col-md-1 divBtn">
-                <button class="nextBtn" (click)="onNext()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                <button class="nextBtn" (click)="onNext()" (keydown.arrowleft)="onPrevious()" (keydown.arrowright)="onNext()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>

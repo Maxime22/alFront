@@ -9,20 +9,10 @@ import { reduce } from 'rxjs/operators';
   animations: [
     trigger('changeOpacity', [
       state('initial', style({
-        backgroundColor: "red",
         opacity: 1,
-        position: 'absolute',
-        top: '0',
-        left: '50%',
-        transform: 'translateX(-50%)'
       })),
       state('final', style({
-        backgroundColor: "green",
         opacity: 0,
-        position: 'absolute',
-        top: '0',
-        left: '50%',
-        transform: 'translateX(-50%)'
       })),
       transition('initial=>final', animate('1500ms')),
       transition('final=>initial', animate('1000ms'))
@@ -43,7 +33,7 @@ export class SlideComponent implements OnInit {
 
   ngOnInit(): void {
     this.image1 = this.listImages[this.imageSelected];
-    this.image2 = this.listImages[this.imageSelected-1]; // NOT REALLY IMPORTANT THE VALUE IN IMAGE 2 BECAUSE WE DON'T SEE IT
+    this.image2 = this.listImages[this.imageSelected]; // AVOID AN ERROR IN THE CONSOLE
     this.isActualImage = this.listImages[this.imageSelected];
   }
 

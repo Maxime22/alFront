@@ -9,16 +9,43 @@
     z-index: 2;
 }
 
-.imgSlide {
-    object-fit:fill;
+.divFigureContainer,
+.divFigureContainer figure {
+    height: 450px;
 }
 
-.portrait{
+.imgSlide {
+    object-fit: fill;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.portrait {
     height: 450px;
     width: 300px;
 }
 
-.landscape{
+.landscape {
     height: 400px;
     width: 600px;
+}
+
+button,
+button:hover,
+button:active {
+    border: none;
+    background-color: white;
+}
+
+.divBtn {
+    height: 450px;
+}
+
+.previousBtn,
+.nextBtn {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }

@@ -42,7 +42,7 @@
 
 <div *ngIf="showSlide && photosInTheSection">
     <div class="divExit">
-        <button (click)="onExitSlide()">X</button>
+        <button (click)="onExitSlide()"><i class="fa fa-times"></i></button>
     </div>
     <app-slide [listImages]="photosInTheSection" [imageSelected]="imageSelected"></app-slide>
 </div>

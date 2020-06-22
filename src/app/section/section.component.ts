@@ -31,9 +31,9 @@ export class SectionComponent implements OnInit {
     }
     this.route.params.subscribe(params => this.handleRouteChange(params));
     this.showSlide = false;
-    if(window.innerWidth > 845){
+    if (window.innerWidth > 845) {
       this.innerWidthMobile = false;
-    }else{
+    } else {
       this.innerWidthMobile = true;
     }
   }
@@ -55,7 +55,7 @@ export class SectionComponent implements OnInit {
       });
   }
 
-  onShowSlide(i){
+  onShowSlide(i) {
     this.showSlide = true;
     this.imageSelected = i;
   }
@@ -65,9 +65,9 @@ export class SectionComponent implements OnInit {
   }
 
   onResize(event) {
-    if(event.target.innerWidth > 845){
+    if (event.target.innerWidth > 845) {
       this.innerWidthMobile = false;
-    }else{
+    } else {
       this.innerWidthMobile = true;
     }
   }

@@ -49,6 +49,7 @@ const appRoutes: Routes = [
   { path: 'groupSection/:groupSectionTitle', component: LayoutGroupAndSectionComponent },
   { path: 'price', component: PageComponent },
   { path: 'contact', component: PageComponent },
+  { path: 'privacypolicy', component: PageComponent },
   { path: 'admin', canActivate: [AuthGuardService], component: AdminComponent },
   { path: 'admin/sectionList', canActivate: [AuthGuardService], component: SectionListComponent },
   { path: 'admin/sectionList/editSection/:id', canActivate: [AuthGuardService], component: EditSectionComponent },

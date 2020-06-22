@@ -20,13 +20,17 @@
     color: white;
     font-size: 60px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 500;
     width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+}
+
+.homeLinkAnne {
+    font-size: 50px !important;
 }
 
 .homeLink,
@@ -41,12 +45,28 @@
 
 // PRICES
 
-.imgPrice{
-    width:100%;
+.imgPrice {
+    width: 100%;
 }
 
-.line{
-    width:80%;
-    background-color: gray;
-    height: 1px;
+.line {
+    width: 80%;
+    background-color: #dbcea3;
+    height: 2px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
+.priceTitle{
+    font-size:25px !important;
+}
+
+// CONTACT
+.inputContact{
+    border: 1px solid #dbcea3;
+}
+
+.imgAnneContact{
+    width:100%;
 }

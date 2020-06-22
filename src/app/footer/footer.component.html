@@ -1,11 +1,21 @@
 <div class="footerDiv container-fluid">
     <div class="container">
         <div class="row">
-            <div class="col-md-2" *ngIf="isAuth">
-                <span class="spanSignOut" (click)="onSignOut()">Déconnexion</span>
+            <div class="col-md-6" *ngIf="isAuth">
+                <!-- <span class="spanSignOut" (click)="onSignOut()">Déconnexion</span> -->
             </div>
-            <div class="col-md-2" *ngIf="isAuth">
-                <a routerLink="/admin">Admin</a>
+            <div class="col-md-6" *ngIf="isAuth">
+                <!-- <a routerLink="/admin">Admin</a> -->
+            </div>
+            <div class="col-md-4 text-right">
+                <a routerLink="/privacypolicy">Politique de confidentialité</a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="https://www.instagram.com/anne_lods/"><img class="linkPng" src="/assets/images/img/insta.png"></a>
+            </div>
+            <div class="col-md-4 text-left">
+                <div>Contact :</div>
+                <div>pro.alods@gmail.com</div>
             </div>
             <!-- <div class="col-md-2" *ngIf="!isAuth">
                 <a routerLink="/auth/signin">Connexion</a>

@@ -1,8 +1,9 @@
 .footerDiv{
     min-width: 200px;
-    background-color: rgb(37, 37, 37);
+    background-color: #2f3234;
     padding: 10px 0 10px 0;
-    min-height: 300px;
+    min-height: 100px;
+    color: white;
 }
 
 .footerDiv a, .footerDiv a:hover{
@@ -13,4 +14,9 @@
 .spanSignOut{
     color:white;
     cursor: pointer;
+}
+
+.linkPng{
+    height: 30px;
+    width: 30px;
 }

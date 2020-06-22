@@ -16,9 +16,12 @@ export class PageComponent implements OnInit {
   page: any;
   isPageContact: boolean;
   isPagePrice: boolean;
+  isPageConf: boolean;
   contactForm: FormGroup;
   loading: boolean;
   prices: any;
+  pageScroll: number;
+  displayButtonScroll: boolean;
 
   constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router, private priceService: PriceService) { }
 
@@ -29,14 +32,27 @@ export class PageComponent implements OnInit {
   }
 
   handleRouteChange(params) {
+    this.onScroll('');
     // WE DON'T USE PARAMS BUT THIS.ROUTE.PARAMS.SUBSCRIBE ALLOWS TO REFRESH THE PAGE
     let pathOfRoute = this.route.snapshot.routeConfig.path;
-    if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "") {
+    if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "" || pathOfRoute === "privacypolicy") {
       if (pathOfRoute === "") {
         this.loading = false;
         this.pageService.getOnePageFromServerWithTitle("home").then(
           (response) => {
             this.page = response;
+            this.isPageContact = false;
+            this.isPagePrice = false;
+          });
+      } else if (pathOfRoute === "privacypolicy") {
+        this.loading = true;
+        this.pageService.getOnePageFromServerWithTitle("politique de confidentialité").then(
+          (response) => {
+            setTimeout(() => {
+              this.loading = false;
+            }, 3000)
+            this.page = response;
+            this.isPageConf = true;
             this.isPageContact = false;
             this.isPagePrice = false;
           });
@@ -52,6 +68,7 @@ export class PageComponent implements OnInit {
               this.initContactForm();
               this.isPageContact = true;
               this.isPagePrice = false;
+              this.isPageConf = false;
             }
             if (pathOfRoute === "price") {
               this.priceService.getPricesFromServer().then((data) => {
@@ -59,6 +76,7 @@ export class PageComponent implements OnInit {
               });
               this.isPageContact = false;
               this.isPagePrice = true;
+              this.isPageConf = false;
             }
           });
       }
@@ -68,7 +86,7 @@ export class PageComponent implements OnInit {
 
   getHeaderAndFooter() {
     if (this.page) {
-      if (this.page.title === "price" || this.page.title === "contact") {
+      if (this.page.title === "price" || this.page.title === "contact" || this.page.title === "politique de confidentialité") {
         return true;
       } else {
         return false;
@@ -106,6 +124,21 @@ export class PageComponent implements OnInit {
       }
     )
 
+  }
+
+  scrollToElement($element) {
+    $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+  }
+  onScroll(event) {
+    let scrollUpElement = document.getElementById('btnScrollUp');
+    this.pageScroll = window.pageYOffset;
+    console.log("pageScroll ", this.pageScroll)
+    console.log("scrollUpElement ", scrollUpElement)
+    if (this.pageScroll > 300) {
+      this.displayButtonScroll = true;
+    } else {
+      this.displayButtonScroll = false;
+    }
   }
 
 }

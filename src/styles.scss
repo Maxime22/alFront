@@ -1,9 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
+// BODY
+body{
+    font-family: 'Poppins', sans-serif;
+    color:#2f3234;
+}
+
+
+// NAVBAR
+.navbar-light .navbar-nav .active > .nav-link{
+    color:#dbcea3 !important;
+}
+.navbar-light .navbar-nav .nav-link{
+    color:#2f3234;
+}
+
+// BUTTON
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus{
-    background-color: rgb(255, 187, 187) !important;
-    border-color : rgb(255, 187, 187) !important;
+    background-color: #bea75b !important;
+    border-color : #bea75b !important;
     box-shadow: none !important;
+    cursor: pointer;
 }
 
 .image-preview {
@@ -52,4 +69,22 @@ a, a:hover, a:visited, a:active{
     100% {
         opacity: 0;
     }
+}
+
+.btnScrollUp{
+    position: fixed;
+    height: 40px;
+    width:40px;
+    right:20px;
+    bottom: 20px;
+    z-index: 1000;
+    font-size: 22px;
+    border:none;
+    background-color: white;
+    border-radius: 100px;
+    box-shadow: 0px 0px 5px gray;
+}
+
+.btnScrollUp:focus, .btnScrollUp:active{
+    outline:none;
 }

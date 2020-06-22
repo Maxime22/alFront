@@ -5,7 +5,11 @@
     <form [formGroup]="pageForm" (ngSubmit)="onSubmitForm()">
         <div class="form-group">
             <label for="content">Contenu</label>
-            <ckeditor [config]="{ allowedContent : true }" id="content" formControlName="content"></ckeditor>
+            <ckeditor [config]="{ allowedContent : true }" formControlName="content"></ckeditor>
+        </div>
+        <div class="form-group" *ngIf="isContactPage">
+            <label for="content2">Contenu supplémentaire</label>
+            <ckeditor [config]="{ allowedContent : true }" formControlName="content2"></ckeditor>
         </div>
         <div class="col-sm-6">
             <div class="row">

@@ -1,3 +1,4 @@
+<div #target></div>
 <app-header></app-header>
 <div class="container-fluid" *ngIf="isAGroupSection">
     <app-group-section></app-group-section>
@@ -5,4 +6,8 @@
 <div class="container-fluid" *ngIf="isASection">
     <app-section></app-section>
 </div>
+<div (window:scroll)="onScroll($event)"></div>
+
+<button id="btnScrollUp" class="btnScrollUp" (click)="scrollToElement(target)" *ngIf="displayButtonScroll"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
 <app-footer></app-footer>
+

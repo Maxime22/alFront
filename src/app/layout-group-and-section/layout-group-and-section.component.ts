@@ -10,6 +10,8 @@ export class LayoutGroupAndSectionComponent implements OnInit {
 
   isASection:boolean;
   isAGroupSection:boolean;
+  pageScroll: number;
+  displayButtonScroll: boolean;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -18,11 +20,27 @@ export class LayoutGroupAndSectionComponent implements OnInit {
   }
 
   handleRouteChange(params) {
+    this.onScroll('');
     if(this.route.snapshot.routeConfig.path === "section/:sectionTitle"){
       this.isASection = true;
     }
     if(this.route.snapshot.routeConfig.path === "groupSection/:groupSectionTitle"){
       this.isAGroupSection = true;
+    }
+  }
+
+  scrollToElement($element) {
+    $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+  }
+  onScroll(event) {
+    let scrollUpElement = document.getElementById('btnScrollUp');
+    this.pageScroll = window.pageYOffset;
+    console.log("pageScroll ", this.pageScroll)
+    console.log("scrollUpElement ", scrollUpElement)
+    if (this.pageScroll > 300) {
+      this.displayButtonScroll = true;
+    } else {
+      this.displayButtonScroll = false;
     }
   }
 

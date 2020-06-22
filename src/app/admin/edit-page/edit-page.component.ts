@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { PageService } from '../../services/page.service';
 import { Page } from '../../models/page.model';
 import { mimeType } from '../mime-type.validator';
@@ -22,6 +22,7 @@ export class EditPageComponent implements OnInit {
   priceImgPreviews: string[];
   pricesFromServer: any[];
   isPricePage: boolean;
+  isContactPage: boolean;
 
   constructor(private formBuilder: FormBuilder, private pageService: PageService, private route: ActivatedRoute, private priceService: PriceService) { }
 
@@ -42,10 +43,14 @@ export class EditPageComponent implements OnInit {
   initForm(page) {
     this.pageForm = this.formBuilder.group({
       title: [page.title, Validators.required],
-      content: [page.title, Validators.required],
+      content: [page.content, Validators.required],
       typeOfTemplate: [page.typeOfTemplate, Validators.required],
       mainImg: [page.mainImgUrl ? page.mainImgUrl : "", Validators.required, mimeType],
     });
+    if (page.title === "contact") {
+      this.isContactPage = true;
+      this.pageForm.addControl("content2", new FormControl(page.content2 ? page.content2 : ""));
+    }
     if (page.title === "price") {
       this.isPricePage = true;
       this.loadPrices();
@@ -86,15 +91,21 @@ export class EditPageComponent implements OnInit {
       formValue['title'].toLowerCase(), formValue['content'], formValue['typeOfTemplate']
     );
 
-    if (this.pricesToDelete.length > 0) {
-      this.priceService.deletePricesToServer(this.pricesToDelete);
+    if (formValue['content2']) {
+      editedPage['content2'] = formValue['content2'];
+    }
+
+    if (this.pricesToDelete) {
+      if (this.pricesToDelete.length > 0) {
+        this.priceService.deletePricesToServer(this.pricesToDelete);
+      }
     }
 
     if (this.isPricePage) {
       this.priceService.editPricesToServer(formValue['prices']).then((response) => {
         this.pageService.editPageToServer(this.route.params['_value']['id'], editedPage, formValue['mainImg']);
       })
-    }else{
+    } else {
       this.pageService.editPageToServer(this.route.params['_value']['id'], editedPage, formValue['mainImg']);
     }
 
@@ -127,7 +138,7 @@ export class EditPageComponent implements OnInit {
           for (let index = 0; index < this.pricesFromServer.length; index++) {
             const price = this.pricesFromServer[index];
             let orderInPrices = 1000;
-            if(price.orderInPrices){
+            if (price.orderInPrices) {
               orderInPrices = price.orderInPrices;
             }
             this.onAddPrice(price.priceTitle, price.priceNumber, price.priceImgUrl, price._id, orderInPrices, price.content);

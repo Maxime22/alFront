@@ -1,45 +1,56 @@
+<div #target></div>
 <div *ngIf="getHeaderAndFooter()">
     <app-header></app-header>
     <div class="container" *ngIf="page && isPageContact">
-        <div [innerHtml]="page.content"></div>
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmitMailForm()">
-            <div class="form-group">
-                <label for="name">Votre nom</label>
-                <input type="text" class="form-control" id="name" formControlName="name">
+        <div class="row">
+            <figure class="col-md-4 offset-2">
+                <img class="imgAnneContact" src="{{page.mainImgUrl}}">
+            </figure>
+            <div class="col-md-4 text-justify" [innerHtml]="page.content"></div>
+            <div class="col-md-8 offset-2 text-justify mt-3" [innerHtml]="page.content2"></div>
+            <div class="col-md-12">
+                <form [formGroup]="contactForm" (ngSubmit)="onSubmitMailForm()">
+                    <div class="col-md-6 offset-3 form-group">
+                        <label for="name">Votre nom</label>
+                        <input type="text" class="form-control inputContact" id="name" formControlName="name">
+                    </div>
+                    <div class="col-md-6 offset-3 form-group">
+                        <label for="subject">Sujet du mail</label>
+                        <input type="text" class="form-control inputContact" id="subject" formControlName="subject">
+                    </div>
+                    <div class="col-md-6 offset-3 form-group">
+                        <label for="email">Votre adresse e-mail</label>
+                        <input type="text" class="form-control inputContact" id="email" formControlName="email">
+                    </div>
+                    <div class="col-md-6 offset-3 form-group">
+                        <label for="message">Votre message</label>
+                        <textarea class="form-control inputContact" id="message" formControlName="message"></textarea>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Envoyer</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="subject">Sujet du mail</label>
-                <input type="text" class="form-control" id="subject" formControlName="subject">
-            </div>
-            <div class="form-group">
-                <label for="email">Votre adresse e-mail</label>
-                <input type="text" class="form-control" id="email" formControlName="email">
-            </div>
-            <div class="form-group">
-                <label for="message">Votre message</label>
-                <textarea class="form-control" id="message" formControlName="message"></textarea>
-            </div>
-            <div class="text-center mt-3">
-                <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Envoyer</button>
-            </div>
-        </form>
+        </div>
     </div>
     <div class="container" *ngIf="page && isPagePrice">
-        <div [innerHtml]="page.content"></div>
+        <div class="col-md-8 offset-2 text-justify" [innerHtml]="page.content"></div>
         <ng-container *ngIf="prices">
             <div class="row">
                 <div class="col-md-3" *ngFor="let price of prices, let i = index">
-                    <h2>{{ price.priceTitle }}</h2>
+                    <h2 class="priceTitle text-center">{{ price.priceTitle }}</h2>
                     <figure>
                         <img class="imgPrice" src={{price.priceImgUrl}} alt={{price.priceTitle}}>
                     </figure>
-                    <div [innerHtml]="price.content"></div>
-                    <div class="line text-center" ></div>
-                    <div>Tarif : {{ price.priceNumber }}</div>
+                    <div class="text-justify" [innerHtml]="price.content"></div>
+                    <div class="line"></div>
+                    <div class="text-center">Tarif : {{ price.priceNumber }} €</div>
                 </div>
             </div>
         </ng-container>
-
+    </div>
+    <div class="container" *ngIf="page && isPageConf">
+        <div class="col-md-8 offset-2 text-justify" [innerHtml]="page.content"></div>
 
     </div>
     <app-footer></app-footer>
@@ -50,7 +61,7 @@
         <figure class="homeFigure">
             <img class="homeImg" src="{{page.mainImgUrl}}" />
             <figcaption class="homeFigcaption">
-                <div><a class="homeLink" routerLink="/section/portrait">Anne Lods Photographie</a></div>
+                <div><a class="homeLink homeLinkAnne" routerLink="/section/portrait">Anne Lods</a></div>
                 <div><a class="homeLink" routerLink="/section/portrait">Entrez</a></div>
             </figcaption>
         </figure>
@@ -59,6 +70,9 @@
 
 <div *ngIf="loading">
     <figure class="loadingFigure">
-        <img class="loadingImg" src="assets/images/img/hug.gif">
+        <img class="loadingImg" src="assets/images/img/spinner.gif">
     </figure>
 </div>
+
+<div (window:scroll)="onScroll($event)"></div>
+<button id="btnScrollUp" class="btnScrollUp" (click)="scrollToElement(target)" *ngIf="displayButtonScroll"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>

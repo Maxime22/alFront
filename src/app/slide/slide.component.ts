@@ -76,8 +76,4 @@ export class SlideComponent implements OnInit {
     this.changeState();
   }
 
-  onKeydown(a){
-    console.log("coucou")
-  }
-
 }

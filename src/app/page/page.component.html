@@ -7,30 +7,28 @@
                 <img class="imgAnneContact" src="{{page.mainImgUrl}}">
             </figure>
             <div class="col-md-4 text-justify" [innerHtml]="page.content"></div>
-            <div class="col-md-8 offset-2 text-justify mt-3" [innerHtml]="page.content2"></div>
-            <div class="col-md-12">
-                <form [formGroup]="contactForm" (ngSubmit)="onSubmitMailForm()">
-                    <div class="col-md-6 offset-3 form-group">
-                        <label for="name">Votre nom</label>
-                        <input type="text" class="form-control inputContact" id="name" formControlName="name">
-                    </div>
-                    <div class="col-md-6 offset-3 form-group">
-                        <label for="subject">Sujet du mail</label>
-                        <input type="text" class="form-control inputContact" id="subject" formControlName="subject">
-                    </div>
-                    <div class="col-md-6 offset-3 form-group">
-                        <label for="email">Votre adresse e-mail</label>
-                        <input type="text" class="form-control inputContact" id="email" formControlName="email">
-                    </div>
-                    <div class="col-md-6 offset-3 form-group">
-                        <label for="message">Votre message</label>
-                        <textarea class="form-control inputContact" id="message" formControlName="message"></textarea>
-                    </div>
-                    <div class="text-center mt-3">
-                        <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Envoyer</button>
-                    </div>
-                </form>
-            </div>
+            <div class="col-md-8 offset-sm-2 text-justify mt-3" [innerHtml]="page.content2"></div>
+            <form class="col-md-12" [formGroup]="contactForm" (ngSubmit)="onSubmitMailForm()">
+                <div class="col-12 col-sm-6 offset-sm-3 form-group">
+                    <label for="name">Votre nom</label>
+                    <input type="text" class="form-control inputContact" id="name" formControlName="name">
+                </div>
+                <div class="col-12 col-sm-6 offset-sm-3 form-group">
+                    <label for="subject">Sujet du mail</label>
+                    <input type="text" class="form-control inputContact" id="subject" formControlName="subject">
+                </div>
+                <div class="col-12 col-sm-6 offset-sm-3 form-group">
+                    <label for="email">Votre adresse e-mail</label>
+                    <input type="text" class="form-control inputContact" id="email" formControlName="email">
+                </div>
+                <div class="col-12 col-sm-6 offset-sm-3 form-group">
+                    <label for="message">Votre message</label>
+                    <textarea class="form-control inputContact" id="message" formControlName="message"></textarea>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Envoyer</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="container" *ngIf="page && isPagePrice">
@@ -75,4 +73,5 @@
 </div>
 
 <div (window:scroll)="onScroll($event)"></div>
-<button id="btnScrollUp" class="btnScrollUp" (click)="scrollToElement(target)" *ngIf="displayButtonScroll"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+<button id="btnScrollUp" class="btnScrollUp" (click)="scrollToElement(target)" *ngIf="displayButtonScroll"><i
+        class="fa fa-chevron-up" aria-hidden="true"></i></button>

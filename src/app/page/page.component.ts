@@ -132,8 +132,6 @@ export class PageComponent implements OnInit {
   onScroll(event) {
     let scrollUpElement = document.getElementById('btnScrollUp');
     this.pageScroll = window.pageYOffset;
-    console.log("pageScroll ", this.pageScroll)
-    console.log("scrollUpElement ", scrollUpElement)
     if (this.pageScroll > 300) {
       this.displayButtonScroll = true;
     } else {

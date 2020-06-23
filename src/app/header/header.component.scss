@@ -1,12 +1,45 @@
-.logoDiv{
+.logoDivLargeScreen,
+.logoDivMobileScreen {
     min-height: 100px;
-    text-align: center;
     background-color: white;
     padding: 10px 0 0 0;
 }
 
-.logoImg{
+.logoDivLargeScreen {
+    text-align: center;
+    display: block;
+}
+
+.logoDivMobileScreen {
+    display: none;
+}
+
+.logoImg {
     width: 100px;
     height: 80px;
-    object-fit:cover;
+    object-fit: cover;
+}
+
+@media all and (max-width: 991px) {
+    .logoDivLargeScreen {
+        display: none;
+    }
+    .logoDivMobileScreen {
+        display: block;
+    }
+
+    .navbar {
+        position: fixed;
+        background-color: white;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        border-bottom: 1px gray solid;
+    }
+    // NEEDED BECAUSE THE NAVBAR IS FIXED ON MOBILE
+    .divForMargin {
+        height: 122px;
+        width: 100%;
+    }
 }

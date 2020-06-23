@@ -22,8 +22,10 @@
     "@rxweb/reactive-form-validators": "^2.0.0-rc2",
     "bootstrap": "^4.5.0",
     "ckeditor4-angular": "^1.2.0",
+    "jquery": "^3.5.1",
     "masonry-layout": "^4.2.2",
     "ngx-masonry": "^9.2.0",
+    "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

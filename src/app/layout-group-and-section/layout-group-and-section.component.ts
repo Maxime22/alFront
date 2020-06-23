@@ -33,7 +33,6 @@ export class LayoutGroupAndSectionComponent implements OnInit {
     $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
   onScroll(event) {
-    let scrollUpElement = document.getElementById('btnScrollUp');
     this.pageScroll = window.pageYOffset;
     if (this.pageScroll > 300) {
       this.displayButtonScroll = true;

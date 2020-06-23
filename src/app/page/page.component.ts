@@ -130,7 +130,6 @@ export class PageComponent implements OnInit {
     $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
   onScroll(event) {
-    let scrollUpElement = document.getElementById('btnScrollUp');
     this.pageScroll = window.pageYOffset;
     if (this.pageScroll > 300) {
       this.displayButtonScroll = true;
@@ -142,6 +141,5 @@ export class PageComponent implements OnInit {
 }
 
 // TODO
-// POURQUOI DES FOIS IL PREND LE FAKEPATH QUAND ON EN MET BEAUCOUP DANS EDITCOMPONENT, COMMENT FAIRE UN LOADING ?
-// 1. Front (types of template section et page + footer + autre ?) et loading dans l'admin section + lazyload
-// 2. Test en ligne + HTTPS avec certbot et redirection (faire attention à ce qui n'a pas été envoyé au git (mailconfig, passwordwonfig pour mongo, images sur le serveur et sur le front etc...))
+// loading dans l'admin section + lazyload
+// 2. Test en ligne + HTTPS avec certbot et redirection (faire attention à ce qui n'a pas été envoyé au git (mailconfig, passwordconfig pour mongo, images sur le serveur et sur le front etc...))

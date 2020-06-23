@@ -47,9 +47,8 @@
             </div>
         </ng-container>
     </div>
-    <div class="container" *ngIf="page && isPageConf">
+    <div class="container" *ngIf="page && (isPageConf || isPageLegal)">
         <div class="col-md-8 offset-2 text-justify" [innerHtml]="page.content"></div>
-
     </div>
     <app-footer></app-footer>
 </div>

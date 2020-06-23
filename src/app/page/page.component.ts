@@ -17,6 +17,7 @@ export class PageComponent implements OnInit {
   isPageContact: boolean;
   isPagePrice: boolean;
   isPageConf: boolean;
+  isPageLegal: boolean;
   contactForm: FormGroup;
   loading: boolean;
   prices: any;
@@ -28,6 +29,8 @@ export class PageComponent implements OnInit {
   ngOnInit(): void {
     this.isPageContact = false;
     this.isPagePrice = false;
+    this.isPageConf = false;
+    this.isPageLegal = false;
     this.route.params.subscribe(params => this.handleRouteChange(params));
   }
 
@@ -35,7 +38,7 @@ export class PageComponent implements OnInit {
     this.onScroll('');
     // WE DON'T USE PARAMS BUT THIS.ROUTE.PARAMS.SUBSCRIBE ALLOWS TO REFRESH THE PAGE
     let pathOfRoute = this.route.snapshot.routeConfig.path;
-    if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "" || pathOfRoute === "privacypolicy") {
+    if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "" || pathOfRoute === "privacypolicy" || pathOfRoute === "legalnotices") {
       if (pathOfRoute === "") {
         this.loading = false;
         this.pageService.getOnePageFromServerWithTitle("home").then(
@@ -43,6 +46,8 @@ export class PageComponent implements OnInit {
             this.page = response;
             this.isPageContact = false;
             this.isPagePrice = false;
+            this.isPageConf = false;
+            this.isPageLegal = false;
           });
       } else if (pathOfRoute === "privacypolicy") {
         this.loading = true;
@@ -53,6 +58,20 @@ export class PageComponent implements OnInit {
             }, 3000)
             this.page = response;
             this.isPageConf = true;
+            this.isPageContact = false;
+            this.isPagePrice = false;
+            this.isPageLegal = false;
+          });
+      } else if (pathOfRoute === "legalnotices") {
+        this.loading = true;
+        this.pageService.getOnePageFromServerWithTitle("mentions légales").then(
+          (response) => {
+            setTimeout(() => {
+              this.loading = false;
+            }, 3000)
+            this.page = response;
+            this.isPageLegal = true;
+            this.isPageConf = false;
             this.isPageContact = false;
             this.isPagePrice = false;
           });
@@ -69,6 +88,7 @@ export class PageComponent implements OnInit {
               this.isPageContact = true;
               this.isPagePrice = false;
               this.isPageConf = false;
+              this.isPageLegal = false;
             }
             if (pathOfRoute === "price") {
               this.priceService.getPricesFromServer().then((data) => {
@@ -77,6 +97,7 @@ export class PageComponent implements OnInit {
               this.isPageContact = false;
               this.isPagePrice = true;
               this.isPageConf = false;
+              this.isPageLegal = false;
             }
           });
       }
@@ -86,7 +107,7 @@ export class PageComponent implements OnInit {
 
   getHeaderAndFooter() {
     if (this.page) {
-      if (this.page.title === "price" || this.page.title === "contact" || this.page.title === "politique de confidentialité") {
+      if (this.page.title === "price" || this.page.title === "contact" || this.page.title === "politique de confidentialité" || this.page.title === "mentions légales") {
         return true;
       } else {
         return false;

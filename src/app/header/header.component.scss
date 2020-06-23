@@ -28,6 +28,15 @@
         display: block;
     }
 
+    .navbar-toggler-icon{
+        color: #2f3234;
+    }
+
+    .navbar-toggler, .navbar-toggler:focus{
+        border-color:#dbcea3;
+        outline:none;
+    }
+
     .navbar {
         position: fixed;
         background-color: white;
@@ -35,7 +44,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        border-bottom: 1px gray solid;
+        border-bottom: 1px #dbcea3 solid;
     }
     // NEEDED BECAUSE THE NAVBAR IS FIXED ON MOBILE
     .divForMargin {

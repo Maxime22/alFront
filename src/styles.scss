@@ -1,24 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 
 // BODY
-body{
-    font-family: 'Poppins', sans-serif;
-    color:#2f3234;
+body {
+    font-family: "Poppins", sans-serif;
+    color: #2f3234;
+    font-size: 15px;
 }
-
 
 // NAVBAR
-.navbar-light .navbar-nav .active > .nav-link{
-    color:#dbcea3 !important;
+.navbar-light .navbar-nav .active > .nav-link {
+    color: #dbcea3 !important;
 }
-.navbar-light .navbar-nav .nav-link{
-    color:#2f3234;
+.navbar-light .navbar-nav .nav-link {
+    color: #2f3234;
+}
+
+.nav-link{
+    font-size: 18px;
 }
 
 // BUTTON
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
     background-color: #bea75b !important;
-    border-color : #bea75b !important;
+    border-color: #bea75b !important;
     box-shadow: none !important;
     cursor: pointer;
 }
@@ -29,11 +36,15 @@ body{
     }
 }
 
-a, a:hover, a:visited, a:active{
+a,
+a:hover,
+a:visited,
+a:active {
     text-decoration: none;
+    color: #bea75b;
 }
 
-.container{
+.container {
     padding-bottom: 10px;
     padding-top: 10px;
 }
@@ -51,7 +62,7 @@ a, a:hover, a:visited, a:active{
 }
 
 .loadingImg {
-    width:250px;
+    width: 250px;
     height: 250px;
     position: absolute;
     top: 50%;
@@ -75,21 +86,22 @@ a, a:hover, a:visited, a:active{
     }
 }
 
-.btnScrollUp{
+.btnScrollUp {
     position: fixed;
     height: 40px;
-    width:40px;
-    right:20px;
+    width: 40px;
+    right: 20px;
     bottom: 20px;
     z-index: 2;
     font-size: 22px;
-    border:none;
+    border: none;
     background-color: white;
     border-radius: 100px;
     box-shadow: 0px 0px 5px #dbcea3;
     color: #2f3234;
 }
 
-.btnScrollUp:focus, .btnScrollUp:active{
-    outline:none;
+.btnScrollUp:focus,
+.btnScrollUp:active {
+    outline: none;
 }

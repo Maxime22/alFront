@@ -16,6 +16,7 @@ export class LayoutGroupAndSectionComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.displayButtonScroll = false;
     this.route.params.subscribe(params => this.handleRouteChange(params));
   }
 
@@ -34,7 +35,15 @@ export class LayoutGroupAndSectionComponent implements OnInit {
   }
   onScroll(event) {
     this.pageScroll = window.pageYOffset;
-    if (this.pageScroll > 300) {
+    if (this.pageScroll > 300 && event.target.innerWidth > 845) {
+      this.displayButtonScroll = true;
+    } else {
+      this.displayButtonScroll = false;
+    }
+  }
+
+  onResize(event) {
+    if (event.target.innerWidth > 845) {
       this.displayButtonScroll = true;
     } else {
       this.displayButtonScroll = false;

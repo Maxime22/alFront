@@ -27,6 +27,7 @@ export class PageComponent implements OnInit {
   constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router, private priceService: PriceService) { }
 
   ngOnInit(): void {
+    this.displayButtonScroll = false;
     this.isPageContact = false;
     this.isPagePrice = false;
     this.isPageConf = false;
@@ -144,7 +145,15 @@ export class PageComponent implements OnInit {
   }
   onScroll(event) {
     this.pageScroll = window.pageYOffset;
-    if (this.pageScroll > 300) {
+    if (this.pageScroll > 300 && event.target.innerWidth > 845) {
+      this.displayButtonScroll = true;
+    } else {
+      this.displayButtonScroll = false;
+    }
+  }
+
+  onResize(event) {
+    if (event.target.innerWidth > 845) {
       this.displayButtonScroll = true;
     } else {
       this.displayButtonScroll = false;

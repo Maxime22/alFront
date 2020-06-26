@@ -1,4 +1,4 @@
-.footerDiv{
+.footerDiv {
     min-width: 200px;
     background-color: #2f3234;
     padding: 10px 0 10px 0;
@@ -6,17 +6,37 @@
     color: white;
 }
 
-.footerDiv a, .footerDiv a:hover{
-    color:white;
+.footerDiv a,
+.footerDiv a:hover {
+    color: white;
     text-decoration: none;
 }
 
-.spanSignOut{
-    color:white;
+.spanSignOut {
+    color: white;
     cursor: pointer;
 }
 
-.linkPng{
+.linkPng {
     height: 30px;
     width: 30px;
+}
+
+.rightFooter {
+    text-align: left;
+}
+
+.leftFooter {
+    text-align: right;
+}
+
+.middleFooter {
+    text-align: center;
+}
+
+@media all and (max-width: 576px) {
+    .rightFooter,
+    .leftFooter {
+        text-align: center;
+    }
 }

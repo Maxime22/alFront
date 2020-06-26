@@ -43,7 +43,7 @@ export class PhotoService {
         // }
 
         return new Promise((resolve, reject) => {
-            this.httpClient.put('http://localhost:3000/alBack/photos/sections/' + sectionId, photoData).subscribe(
+            this.httpClient.put('alBack/photos/sections/' + sectionId, photoData).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -56,7 +56,7 @@ export class PhotoService {
 
     getPhotosOfASectionFromServer(sectionId: string){
         return new Promise((resolve, reject) => {
-            this.httpClient.get('http://localhost:3000/alBack/photos/sections/' + sectionId).subscribe(
+            this.httpClient.get('alBack/photos/sections/' + sectionId).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -69,7 +69,7 @@ export class PhotoService {
 
     deletePhotosOfASectionToServer(photosToDelete: string[]){
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://localhost:3000/alBack/photos/deletePhotos', photosToDelete).subscribe(
+            this.httpClient.post('alBack/photos/deletePhotos', photosToDelete).subscribe(
                 (response) => {
                     resolve(response);
                 },

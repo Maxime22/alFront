@@ -38,7 +38,7 @@ export class PageComponent implements OnInit {
     this.onScroll('');
     // WE DON'T USE PARAMS BUT THIS.ROUTE.PARAMS.SUBSCRIBE ALLOWS TO REFRESH THE PAGE
     let pathOfRoute = this.route.snapshot.routeConfig.path;
-    if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "" || pathOfRoute === "privacypolicy" || pathOfRoute === "legalnotices") {
+    if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "" || pathOfRoute === "legalnotices") {
       if (pathOfRoute === "") {
         this.loading = false;
         this.pageService.getOnePageFromServerWithTitle("home").then(
@@ -47,19 +47,6 @@ export class PageComponent implements OnInit {
             this.isPageContact = false;
             this.isPagePrice = false;
             this.isPageConf = false;
-            this.isPageLegal = false;
-          });
-      } else if (pathOfRoute === "privacypolicy") {
-        this.loading = true;
-        this.pageService.getOnePageFromServerWithTitle("politique de confidentialité").then(
-          (response) => {
-            setTimeout(() => {
-              this.loading = false;
-            }, 3000)
-            this.page = response;
-            this.isPageConf = true;
-            this.isPageContact = false;
-            this.isPagePrice = false;
             this.isPageLegal = false;
           });
       } else if (pathOfRoute === "legalnotices") {
@@ -107,7 +94,7 @@ export class PageComponent implements OnInit {
 
   getHeaderAndFooter() {
     if (this.page) {
-      if (this.page.title === "price" || this.page.title === "contact" || this.page.title === "politique de confidentialité" || this.page.title === "mentions légales") {
+      if (this.page.title === "price" || this.page.title === "contact" || this.page.title === "politique de confidentialité" || this.page.title === "mentions légales") {
         return true;
       } else {
         return false;
@@ -136,7 +123,12 @@ export class PageComponent implements OnInit {
       message: formValue['message'],
     }
 
-    this.httpClient.post('http://localhost:3000/alBack/mail/contact', mail).subscribe(
+    let urlApi = "/alBack/mail/contact";
+    if (window.location.hostname === "localhost") {
+      urlApi = "http://localhost:3000" + urlApi;
+    }
+
+    this.httpClient.post(urlApi, mail).subscribe(
       (resApi) => {
         this.router.navigate(['/section/portrait']);
       },

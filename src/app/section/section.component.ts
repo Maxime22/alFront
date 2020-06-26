@@ -4,6 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { RouteHistory } from '../services/routeHistory.service';
 import { PhotoService } from '../services/photo.service';
 import { NgxMasonryModule } from 'ngx-masonry';
+import LazyLoad from "vanilla-lazyload";
+
+let lazyLoadInstance = new LazyLoad({
+  elements_selector: ".lazy"
+});
 
 @Component({
   selector: 'app-section',

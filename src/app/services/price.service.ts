@@ -38,7 +38,7 @@ export class PriceService {
         priceData.append('pricesValues', JSON.stringify(pricesValuesToSend));
 
         return new Promise((resolve, reject) => {
-            this.httpClient.put('http://localhost:3000/alBack/prices/', priceData).subscribe(
+            this.httpClient.put('alBack/prices/', priceData).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -51,7 +51,7 @@ export class PriceService {
 
     getPricesFromServer(){
         return new Promise((resolve, reject) => {
-            this.httpClient.get('http://localhost:3000/alBack/prices/').subscribe(
+            this.httpClient.get('alBack/prices/').subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -64,7 +64,7 @@ export class PriceService {
 
     deletePricesToServer(pricesToDelete: string[]){
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://localhost:3000/alBack/prices/deletePrices', pricesToDelete).subscribe(
+            this.httpClient.post('alBack/prices/deletePrices', pricesToDelete).subscribe(
                 (response) => {
                     resolve(response);
                 },

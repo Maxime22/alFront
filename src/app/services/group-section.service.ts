@@ -8,7 +8,7 @@ import { GroupSection } from '../models/group-section.model';
 export class GroupSectionService {
 
   groupSectionSubject = new Subject<any[]>();
-  oneGroupSectionSubject  = new Subject<any>();
+  oneGroupSectionSubject = new Subject<any>();
 
   private groupSections = [];
 
@@ -44,8 +44,12 @@ export class GroupSectionService {
   // }
 
   getGroupSectionsFromServer() {
+    let urlApi = '/alBack/groupSections';
+    if (window.location.hostname === "localhost") {
+      urlApi = 'http://localhost:3000' + urlApi;
+    }
     return new Promise((resolve, reject) => {
-      this.httpClient.get<any[]>('http://localhost:3000/alBack/groupSections').subscribe(
+      this.httpClient.get<any[]>(urlApi).subscribe(
         (response) => {
           this.groupSections = response;
           this.emitGroupSectionSubject();
@@ -61,58 +65,74 @@ export class GroupSectionService {
   addGroupSection(groupSection: GroupSection) {
     this.groupSections.push(groupSection);
     this.saveGroupSectionToServer(groupSection);
-}
+  }
 
-saveGroupSectionToServer(groupSection: GroupSection) {
-    this.httpClient.post('http://localhost:3000/alBack/groupSections', groupSection).subscribe(
-        (resApi) => {
-            // console.log(resApi['message'])
-            this.router.navigate(['/admin/groupSectionList']);
-        },
-        (error) => {
-            console.log('fail enregistrement ' + error)
-        }
+  saveGroupSectionToServer(groupSection: GroupSection) {
+    let urlApi = '/alBack/groupSections';
+    if (window.location.hostname === "localhost") {
+      urlApi = 'http://localhost:3000' + urlApi;
+    }
+    this.httpClient.post(urlApi, groupSection).subscribe(
+      (resApi) => {
+        // console.log(resApi['message'])
+        this.router.navigate(['/admin/groupSectionList']);
+      },
+      (error) => {
+        console.log('fail enregistrement ' + error)
+      }
     )
-}
+  }
 
-deleteGroupSectionInServer(id: string) {
-  return new Promise((resolve, reject) => {
-      this.httpClient.delete('http://localhost:3000/alBack/groupSections/' + id).subscribe(
-          (response) => {
-              resolve(response);
-          },
-          (error) => {
-              reject(error);
-          }
+  deleteGroupSectionInServer(id: string) {
+    let urlApi = '/alBack/groupSections/';
+    if (window.location.hostname === "localhost") {
+      urlApi = 'http://localhost:3000' + urlApi;
+    }
+    return new Promise((resolve, reject) => {
+      this.httpClient.delete(urlApi + id).subscribe(
+        (response) => {
+          resolve(response);
+        },
+        (error) => {
+          reject(error);
+        }
       );
-  });
-}
+    });
+  }
 
-editGroupSectionToServer(id: string, groupSection: GroupSection){
-  return new Promise((resolve, reject) => {
-    this.httpClient.put('http://localhost:3000/alBack/groupSections/' + id, groupSection).subscribe(
+  editGroupSectionToServer(id: string, groupSection: GroupSection) {
+    let urlApi = '/alBack/groupSections/';
+    if (window.location.hostname === "localhost") {
+      urlApi = 'http://localhost:3000' + urlApi;
+    }
+    return new Promise((resolve, reject) => {
+      this.httpClient.put(urlApi + id, groupSection).subscribe(
         (response) => {
-            resolve(response['message']);
-            this.router.navigate(['/admin/groupSectionList']);
+          resolve(response['message']);
+          this.router.navigate(['/admin/groupSectionList']);
         },
         (error) => {
-            reject(error);
+          reject(error);
         }
-    );
-});
-}
+      );
+    });
+  }
 
-getOneGroupSectionFromServerWithTitle(title: string){
-  return new Promise((resolve, reject) => {
-    this.httpClient.post<any>('http://localhost:3000/alBack/groupSections/getOneGroupSectionWithTitle', {title:title.toLowerCase()}).subscribe(
+  getOneGroupSectionFromServerWithTitle(title: string) {
+    let urlApi = '/alBack/groupSections/getOneGroupSectionWithTitle';
+    if (window.location.hostname === "localhost") {
+      urlApi = 'http://localhost:3000' + urlApi;
+    }
+    return new Promise((resolve, reject) => {
+      this.httpClient.post<any>(urlApi, { title: title.toLowerCase() }).subscribe(
         (response) => {
-            resolve(response);
+          resolve(response);
         },
         (error) => {
-            reject(error);
+          reject(error);
         }
-    );
-});
-}
+      );
+    });
+  }
 
 }

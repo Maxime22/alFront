@@ -48,7 +48,7 @@ export class SectionService {
     }
 
     saveSectionToServer(section: Section) {
-        this.httpClient.post('http://localhost:3000/alBack/sections', section).subscribe(
+        this.httpClient.post('alBack/sections', section).subscribe(
             (resApi) => {
                 // console.log(resApi['message'])
                 this.router.navigate(['/admin/sectionList']);
@@ -71,7 +71,7 @@ export class SectionService {
             sectionData.append('mainImg', mainImg, section.title);
         }
         return new Promise((resolve, reject) => {
-            this.httpClient.put('http://localhost:3000/alBack/sections/' + id, sectionData).subscribe(
+            this.httpClient.put('alBack/sections/' + id, sectionData).subscribe(
                 (response) => {
                     resolve(response['message']);
                     // this.emitSectionSubject();
@@ -86,7 +86,7 @@ export class SectionService {
 
     deleteSectionInServer(id: string) {
         return new Promise((resolve, reject) => {
-            this.httpClient.delete('http://localhost:3000/alBack/sections/' + id).subscribe(
+            this.httpClient.delete('alBack/sections/' + id).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -99,7 +99,7 @@ export class SectionService {
 
     getSectionsFromServer() {
         return new Promise((resolve, reject) => {
-            this.httpClient.get<any[]>('http://localhost:3000/alBack/sections').subscribe(
+            this.httpClient.get<any[]>('alBack/sections').subscribe(
                 (response) => {
                     this.sections = response;
                     // this.emitSectionSubject();
@@ -114,7 +114,7 @@ export class SectionService {
 
     getOneSectionFromServer(title: string) {
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://localhost:3000/alBack/sections/getOneSectionWithTitle', { title: title.toLowerCase() }).subscribe(
+            this.httpClient.post('alBack/sections/getOneSectionWithTitle', { title: title.toLowerCase() }).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -128,7 +128,7 @@ export class SectionService {
     // NOT SURE
     getSeveralSectionsFromServer(sectionsIds: []) {
         return new Promise((resolve, reject) => {
-            this.httpClient.post<any[]>('http://localhost:3000/alBack/sections/severalSections', { sectionsIds: sectionsIds }).subscribe(
+            this.httpClient.post<any[]>('alBack/sections/severalSections', { sectionsIds: sectionsIds }).subscribe(
                 (response) => {
                     resolve(response);
                 },

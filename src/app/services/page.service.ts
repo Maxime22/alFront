@@ -13,8 +13,13 @@ export class PageService {
         pageData.append('page', JSON.stringify(page));
         pageData.append('mainImg', mainImg, page.title);
 
+        let urlApi = '/alBack/pages';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
+
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://localhost:3000/alBack/pages', pageData).subscribe(
+            this.httpClient.post(urlApi, pageData).subscribe(
                 (response) => {
                     this.router.navigate(['/admin/pageList']);
                     resolve(response);
@@ -38,8 +43,13 @@ export class PageService {
             pageData.append('mainImg', mainImg, page.title);
         }
 
+        let urlApi = '/alBack/pages/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
+
         return new Promise((resolve, reject) => {
-            this.httpClient.put('http://localhost:3000/alBack/pages/' + id, pageData).subscribe(
+            this.httpClient.put(urlApi + id, pageData).subscribe(
                 (response) => {
                     this.router.navigate(['/admin/pageList']);
                     resolve(response);
@@ -53,8 +63,12 @@ export class PageService {
     }
 
     getOnePageFromServer(id: string) {
+        let urlApi = '/alBack/pages/getOnePageWithId';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://localhost:3000/alBack/pages/getOnePageWithId', { id: id }).subscribe(
+            this.httpClient.post(urlApi, { id: id }).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -66,8 +80,13 @@ export class PageService {
     }
 
     getOnePageFromServerWithTitle(title: string) {
+        let urlApi = "/alBack/pages/getOnePageWithTitle";
+        if (window.location.hostname === "localhost") {
+            urlApi = "http://localhost:3000" + urlApi;
+        }
+        console.log(window.location.hostname);
         return new Promise((resolve, reject) => {
-            this.httpClient.post('http://localhost:3000/alBack/pages/getOnePageWithTitle', { title: title }).subscribe(
+            this.httpClient.post(urlApi, { title: title }).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -80,7 +99,7 @@ export class PageService {
 
     getPagesFromServer() {
         return new Promise((resolve, reject) => {
-            this.httpClient.get<any[]>('http://localhost:3000/alBack/pages').subscribe(
+            this.httpClient.get<any[]>('alBack/pages').subscribe(
                 (response) => {
                     resolve(response);
                 },

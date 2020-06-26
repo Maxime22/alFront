@@ -84,7 +84,6 @@ export class PageService {
         if (window.location.hostname === "localhost") {
             urlApi = "http://localhost:3000" + urlApi;
         }
-        console.log(window.location.hostname);
         return new Promise((resolve, reject) => {
             this.httpClient.post(urlApi, { title: title }).subscribe(
                 (response) => {

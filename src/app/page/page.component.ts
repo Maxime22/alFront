@@ -23,6 +23,7 @@ export class PageComponent implements OnInit {
   prices: any;
   pageScroll: number;
   displayButtonScroll: boolean;
+  alreadySubmitted: boolean;
 
   constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router, private priceService: PriceService) { }
 
@@ -36,6 +37,7 @@ export class PageComponent implements OnInit {
   }
 
   handleRouteChange(params) {
+    this.alreadySubmitted = false;
     this.onScroll('');
     // WE DON'T USE PARAMS BUT THIS.ROUTE.PARAMS.SUBSCRIBE ALLOWS TO REFRESH THE PAGE
     let pathOfRoute = this.route.snapshot.routeConfig.path;
@@ -115,6 +117,8 @@ export class PageComponent implements OnInit {
   }
 
   onSubmitMailForm() {
+    this.alreadySubmitted = true;
+    
     const formValue = this.contactForm.value;
 
     const mail = {
@@ -131,7 +135,8 @@ export class PageComponent implements OnInit {
 
     this.httpClient.post(urlApi, mail).subscribe(
       (resApi) => {
-        this.router.navigate(['/section/portrait']);
+        alert('Message envoyé !');
+        // this.router.navigate(['/']);
       },
       (error) => {
         console.log('fail enregistrement ' + error)
@@ -145,7 +150,7 @@ export class PageComponent implements OnInit {
   }
   onScroll(event) {
     this.pageScroll = window.pageYOffset;
-    if (this.pageScroll > 300 && event.target.innerWidth > 845) {
+    if (this.pageScroll > 300 && event !== "" && event.target.innerWidth > 845) {
       this.displayButtonScroll = true;
     } else {
       this.displayButtonScroll = false;

@@ -131,7 +131,7 @@ export class EditPageComponent implements OnInit {
 
   loadPrices() {
     this.priceService.getPricesFromServer().then((data: []) => {
-      console.log(data)
+      // console.log(data)
       if (data.length > 0) {
         this.pricesFromServer = data;
         if (this.pricesFromServer.length > 0) {

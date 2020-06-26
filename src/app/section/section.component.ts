@@ -36,11 +36,6 @@ export class SectionComponent implements OnInit {
     }
     this.route.params.subscribe(params => this.handleRouteChange(params));
     this.showSlide = false;
-    if (window.innerWidth > 845) {
-      this.innerWidthMobile = false;
-    } else {
-      this.innerWidthMobile = true;
-    }
   }
 
   handleRouteChange(params) {

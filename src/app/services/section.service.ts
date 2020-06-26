@@ -48,7 +48,11 @@ export class SectionService {
     }
 
     saveSectionToServer(section: Section) {
-        this.httpClient.post('alBack/sections', section).subscribe(
+        let urlApi = '/alBack/sections';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
+        this.httpClient.post(urlApi, section).subscribe(
             (resApi) => {
                 // console.log(resApi['message'])
                 this.router.navigate(['/admin/sectionList']);
@@ -70,8 +74,13 @@ export class SectionService {
             // HERE THE MAINIMG WILL HAVE THE TITLE OF THE SECTION
             sectionData.append('mainImg', mainImg, section.title);
         }
+
+        let urlApi = '/alBack/sections/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.put('alBack/sections/' + id, sectionData).subscribe(
+            this.httpClient.put(urlApi + id, sectionData).subscribe(
                 (response) => {
                     resolve(response['message']);
                     // this.emitSectionSubject();
@@ -85,8 +94,12 @@ export class SectionService {
     }
 
     deleteSectionInServer(id: string) {
+        let urlApi = '/alBack/sections/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.delete('alBack/sections/' + id).subscribe(
+            this.httpClient.delete(urlApi + id).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -98,8 +111,12 @@ export class SectionService {
     }
 
     getSectionsFromServer() {
+        let urlApi = '/alBack/sections';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.get<any[]>('alBack/sections').subscribe(
+            this.httpClient.get<any[]>(urlApi).subscribe(
                 (response) => {
                     this.sections = response;
                     // this.emitSectionSubject();
@@ -113,8 +130,12 @@ export class SectionService {
     }
 
     getOneSectionFromServer(title: string) {
+        let urlApi = '/alBack/sections/getOneSectionWithTitle';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.post('alBack/sections/getOneSectionWithTitle', { title: title.toLowerCase() }).subscribe(
+            this.httpClient.post(urlApi, { title: title.toLowerCase() }).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -127,8 +148,12 @@ export class SectionService {
 
     // NOT SURE
     getSeveralSectionsFromServer(sectionsIds: []) {
+        let urlApi = '/alBack/sections/severalSections';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.post<any[]>('alBack/sections/severalSections', { sectionsIds: sectionsIds }).subscribe(
+            this.httpClient.post<any[]>(urlApi, { sectionsIds: sectionsIds }).subscribe(
                 (response) => {
                     resolve(response);
                 },

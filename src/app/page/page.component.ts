@@ -5,11 +5,26 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { PriceService } from '../services/price.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
-  styleUrls: ['./page.component.scss']
+  styleUrls: ['./page.component.scss'],
+  animations: [
+    trigger('changeOpacity', [
+      state('initial', style({
+        opacity: 1,
+        display: 'block'
+      })),
+      state('final', style({
+        opacity: 0,
+        display: 'none'
+      })),
+      transition('initial=>final', animate('1500ms')),
+      transition('final=>initial', animate('1000ms'))
+    ]),
+  ]
 })
 export class PageComponent implements OnInit {
 
@@ -19,11 +34,11 @@ export class PageComponent implements OnInit {
   isPageConf: boolean;
   isPageLegal: boolean;
   contactForm: FormGroup;
-  loading: boolean;
   prices: any;
   pageScroll: number;
   displayButtonScroll: boolean;
   alreadySubmitted: boolean;
+  currentState = 'initial';
 
   constructor(private pageService: PageService, private route: ActivatedRoute, private formBuilder: FormBuilder, private httpClient: HttpClient, private router: Router, private priceService: PriceService) { }
 
@@ -37,15 +52,16 @@ export class PageComponent implements OnInit {
   }
 
   handleRouteChange(params) {
+    this.displayButtonScroll = false;
     this.alreadySubmitted = false;
     this.onScroll('');
     // WE DON'T USE PARAMS BUT THIS.ROUTE.PARAMS.SUBSCRIBE ALLOWS TO REFRESH THE PAGE
     let pathOfRoute = this.route.snapshot.routeConfig.path;
     if (pathOfRoute === "price" || pathOfRoute === "contact" || pathOfRoute === "" || pathOfRoute === "legalnotices") {
       if (pathOfRoute === "") {
-        this.loading = false;
         this.pageService.getOnePageFromServerWithTitle("home").then(
           (response) => {
+            this.changeState();
             this.page = response;
             this.isPageContact = false;
             this.isPagePrice = false;
@@ -53,12 +69,9 @@ export class PageComponent implements OnInit {
             this.isPageLegal = false;
           });
       } else if (pathOfRoute === "legalnotices") {
-        this.loading = true;
         this.pageService.getOnePageFromServerWithTitle("mentions légales").then(
           (response) => {
-            setTimeout(() => {
-              this.loading = false;
-            }, 3000)
+            this.changeState();
             this.page = response;
             this.isPageLegal = true;
             this.isPageConf = false;
@@ -66,12 +79,9 @@ export class PageComponent implements OnInit {
             this.isPagePrice = false;
           });
       } else {
-        this.loading = true;
         this.pageService.getOnePageFromServerWithTitle(pathOfRoute).then(
           (response) => {
-            setTimeout(() => {
-              this.loading = false;
-            }, 3000)
+            this.changeState();
             this.page = response;
             if (pathOfRoute === "contact") {
               this.initContactForm();
@@ -156,13 +166,12 @@ export class PageComponent implements OnInit {
       this.displayButtonScroll = false;
     }
   }
-
   onResize(event) {
-    if (event.target.innerWidth > 845) {
-      this.displayButtonScroll = true;
-    } else {
-      this.displayButtonScroll = false;
-    }
+    this.onScroll(event);
+  }
+
+  changeState() {
+    this.currentState = this.currentState === 'initial' ? 'final' : 'initial';
   }
 
 }

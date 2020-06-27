@@ -41,13 +41,8 @@ export class LayoutGroupAndSectionComponent implements OnInit {
       this.displayButtonScroll = false;
     }
   }
-
   onResize(event) {
-    if (event.target.innerWidth > 845) {
-      this.displayButtonScroll = true;
-    } else {
-      this.displayButtonScroll = false;
-    }
+    this.onScroll(event);
   }
 
 }

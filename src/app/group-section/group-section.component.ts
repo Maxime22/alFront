@@ -3,11 +3,26 @@ import { SectionService } from '../services/section.service';
 import { GroupSectionService } from '../services/group-section.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-group-section',
   templateUrl: './group-section.component.html',
-  styleUrls: ['./group-section.component.scss']
+  styleUrls: ['./group-section.component.scss'],
+  animations: [
+    trigger('changeOpacity', [
+      state('initial', style({
+        opacity: 1,
+        display: 'block'
+      })),
+      state('final', style({
+        opacity: 0,
+        display: 'none'
+      })),
+      transition('initial=>final', animate('1500ms')),
+      transition('final=>initial', animate('1000ms'))
+    ]),
+  ]
 })
 export class GroupSectionComponent implements OnInit {
 
@@ -15,31 +30,28 @@ export class GroupSectionComponent implements OnInit {
   groupSections: any;
   groupSection: any;
   groupSectionSubscription: Subscription;
-  loading: boolean;
+  currentState = 'initial';
 
   constructor(private sectionService: SectionService, private groupSectionService: GroupSectionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loading = true;
     this.route.params.subscribe(params => this.handleRouteChange(params));
   }
 
   handleRouteChange(params) {
     this.groupSectionService.getOneGroupSectionFromServerWithTitle(params['groupSectionTitle']).then(
       (response) => {
-        // we can put the settimeout here because it is asynchronous
-        setTimeout(() => {
-          this.loading = false;
-        }, 3000)
+        this.changeState();
         this.groupSection = response;
         this.sectionService.getSeveralSectionsFromServer(response['sectionsIds']).then(
           (response) => {
             this.sections = response;
           });
       });
+  }
 
-
-
+  changeState() {
+    this.currentState = this.currentState === 'initial' ? 'final' : 'initial';
   }
 
 }

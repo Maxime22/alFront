@@ -25,7 +25,7 @@ let lazyLoadInstance = new LazyLoad({
         opacity: 0,
         display: 'none'
       })),
-      transition('initial=>final', animate('1500ms')),
+      transition('initial=>final', animate('3000ms')),
       transition('final=>initial', animate('1000ms'))
     ]),
   ]
@@ -44,11 +44,11 @@ export class SectionComponent implements OnInit {
   // https://www.it-swarm.dev/fr/angular/angular-4-composant-ngoninit-non-appele-chaque-demande-de-route/832647952/
   // https://blog.hackages.io/our-solution-to-get-a-previous-route-with-angular-5-601c16621cf0
   ngOnInit(): void {
-    if (this.route.snapshot.params['sectionTitle'] === "portrait" && this.routeHistory.getPreviousUrl() === "/") {
-      this.currentState = 'final';
-    } else if (this.route.snapshot.params['sectionTitle'] !== "portrait" && !this.routeHistory.getPreviousUrl().includes('section/')) {
-      this.currentState = 'final';
-    }
+    // if (this.route.snapshot.params['sectionTitle'] === "portrait" && this.routeHistory.getPreviousUrl() === "/") {
+    //   this.currentState = 'final';
+    // } else if (this.route.snapshot.params['sectionTitle'] !== "portrait" && !this.routeHistory.getPreviousUrl().includes('section/')) {
+    //   this.currentState = 'final';
+    // }
     this.route.params.subscribe(params => this.handleRouteChange(params));
     this.showSlide = false;
   }
@@ -58,9 +58,7 @@ export class SectionComponent implements OnInit {
       (response) => {
         this.section = response;
         this.photoService.getPhotosOfASectionFromServer(response["_id"]).then((response: any) => {
-          if (this.currentState === 'initial') {
-            this.changeState();
-          }
+          this.changeState();
           let photosInOrder = response.photos;
           photosInOrder.sort(function (a, b) {
             return Number(a.orderInPhotos) - Number(b.orderInPhotos);
@@ -68,10 +66,17 @@ export class SectionComponent implements OnInit {
           this.photosInTheSection = photosInOrder;
         })
       });
+    if (window.innerWidth > 845) {
+      this.innerWidthMobile = false;
+    } else {
+      this.innerWidthMobile = true;
+    }
   }
 
   onShowSlide(i) {
-    this.showSlide = true;
+    if (this.innerWidthMobile) {
+      this.showSlide = true;
+    }
     this.imageSelected = i;
   }
 

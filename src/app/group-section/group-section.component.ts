@@ -19,7 +19,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
         opacity: 0,
         display: 'none'
       })),
-      transition('initial=>final', animate('1500ms')),
+      transition('initial=>final', animate('3000ms')),
       transition('final=>initial', animate('1000ms'))
     ]),
   ]

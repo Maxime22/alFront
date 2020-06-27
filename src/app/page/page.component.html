@@ -34,15 +34,15 @@
     <div class="container" *ngIf="page && isPagePrice">
         <div class="col-md-8 offset-md-2 col-12 text-justify mt-3" [innerHtml]="page.content"></div>
         <ng-container *ngIf="prices">
-            <div class="row">
-                <div class="col-md-3" *ngFor="let price of prices, let i = index">
+            <div class="row mb-3">
+                <div class="col-md-3 mt-3" *ngFor="let price of prices, let i = index">
                     <h2 class="priceTitle text-center">{{ price.priceTitle }}</h2>
                     <figure>
                         <img class="imgPrice" src={{price.priceImgUrl}} alt={{price.priceTitle}}>
                     </figure>
                     <div class="text-justify" [innerHtml]="price.content"></div>
                     <div class="line"></div>
-                    <div class="text-center">Tarif : {{ price.priceNumber }} €</div>
+                    <div class="text-center">Tarif : {{ price.priceNumber }}</div>
                 </div>
             </div>
         </ng-container>

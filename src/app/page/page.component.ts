@@ -91,8 +91,12 @@ export class PageComponent implements OnInit {
               this.isPageLegal = false;
             }
             if (pathOfRoute === "price") {
-              this.priceService.getPricesFromServer().then((data) => {
-                this.prices = data;
+              this.priceService.getPricesFromServer().then((data: any) => {
+                let pricesInOrder = data;
+                pricesInOrder.sort(function (a, b) {
+                  return Number(a.orderInPrices) - Number(b.orderInPrices);
+                });
+                this.prices = pricesInOrder;
               });
               this.isPageContact = false;
               this.isPagePrice = true;
@@ -128,7 +132,7 @@ export class PageComponent implements OnInit {
 
   onSubmitMailForm() {
     this.alreadySubmitted = true;
-    
+
     const formValue = this.contactForm.value;
 
     const mail = {

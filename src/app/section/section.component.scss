@@ -5,6 +5,7 @@ button{
 
 .sectionContainer {
     padding: 10px 0 10px 0;
+    min-height: 500px;
     animation-name: progressiveDisplay;
     animation-duration: 3.5s;
     animation-iteration-count: 1;
@@ -25,7 +26,6 @@ button{
 }
 
 .photoContainer {
-    // margin: 0 auto;
     width: 300px;
     margin-right: 10px;
     margin-bottom: 10px;

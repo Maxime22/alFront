@@ -23,7 +23,7 @@ export class PriceService {
                     content: prices[index]["contentPrice"]
                 }
             )
-            if(prices[index]["priceId"] !== null && prices[index]["priceId"] !== undefined){
+            if (prices[index]["priceId"] !== null && prices[index]["priceId"] !== undefined) {
                 pricesValuesToSend[index]["_id"] = prices[index]["priceId"];
             }
             // IF PRICEIMG IS AN URL WE PUT THE URL IN THE OBJECT TO SAVE
@@ -37,8 +37,12 @@ export class PriceService {
 
         priceData.append('pricesValues', JSON.stringify(pricesValuesToSend));
 
+        let urlApi = '/alBack/prices/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.put('alBack/prices/', priceData).subscribe(
+            this.httpClient.put(urlApi, priceData).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -49,9 +53,13 @@ export class PriceService {
         });
     }
 
-    getPricesFromServer(){
+    getPricesFromServer() {
+        let urlApi = '/alBack/prices/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.get('alBack/prices/').subscribe(
+            this.httpClient.get(urlApi).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -62,9 +70,13 @@ export class PriceService {
         });
     }
 
-    deletePricesToServer(pricesToDelete: string[]){
+    deletePricesToServer(pricesToDelete: string[]) {
+        let urlApi = '/alBack/prices/deletePrices';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.post('alBack/prices/deletePrices', pricesToDelete).subscribe(
+            this.httpClient.post(urlApi, pricesToDelete).subscribe(
                 (response) => {
                     resolve(response);
                 },

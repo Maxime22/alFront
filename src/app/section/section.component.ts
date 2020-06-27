@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SectionService } from '../services/section.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouteHistory } from '../services/routeHistory.service';
 import { PhotoService } from '../services/photo.service';
-import { NgxMasonryModule } from 'ngx-masonry';
 import LazyLoad from "vanilla-lazyload";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { NgxMasonryComponent } from 'ngx-masonry';
 
 let lazyLoadInstance = new LazyLoad({
   elements_selector: ".lazy"
@@ -25,8 +25,7 @@ let lazyLoadInstance = new LazyLoad({
         opacity: 0,
         display: 'none'
       })),
-      transition('initial=>final', animate('3000ms')),
-      transition('final=>initial', animate('1000ms'))
+      transition('initial=>final', animate('2000ms 1500ms')),
     ]),
   ]
 })
@@ -37,7 +36,8 @@ export class SectionComponent implements OnInit {
   showSlide: boolean;
   imageSelected: number;
   innerWidthMobile: boolean;
-  currentState = 'initial';
+  currentState: string;
+  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
 
   constructor(private sectionService: SectionService, private photoService: PhotoService, private route: ActivatedRoute, private routeHistory: RouteHistory) { }
 
@@ -50,16 +50,17 @@ export class SectionComponent implements OnInit {
     //   this.currentState = 'final';
     // }
     this.route.params.subscribe(params => this.handleRouteChange(params));
-    this.showSlide = false;
   }
 
   handleRouteChange(params) {
+    this.showSlide = false;
+    this.currentState = 'initial';
     this.sectionService.getOneSectionFromServer(params['sectionTitle']).then(
       (response) => {
         this.section = response;
-        this.photoService.getPhotosOfASectionFromServer(response["_id"]).then((response: any) => {
+        this.photoService.getPhotosOfASectionFromServer(response["_id"]).then((res: any) => {
           this.changeState();
-          let photosInOrder = response.photos;
+          let photosInOrder = res.photos;
           photosInOrder.sort(function (a, b) {
             return Number(a.orderInPhotos) - Number(b.orderInPhotos);
           });
@@ -71,10 +72,16 @@ export class SectionComponent implements OnInit {
     } else {
       this.innerWidthMobile = true;
     }
+    setTimeout(() => {
+      if (this.masonry) {
+        this.masonry.reloadItems();
+        this.masonry.layout();
+      }
+    }, 800);
   }
 
   onShowSlide(i) {
-    if (this.innerWidthMobile) {
+    if (!this.innerWidthMobile) {
       this.showSlide = true;
     }
     this.imageSelected = i;

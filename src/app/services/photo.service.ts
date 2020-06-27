@@ -41,9 +41,12 @@ export class PhotoService {
         // for (var pair of photoData.entries()) {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
-
+        let urlApi = '/alBack/photos/sections/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.put('alBack/photos/sections/' + sectionId, photoData).subscribe(
+            this.httpClient.put(urlApi + sectionId, photoData).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -55,8 +58,12 @@ export class PhotoService {
     }
 
     getPhotosOfASectionFromServer(sectionId: string){
+        let urlApi = '/alBack/photos/sections/';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.get('alBack/photos/sections/' + sectionId).subscribe(
+            this.httpClient.get(urlApi + sectionId).subscribe(
                 (response) => {
                     resolve(response);
                 },
@@ -68,8 +75,12 @@ export class PhotoService {
     }
 
     deletePhotosOfASectionToServer(photosToDelete: string[]){
+        let urlApi = '/alBack/photos/deletePhotos';
+        if (window.location.hostname === "localhost") {
+            urlApi = 'http://localhost:3000' + urlApi;
+        }
         return new Promise((resolve, reject) => {
-            this.httpClient.post('alBack/photos/deletePhotos', photosToDelete).subscribe(
+            this.httpClient.post(urlApi, photosToDelete).subscribe(
                 (response) => {
                     resolve(response);
                 },

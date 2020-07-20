@@ -4,7 +4,7 @@
     <div class="container" *ngIf="page && isPageContact">
         <div class="row mt-3">
             <figure class="col-md-4 col-12 offset-md-2">
-                <img class="imgAnneContact" src="{{page.mainImgUrl}}">
+                <img class="imgAnneContact" src="{{page.mainImgUrl}}" alt="image contact Anne Lods">
             </figure>
             <div class="col-md-4 col-12 text-justify" [innerHtml]="page.content"></div>
             <div class="col-md-8 offset-md-2 col-12 text-justify mt-3" [innerHtml]="page.content2"></div>
@@ -26,7 +26,8 @@
                     <textarea class="form-control inputContact" id="message" formControlName="message"></textarea>
                 </div>
                 <div class="text-center mt-3">
-                    <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid || alreadySubmitted">Envoyer</button>
+                    <button class="btn btn-primary" type="submit"
+                        [disabled]="contactForm.invalid || alreadySubmitted">Envoyer</button>
                 </div>
             </form>
         </div>
@@ -56,10 +57,13 @@
 <div *ngIf="!getHeaderAndFooter() && page">
     <div class="container-fluid">
         <figure class="homeFigure">
-            <img class="homeImg" src="{{page.mainImgUrl}}" />
+            <img class="homeImg" src="{{page.mainImgUrl}}" alt="Anne Lods Photographe" />
             <figcaption class="homeFigcaption">
-                <div><a class="homeLink homeLinkAnne" routerLink="/section/portrait">Anne Lods</a></div>
-                <div><a class="homeLink" routerLink="/section/portrait">Entrez</a></div>
+                <div class="homeLinkTop" routerLink="/section/portrait">
+                    <h1 class="homeLinkAnne">Anne Lods</h1>
+                    <div class="homeLinkPhotoDiv"><span class="homeLinkPhoto">Photographe portraitiste</span></div>
+                </div>
+                <div><a class="homeLinkBottom" routerLink="/section/portrait">Entrez</a></div>
             </figcaption>
         </figure>
     </div>
@@ -67,7 +71,7 @@
 
 <div>
     <figure [@changeOpacity]=currentState class="loadingFigure">
-        <img class="loadingImg" src="assets/images/img/spinner.gif">
+        <img class="loadingImg" src="assets/images/img/spinner.gif" alt="loading image">
     </figure>
 </div>
 

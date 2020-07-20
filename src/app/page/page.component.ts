@@ -164,7 +164,7 @@ export class PageComponent implements OnInit {
   }
   onScroll(event) {
     this.pageScroll = window.pageYOffset;
-    if (this.pageScroll > 300 && event !== "" && event.target.innerWidth > 845) {
+    if (this.pageScroll > 300 && event !== "" && window.innerWidth > 845) {
       this.displayButtonScroll = true;
     } else {
       this.displayButtonScroll = false;

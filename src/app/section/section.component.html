@@ -3,16 +3,16 @@
         <div class="container mt-3 mb-3" *ngIf="section">
             <div *ngIf="photosInTheSection && !innerWidthMobile">
                 <ngx-masonry
-                    [options]="{ fitWidth: true, horizontalOrder: true, containerStyle:{position:'relative', margin:'auto'} }"
+                    [options]="{ fitWidth: true, horizontalOrder: false, containerStyle:{position:'relative', margin:'auto'} }"
+                    [ordered]="true"
                     >
-                    <!-- ng-container -->
                     <div ngxMasonryItem class="photoContainer" *ngFor="let photo of photosInTheSection, let i = index">
                         <figure class="figurePhotoLandscape" *ngIf="photo.typeOfPhoto === 'landscape'">
-                            <img class="landscapeImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                            <img id="{{ photo._id }}" class="landscapeImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
                                 (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'landscape'">
                         </figure>
                         <figure class="figurePhotoPortrait" *ngIf="photo.typeOfPhoto === 'portrait'">
-                            <img class="portraitImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                            <img id="{{ photo._id }}" class="portraitImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
                                 (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'portrait'">
                         </figure>
                     </div>
@@ -22,11 +22,11 @@
                 <ng-container *ngFor="let photo of photosInTheSection, let i = index">
                     <div class="text-center">
                         <figure class="figurePhotoLandscape" *ngIf="photo.typeOfPhoto === 'landscape'">
-                            <img class="landscapeImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                            <img id="{{ photo._id }}" class="landscapeImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
                                 (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'landscape'">
                         </figure>
                         <figure class="figurePhotoPortrait" *ngIf="photo.typeOfPhoto === 'portrait'">
-                            <img class="portraitImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
+                            <img id="{{ photo._id }}" class="portraitImg lazy" data-src="{{photo.photoImgUrl}}" alt="{{photo.photoTitle}}"
                                 (click)="onShowSlide(i)" *ngIf="photo.typeOfPhoto === 'portrait'">
                         </figure>
                     </div>
@@ -38,7 +38,7 @@
 
 <div>
     <figure [@changeOpacity]=currentState class="loadingFigure">
-        <img class="loadingImg" src="assets/images/img/spinner.gif">
+        <img *ngIf="!alreadyInSection" class="loadingImg" src="assets/images/img/spinner.gif">
     </figure>
 </div>
 

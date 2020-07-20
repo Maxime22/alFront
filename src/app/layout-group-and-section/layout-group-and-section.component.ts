@@ -8,8 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LayoutGroupAndSectionComponent implements OnInit {
 
-  isASection:boolean;
-  isAGroupSection:boolean;
+  isASection: boolean;
+  isAGroupSection: boolean;
   pageScroll: number;
   displayButtonScroll: boolean;
 
@@ -22,10 +22,10 @@ export class LayoutGroupAndSectionComponent implements OnInit {
 
   handleRouteChange(params) {
     this.onScroll('');
-    if(this.route.snapshot.routeConfig.path === "section/:sectionTitle"){
+    if (this.route.snapshot.routeConfig.path === "section/:sectionTitle") {
       this.isASection = true;
     }
-    if(this.route.snapshot.routeConfig.path === "groupSection/:groupSectionTitle"){
+    if (this.route.snapshot.routeConfig.path === "groupSection/:groupSectionTitle") {
       this.isAGroupSection = true;
     }
   }
@@ -35,7 +35,7 @@ export class LayoutGroupAndSectionComponent implements OnInit {
   }
   onScroll(event) {
     this.pageScroll = window.pageYOffset;
-    if (this.pageScroll > 300 && event !== "" && event.target.innerWidth > 845) {
+    if (this.pageScroll > 300 && event !== "" && window.innerWidth > 845) {
       this.displayButtonScroll = true;
     } else {
       this.displayButtonScroll = false;

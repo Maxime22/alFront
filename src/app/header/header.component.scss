@@ -21,6 +21,10 @@
 }
 
 @media all and (max-width: 991px) {
+    .logoImg {
+        width: 160px;
+        height: 80px;
+    }
     .logoDivLargeScreen {
         display: none;
     }
